@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+  --rosa: #ff6b8b;
+  --morado: #6c5ce7;
+  --azul: #2d9cdb;
+  --verde: #2ecc71;
+  --fondo: #fff5f7;
+}
+
+body {
+  background: var(--fondo);
+  font-family: Arial, sans-serif;
+}
+
+.btn-cita {
+  background: var(--rosa);
+  color: white;
+  border: none;
+}
+
+.btn-cita:hover {
+  background: #e85a79;
+  color: white;
+}
+
+.card-cita {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
