@@ -1,40 +1,30 @@
 {
-  "name": "cita-perfecta-angular-final",
-  "version": "1.0.0",
-  "description": "MVP web de Cita Perfecta en Angular: Bootstrap, routing, servicios CRUD, Input/Output, logout y responsive.",
+  "name": "cita-perfecta",
+  "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o",
+    "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
   },
   "private": true,
+  "packageManager": "npm@10.9.8",
   "dependencies": {
-    "@angular/animations": "20.3.25",
-    "@angular/common": "20.3.25",
-    "@angular/compiler": "20.3.25",
-    "@angular/core": "20.3.25",
-    "@angular/forms": "20.3.25",
-    "@angular/platform-browser": "20.3.25",
-    "@angular/router": "20.3.25",
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/platform-browser": "^21.2.0",
+    "@angular/router": "^21.2.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.6.0",
-    "zone.js": "~0.15.0",
-    "bootstrap": "5.3.3"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "20.3.28",
-    "@angular/cli": "20.3.28",
-    "@angular/compiler-cli": "20.3.25",
-    "typescript": "~5.8.0"
-  },
-  "overrides": {
-    "@angular/animations": "20.3.25",
-    "@angular/common": "20.3.25",
-    "@angular/compiler": "20.3.25",
-    "@angular/core": "20.3.25",
-    "@angular/forms": "20.3.25",
-    "@angular/platform-browser": "20.3.25",
-    "@angular/router": "20.3.25"
+    "@angular/build": "^21.2.15",
+    "@angular/cli": "^21.2.15",
+    "@angular/compiler-cli": "^21.2.0",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.2"
   }
 }
