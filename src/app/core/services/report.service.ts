@@ -1,0 +1,44 @@
+import { Injectable } from '@angular/core';
+import { Report } from '../models/report.model';
+import { AuthService } from './auth.service';
+
+@Injectable({ providedIn: 'root' })
+export class ReportService {
+  private reportsKey = 'cp_reports';
+  private blockedKey = 'cp_blocked_profiles';
+
+  constructor(private authService: AuthService) {}
+
+  reportProfile(toProfileId: number, reason: string, description: string): void {
+    const user = this.authService.currentUser();
+    if (!user) return;
+
+    const reports = this.getReports();
+    reports.push({
+      fromUserId: user.id,
+      toProfileId,
+      reason,
+      description,
+      createdAt: new Date().toISOString()
+    });
+    localStorage.setItem(this.reportsKey, JSON.stringify(reports));
+  }
+
+  blockProfile(toProfileId: number): void {
+    const blocked = this.getBlockedProfiles();
+    if (!blocked.includes(toProfileId)) {
+      blocked.push(toProfileId);
+    }
+    localStorage.setItem(this.blockedKey, JSON.stringify(blocked));
+  }
+
+  getBlockedProfiles(): number[] {
+    const raw = localStorage.getItem(this.blockedKey);
+    return raw ? (JSON.parse(raw) as number[]) : [];
+  }
+
+  private getReports(): Report[] {
+    const raw = localStorage.getItem(this.reportsKey);
+    return raw ? (JSON.parse(raw) as Report[]) : [];
+  }
+}

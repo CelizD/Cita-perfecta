@@ -1,0 +1,18 @@
+.pact-card {
+  max-width: 720px;
+}
+
+.pact-list {
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding-left: 1.2rem;
+}
+
+.pact-list li {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 107, 139, 0.13);
+  border-radius: 18px;
+  font-weight: 700;
+  padding: 1rem;
+}

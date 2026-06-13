@@ -1,0 +1,19 @@
+<header class="navbar">
+  <a class="brand" routerLink="/inicio">
+    <span class="brand-mark">CP</span>
+    <span>Cita Perfecta</span>
+  </a>
+
+  <nav class="nav-links">
+    <a routerLink="/inicio" routerLinkActive="active">Inicio</a>
+    @if (authService.currentUser()) {
+      <a routerLink="/matches" routerLinkActive="active">Matches</a>
+      <a routerLink="/chats" routerLinkActive="active">Chat</a>
+      <a routerLink="/crud-perfiles" routerLinkActive="active">CRUD</a>
+      <a routerLink="/ajustes" routerLinkActive="active">Ajustes</a>
+    } @else {
+      <a routerLink="/login" routerLinkActive="active">Login</a>
+      <a class="nav-cta" routerLink="/registro">Crear cuenta</a>
+    }
+  </nav>
+</header>

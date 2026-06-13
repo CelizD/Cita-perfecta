@@ -1,0 +1,18 @@
+.selectable {
+  margin-top: 1rem;
+}
+
+.chip-button {
+  background: white;
+  border: 1px solid rgba(255, 107, 139, 0.2);
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.7rem 1rem;
+}
+
+.chip-button.selected {
+  background: var(--primary);
+  color: white;
+}

@@ -1,0 +1,10 @@
+<div class="closure-box">
+  <h3>Cierre Amistoso</h3>
+  <p>Elige una opción para cerrar la conversación sin ghosting.</p>
+
+  @for (option of options; track option) {
+    <button type="button" (click)="closeSelected.emit(option)">
+      {{ option }}
+    </button>
+  }
+</div>

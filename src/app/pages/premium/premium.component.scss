@@ -1,0 +1,17 @@
+.premium-card {
+  max-width: 680px;
+}
+
+.benefits {
+  display: grid;
+  gap: 0.8rem;
+  margin: 2rem 0;
+}
+
+.benefit {
+  background: white;
+  border: 1px solid rgba(255, 107, 139, 0.14);
+  border-radius: 18px;
+  font-weight: 800;
+  padding: 1rem;
+}

@@ -1,0 +1,28 @@
+.closure-box {
+  background: var(--warm);
+  border: 1px solid rgba(255, 107, 139, 0.15);
+  border-radius: 24px;
+  display: grid;
+  gap: 0.8rem;
+  padding: 1rem;
+}
+
+.closure-box h3,
+.closure-box p {
+  margin: 0;
+}
+
+.closure-box button {
+  background: white;
+  border: 1px solid rgba(255, 107, 139, 0.18);
+  border-radius: 16px;
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.9rem;
+  text-align: left;
+}
+
+.closure-box button:hover {
+  border-color: var(--primary);
+}

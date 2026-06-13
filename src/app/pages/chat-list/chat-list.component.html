@@ -1,0 +1,26 @@
+<section class="page-narrow">
+  <div class="section-title">
+    <span class="eyebrow">Conversaciones</span>
+    <h1>Chats activos</h1>
+    <p>Los chats se crean cuando envías un like y se simula un match.</p>
+  </div>
+
+  <div class="chat-list">
+    @for (chat of chats; track chat.id) {
+      <a class="chat-row" [routerLink]="['/chat', chat.id]">
+        <div class="avatar mini">{{ chat.profileName.slice(0, 2).toUpperCase() }}</div>
+        <div>
+          <h3>{{ chat.profileName }}</h3>
+          <p>{{ chat.messages.at(-1)?.text }}</p>
+        </div>
+        <span [class.closed]="chat.status === 'cerrado'">{{ chat.status }}</span>
+      </a>
+    } @empty {
+      <div class="empty-state">
+        <h2>Aún no tienes chats</h2>
+        <p>Ve a perfiles compatibles y envía un like para crear un match simulado.</p>
+        <a class="btn primary" routerLink="/matches">Ver perfiles</a>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,41 @@
+<section class="page-narrow">
+  <div class="section-title">
+    <span class="eyebrow">Cuenta y privacidad</span>
+    <h1>Ajustes</h1>
+    <p>Administra tu perfil, modo pausa, seguridad y plan premium.</p>
+  </div>
+
+  <div class="settings-list">
+    <a class="settings-row" routerLink="/onboarding">
+      <div>
+        <h3>Editar perfil</h3>
+        <p>Actualiza tu ciudad, biografía e intereses.</p>
+      </div>
+      <span>Editar</span>
+    </a>
+
+    <button class="settings-row" type="button" (click)="togglePause()">
+      <div>
+        <h3>Modo Pausa</h3>
+        <p>No aparecerás en nuevas recomendaciones mientras esté activo.</p>
+      </div>
+      <span>{{ authService.currentUser()?.pauseMode ? 'Activo' : 'Inactivo' }}</span>
+    </button>
+
+    <a class="settings-row" routerLink="/premium">
+      <div>
+        <h3>Plan Premium</h3>
+        <p>Vista simulada de beneficios premium.</p>
+      </div>
+      <span>{{ authService.currentUser()?.premium ? 'Activo' : 'Ver' }}</span>
+    </a>
+
+    <button class="settings-row danger-row" type="button" (click)="logout()">
+      <div>
+        <h3>Cerrar sesión</h3>
+        <p>Salir de la cuenta actual.</p>
+      </div>
+      <span>Salir</span>
+    </button>
+  </div>
+</section>

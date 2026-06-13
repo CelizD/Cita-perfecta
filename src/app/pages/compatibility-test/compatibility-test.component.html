@@ -1,0 +1,35 @@
+<section class="center-page">
+  <div class="test-card glass-card">
+    <span class="eyebrow">Test de compatibilidad</span>
+    <h1>Pregunta {{ currentIndex + 1 }} de {{ questions.length }}</h1>
+
+    <div class="progress-bar" aria-label="Progreso del test">
+      <span [style.width.%]="progress"></span>
+    </div>
+
+    <p class="question-text">{{ currentQuestion.text }}</p>
+
+    <div class="scale">
+      @for (value of [1, 2, 3, 4, 5]; track value) {
+        <button
+          type="button"
+          [class.selected]="answers.get(currentQuestion.id) === value"
+          (click)="select(value)">
+          {{ value }}
+        </button>
+      }
+    </div>
+
+    <div class="scale-labels">
+      <span>Muy en desacuerdo</span>
+      <span>Muy de acuerdo</span>
+    </div>
+
+    <div class="actions between">
+      <button class="btn ghost" type="button" (click)="previous()" [disabled]="currentIndex === 0">Anterior</button>
+      <button class="btn primary" type="button" (click)="next()">
+        {{ currentIndex === questions.length - 1 ? 'Finalizar test' : 'Siguiente' }}
+      </button>
+    </div>
+  </div>
+</section>

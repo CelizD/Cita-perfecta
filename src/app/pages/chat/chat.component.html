@@ -1,0 +1,44 @@
+@if (chat) {
+  <section class="chat-page">
+    <div class="chat-header glass-card">
+      <div>
+        <span class="eyebrow">Chat con</span>
+        <h1>{{ chat.profileName }}</h1>
+        <p>{{ chat.compatibility }}% de compatibilidad · Estado: {{ chat.status }}</p>
+      </div>
+      <a class="btn ghost" routerLink="/chats">Volver</a>
+    </div>
+
+    <div class="chat-window">
+      @for (message of chat.messages; track message.id) {
+        <div class="bubble" [class.mine]="message.sender === 'yo'">
+          <span>{{ message.sender === 'yo' ? 'Tú' : chat.profileName }}</span>
+          <p>{{ message.text }}</p>
+        </div>
+      }
+    </div>
+
+    <div class="icebreaker">
+      <strong>Sugerencia:</strong> {{ icebreaker }}
+    </div>
+
+    @if (showClosure && chat.status === 'activo') {
+      <app-friendly-closure (closeSelected)="close($event)"></app-friendly-closure>
+    }
+
+    <form class="chat-form" [formGroup]="form" (ngSubmit)="send()">
+      <input formControlName="text" placeholder="Escribe un mensaje..." [disabled]="chat.status === 'cerrado'">
+      <button class="btn primary" type="submit" [disabled]="chat.status === 'cerrado'">Enviar</button>
+      <button class="btn ghost" type="button" (click)="showClosure = !showClosure" [disabled]="chat.status === 'cerrado'">
+        Cierre Amistoso
+      </button>
+    </form>
+  </section>
+} @else {
+  <section class="center-page">
+    <div class="empty-state">
+      <h1>Chat no encontrado</h1>
+      <a class="btn primary" routerLink="/chats">Volver a chats</a>
+    </div>
+  </section>
+}

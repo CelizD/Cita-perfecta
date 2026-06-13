@@ -1,0 +1,79 @@
+.chat-page {
+  display: grid;
+  gap: 1rem;
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 3rem 5vw;
+}
+
+.chat-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-window {
+  background: white;
+  border: 1px solid rgba(255, 107, 139, 0.14);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 1rem;
+  min-height: 360px;
+  padding: 1rem;
+}
+
+.bubble {
+  background: var(--warm);
+  border-radius: 22px 22px 22px 4px;
+  max-width: 76%;
+  padding: 0.9rem 1rem;
+}
+
+.bubble.mine {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 22px 22px 4px 22px;
+  color: white;
+  justify-self: end;
+}
+
+.bubble span {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 900;
+  opacity: 0.75;
+}
+
+.bubble p {
+  margin: 0.25rem 0 0;
+}
+
+.icebreaker {
+  background: #f2f0ff;
+  border-radius: 18px;
+  color: var(--secondary);
+  font-weight: 700;
+  padding: 1rem;
+}
+
+.chat-form {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: 1fr auto auto;
+}
+
+.chat-form input {
+  border: 1px solid rgba(255, 107, 139, 0.2);
+  border-radius: 999px;
+  font: inherit;
+  padding: 0.95rem 1.2rem;
+}
+
+@media (max-width: 760px) {
+  .chat-header,
+  .chat-form {
+    align-items: stretch;
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+}

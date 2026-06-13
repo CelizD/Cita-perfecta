@@ -1,0 +1,26 @@
+<section class="page-wide">
+  <div class="section-title">
+    <span class="eyebrow">Conexiones compatibles</span>
+    <h1>Perfiles sugeridos para ti</h1>
+    <p>Estos perfiles se ordenan con una compatibilidad simulada usando tus respuestas e intereses.</p>
+  </div>
+
+  @if (actionMessage) {
+    <div class="alert success">{{ actionMessage }}</div>
+  }
+
+  <div class="profiles-grid">
+    @for (profile of profiles; track profile.id) {
+      <app-profile-card
+        [profile]="profile"
+        (likeClicked)="onLike($event)"
+        (letterClicked)="onLetter($event)">
+      </app-profile-card>
+    } @empty {
+      <div class="empty-state">
+        <h2>No hay perfiles disponibles</h2>
+        <p>Puede ser que hayas bloqueado todos los perfiles demo.</p>
+      </div>
+    }
+  </div>
+</section>

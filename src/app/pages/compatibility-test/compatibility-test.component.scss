@@ -1,0 +1,54 @@
+.test-card {
+  max-width: 760px;
+}
+
+.question-text {
+  color: var(--ink);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 2rem 0;
+}
+
+.progress-bar {
+  background: #f7d7df;
+  border-radius: 999px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.progress-bar span {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  display: block;
+  height: 100%;
+}
+
+.scale {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: space-between;
+}
+
+.scale button {
+  background: white;
+  border: 1px solid rgba(255, 107, 139, 0.25);
+  border-radius: 20px;
+  color: var(--muted);
+  cursor: pointer;
+  flex: 1;
+  font-size: 1.2rem;
+  font-weight: 900;
+  padding: 1rem;
+}
+
+.scale button.selected {
+  background: var(--primary);
+  color: white;
+}
+
+.scale-labels,
+.between {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}

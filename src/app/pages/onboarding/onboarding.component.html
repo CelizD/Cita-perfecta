@@ -1,0 +1,47 @@
+<section class="page-narrow">
+  <div class="section-title">
+    <span class="eyebrow">Perfil personal</span>
+    <h1>Completa tu perfil</h1>
+    <p>Estos datos ayudan a mostrarte perfiles más compatibles.</p>
+  </div>
+
+  <form class="form-card" [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      Ciudad
+      <input type="text" formControlName="city" placeholder="Tijuana">
+    </label>
+
+    <label>
+      Biografía
+      <textarea formControlName="bio" rows="5" placeholder="Cuéntanos qué buscas, qué te gusta y cómo te gusta conectar..."></textarea>
+      @if (form.controls.bio.touched && form.controls.bio.invalid) {
+        <small>Escribe al menos 20 caracteres.</small>
+      }
+    </label>
+
+    <label>
+      Foto de perfil simulada
+      <input type="text" formControlName="photoProfile" placeholder="Puedes dejarlo vacío en el MVP">
+    </label>
+
+    <div>
+      <h3>Elige mínimo 3 intereses</h3>
+      <div class="chips selectable">
+        @for (interest of interests; track interest) {
+          <button
+            type="button"
+            class="chip-button"
+            [class.selected]="selectedInterests.has(interest)"
+            (click)="toggleInterest(interest)">
+            {{ interest }}
+          </button>
+        }
+      </div>
+      @if (selectedInterests.size < 3) {
+        <small>Selecciona mínimo 3 intereses.</small>
+      }
+    </div>
+
+    <button class="btn primary full" type="submit">Guardar y continuar</button>
+  </form>
+</section>

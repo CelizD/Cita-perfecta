@@ -1,0 +1,16 @@
+<section class="center-page">
+  <div class="glass-card aura-card">
+    <span class="eyebrow">Tu Aura Cita Perfecta</span>
+    <div class="aura-orb"></div>
+    <h1>{{ aura.title }}</h1>
+    <p>{{ aura.description }}</p>
+
+    <div class="chips center">
+      @for (trait of aura.traits; track trait) {
+        <span>{{ trait }}</span>
+      }
+    </div>
+
+    <a class="btn primary full" routerLink="/matches">Ver conexiones</a>
+  </div>
+</section>

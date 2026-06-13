@@ -1,0 +1,22 @@
+<section class="center-page">
+  <div class="premium-card glass-card">
+    <span class="eyebrow">Demo Premium</span>
+    <h1>Cita Perfecta Premium</h1>
+    <p>Esta pantalla es simulada para el microproyecto. Puedes activarla para demostrar el flujo.</p>
+
+    <div class="benefits">
+      @for (benefit of premiumService.benefits; track benefit) {
+        <div class="benefit">✓ {{ benefit }}</div>
+      }
+    </div>
+
+    @if (authService.currentUser()?.premium) {
+      <p class="alert success">Premium demo activo.</p>
+      <a class="btn ghost full" routerLink="/ajustes">Volver a ajustes</a>
+    } @else {
+      <button class="btn primary full" type="button" (click)="premiumService.activateDemoPremium()">
+        Activar Premium demo
+      </button>
+    }
+  </div>
+</section>

@@ -1,0 +1,52 @@
+.detail-layout {
+  align-items: start;
+  padding-top: 4rem;
+}
+
+.profile-hero-card {
+  position: sticky;
+  top: 100px;
+}
+
+.avatar.large {
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 34px;
+  color: white;
+  display: grid;
+  font-family: var(--title-font);
+  font-size: 3rem;
+  font-weight: 900;
+  height: 150px;
+  place-items: center;
+  width: 150px;
+}
+
+.compat-pill {
+  background: #ecfff5;
+  border-radius: 999px;
+  color: #15965a;
+  display: inline-flex;
+  font-weight: 900;
+  margin: 1rem 0;
+  padding: 0.7rem 1rem;
+}
+
+.actions-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.traits span {
+  background: #f2f0ff;
+  color: var(--secondary);
+}
+
+.split {
+  display: flex;
+  gap: 0.8rem;
+}
+
+@media (max-width: 900px) {
+  .profile-hero-card { position: static; }
+}

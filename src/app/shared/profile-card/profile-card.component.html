@@ -1,0 +1,24 @@
+<article class="profile-card card h-100 border-0">
+  <div class="avatar">{{ initials }}</div>
+  <div class="profile-topline">
+    <div>
+      <h3>{{ profile.name }}, {{ profile.age }}</h3>
+      <p>{{ profile.city }}</p>
+    </div>
+    <strong>{{ profile.compatibility }}%</strong>
+  </div>
+
+  <p>{{ profile.bio }}</p>
+
+  <div class="chips">
+    @for (interest of profile.interests.slice(0, 4); track interest) {
+      <span>{{ interest }}</span>
+    }
+  </div>
+
+  <div class="card-actions">
+    <a class="btn primary full" [routerLink]="['/perfil', profile.id]">Ver perfil</a>
+    <button class="btn ghost full" type="button" (click)="notifyLike()">Like</button>
+    <button class="btn ghost full" type="button" (click)="notifyLetter()">Carta</button>
+  </div>
+</article>

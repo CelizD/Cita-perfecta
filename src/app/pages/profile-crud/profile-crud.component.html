@@ -1,0 +1,89 @@
+<section class="page-wide">
+  <div class="section-title">
+    <span class="eyebrow">CRUD obligatorio</span>
+    <h1>Administrador de perfiles</h1>
+    <p>
+      Esta pantalla demuestra el CRUD solicitado por el producto final: crear, leer, actualizar y eliminar perfiles usando un servicio de Angular.
+    </p>
+  </div>
+
+  @if (message) {
+    <div class="alert success">{{ message }}</div>
+  }
+
+  <div class="crud-layout">
+    <form class="form-card" [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+      <h2>{{ editingId ? 'Actualizar perfil' : 'Crear perfil' }}</h2>
+
+      <label>
+        Nombre
+        <input class="form-control" formControlName="name" placeholder="Ej. Andrea" />
+        @if (profileForm.controls.name.touched && profileForm.controls.name.invalid) {
+          <small>El nombre es obligatorio.</small>
+        }
+      </label>
+
+      <label>
+        Edad
+        <input class="form-control" type="number" formControlName="age" />
+        @if (profileForm.controls.age.touched && profileForm.controls.age.invalid) {
+          <small>Debe ser mayor de 18 años.</small>
+        }
+      </label>
+
+      <label>
+        Ciudad
+        <input class="form-control" formControlName="city" placeholder="Ej. Tijuana" />
+      </label>
+
+      <label>
+        Biografía
+        <textarea class="form-control" rows="4" formControlName="bio" placeholder="Escribe una pequeña descripción"></textarea>
+      </label>
+
+      <label>
+        Intereses separados por coma
+        <input class="form-control" formControlName="interests" />
+      </label>
+
+      <label>
+        Rasgos separados por coma
+        <input class="form-control" formControlName="traits" />
+      </label>
+
+      <div class="form-actions">
+        <button class="btn primary" type="submit">{{ editingId ? 'Guardar cambios' : 'Crear perfil' }}</button>
+        @if (editingId) {
+          <button class="btn ghost" type="button" (click)="cancelEdit()">Cancelar</button>
+        }
+      </div>
+    </form>
+
+    <div class="profiles-admin">
+      @for (profile of profiles; track profile.id) {
+        <article class="admin-card card border-0">
+          <div>
+            <h3>{{ profile.name }}, {{ profile.age }}</h3>
+            <p>{{ profile.city }} · {{ profile.compatibility }}% compatible</p>
+            <p>{{ profile.bio }}</p>
+            <div class="chips">
+              @for (interest of profile.interests; track interest) {
+                <span>{{ interest }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="admin-actions">
+            <button class="btn ghost" type="button" (click)="editProfile(profile)">Editar</button>
+            <button class="btn danger" type="button" (click)="deleteProfile(profile.id)">Eliminar</button>
+          </div>
+        </article>
+      } @empty {
+        <div class="empty-state">
+          <h2>No hay perfiles en el CRUD</h2>
+          <p>Crea un perfil usando el formulario.</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

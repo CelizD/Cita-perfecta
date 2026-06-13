@@ -1,0 +1,76 @@
+@if (profile) {
+  <section class="page-grid detail-layout">
+    <div class="glass-card profile-hero-card">
+      <div class="avatar large">{{ profile.name.slice(0, 2).toUpperCase() }}</div>
+      <h1>{{ profile.name }}, {{ profile.age }}</h1>
+      <p>{{ profile.city }}</p>
+      <div class="compat-pill">{{ profile.compatibility }}% compatible</div>
+      <p>{{ profile.bio }}</p>
+      <div class="chips">
+        @for (interest of profile.interests; track interest) {
+          <span>{{ interest }}</span>
+        }
+      </div>
+      <div class="chips traits">
+        @for (trait of profile.traits; track trait) {
+          <span>{{ trait }}</span>
+        }
+      </div>
+    </div>
+
+    <div class="actions-panel">
+      <form class="form-card" [formGroup]="likeForm" (ngSubmit)="sendLike()">
+        <h2>Enviar like</h2>
+        <label>
+          Comentario opcional
+          <textarea rows="3" formControlName="comment" placeholder="Me gustó que valores la comunicación clara..."></textarea>
+        </label>
+        <button class="btn primary full" type="submit">Enviar like</button>
+      </form>
+
+      <form class="form-card" [formGroup]="letterForm" (ngSubmit)="sendLetter()">
+        <h2>Carta de conexión</h2>
+        <label>
+          Escribe una carta breve
+          <textarea rows="5" formControlName="letter" placeholder="Hola, me llamó la atención tu perfil porque..."></textarea>
+          @if (letterForm.controls.letter.touched && letterForm.controls.letter.invalid) {
+            <small>La carta debe tener mínimo 15 caracteres.</small>
+          }
+        </label>
+        <button class="btn ghost full" type="submit">Enviar carta</button>
+      </form>
+
+      <form class="form-card" [formGroup]="reportForm" (ngSubmit)="report()">
+        <h2>Seguridad</h2>
+        <label>
+          Motivo
+          <select formControlName="reason">
+            <option>Comportamiento inapropiado</option>
+            <option>Perfil falso</option>
+            <option>Acoso o presión</option>
+            <option>Otro</option>
+          </select>
+        </label>
+        <label>
+          Descripción
+          <textarea rows="3" formControlName="description"></textarea>
+        </label>
+        <div class="actions split">
+          <button class="btn ghost" type="submit">Reportar</button>
+          <button class="btn danger" type="button" (click)="block()">Bloquear</button>
+        </div>
+      </form>
+
+      @if (message) {
+        <p class="alert success">{{ message }}</p>
+      }
+    </div>
+  </section>
+} @else {
+  <section class="center-page">
+    <div class="empty-state">
+      <h1>Perfil no encontrado</h1>
+      <a class="btn primary" routerLink="/matches">Volver a matches</a>
+    </div>
+  </section>
+}
