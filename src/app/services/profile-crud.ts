@@ -10,7 +10,7 @@ export class ProfileCrudService {
   private defaultProfiles: UserProfile[] = [
     {
       id: '1',
-      name: 'Ana',
+      name: 'Valeria',
       age: 22,
       city: 'Tijuana',
       bio: 'Me gusta el café, la música y las conversaciones tranquilas.',

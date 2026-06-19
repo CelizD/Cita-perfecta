@@ -48,7 +48,7 @@ export class ProfileDetailComponent {
       this.likeForm.controls.comment.value
     );
     const chat = this.chatService.createChatForMatch(match);
-    this.message = 'Like enviado. Match simulado creado correctamente.';
+    this.message = 'Like enviado. Match local creado correctamente.';
     setTimeout(() => this.router.navigate(['/chat', chat.id]), 700);
   }
 

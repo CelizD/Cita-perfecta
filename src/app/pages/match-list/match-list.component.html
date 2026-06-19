@@ -2,7 +2,7 @@
   <div class="section-title">
     <span class="eyebrow">Conexiones compatibles</span>
     <h1>Perfiles sugeridos para ti</h1>
-    <p>Estos perfiles se ordenan con una compatibilidad simulada usando tus respuestas e intereses.</p>
+    <p>Estos perfiles se ordenan usando tus respuestas, intereses y los perfiles compatibles guardados.</p>
   </div>
 
   @if (actionMessage) {
@@ -13,13 +13,14 @@
     @for (profile of profiles; track profile.id) {
       <app-profile-card
         [profile]="profile"
+        (viewClicked)="onView($event)"
         (likeClicked)="onLike($event)"
         (letterClicked)="onLetter($event)">
       </app-profile-card>
     } @empty {
       <div class="empty-state">
         <h2>No hay perfiles disponibles</h2>
-        <p>Puede ser que hayas bloqueado todos los perfiles demo.</p>
+        <p>Agrega perfiles desde Ajustes para que aparezcan como conexiones compatibles.</p>
       </div>
     }
   </div>

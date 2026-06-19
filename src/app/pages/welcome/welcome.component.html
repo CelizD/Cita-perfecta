@@ -1,48 +1,79 @@
-<section class="hero page-grid">
-  <div class="hero-content">
-    <span class="eyebrow">Plataforma de compatibilidad</span>
-    <h1>Cita Perfecta</h1>
-    <p class="subtitle">Conexiones reales, no coincidencias al azar.</p>
-    <p>
-      Conoce personas compatibles con tus valores, intereses y forma de comunicarte.
-      Una experiencia más tranquila, segura y consciente.
-    </p>
-    <div class="actions">
-      <a class="btn primary" routerLink="/registro">Crear cuenta</a>
-      <a class="btn ghost" routerLink="/login">Iniciar sesión</a>
+@if (authService.currentUser()) {
+  <section class="page-wide home-feed">
+    <div class="feed-hero">
+      <div>
+        <span class="eyebrow">Feed de personas</span>
+        <h1>Hola, {{ userName }}</h1>
+        <p>Estas son conexiones sugeridas seg&uacute;n tus intereses, respuestas y perfiles guardados.</p>
+      </div>
+
+      <div class="feed-actions">
+        <a class="btn ghost" routerLink="/test">Actualizar test</a>
+        <a class="btn primary" routerLink="/matches">Ver todos</a>
+      </div>
     </div>
-  </div>
 
-  <div class="hero-card glass-card">
-    <div class="compatibility-ring">87%</div>
-    <h2>Ana, 22</h2>
-    <p>Compatibilidad alta por empatía, calma y comunicación clara.</p>
-    <div class="chips">
-      <span>Café</span>
-      <span>Música</span>
-      <span>Honestidad</span>
+    @if (actionMessage) {
+      <div class="alert success">{{ actionMessage }}</div>
+    }
+
+    <div class="feed-layout">
+      <aside class="feed-panel">
+        <div class="feed-panel-copy">
+          <span class="eyebrow">Tu actividad</span>
+          <h2>Explora con calma</h2>
+          <p>Revisa perfiles, manda un like o escribe una carta para iniciar una conversaci&oacute;n con m&aacute;s intenci&oacute;n.</p>
+        </div>
+
+        <div class="feed-stat">
+          <strong>{{ feedProfiles.length }}</strong>
+          <span>perfiles disponibles</span>
+        </div>
+
+        <a class="settings-link" routerLink="/ajustes">Administrar cuenta</a>
+      </aside>
+
+      <div class="feed-grid">
+        @for (profile of feedProfiles; track profile.id) {
+          <app-profile-card
+            [profile]="profile"
+            (viewClicked)="onView($event)"
+            (likeClicked)="onLike($event)"
+            (letterClicked)="onLetter($event)">
+          </app-profile-card>
+        } @empty {
+          <div class="empty-state">
+            <h2>No hay perfiles por ahora</h2>
+            <p>Agrega perfiles desde Ajustes para que aparezcan en el feed.</p>
+          </div>
+        }
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+} @else {
+  <section class="page-wide home-feed public-mode">
+    <div class="feed-hero public-hero">
+      <div>
+        <span class="eyebrow">Feed de personas</span>
+        <h1>Personas compatibles</h1>
+        <p>Explora perfiles por intereses, ciudad y compatibilidad. Inicia sesi&oacute;n solo cuando quieras interactuar.</p>
+      </div>
+    </div>
 
-<section class="section">
-  <div class="section-title">
-    <span class="eyebrow">MVP del microproyecto</span>
-    <h2>Funciones principales</h2>
-  </div>
-
-  <div class="feature-grid">
-    <article class="feature-card">
-      <h3>Test de compatibilidad</h3>
-      <p>Responde preguntas sobre valores, metas, comunicación e intereses.</p>
-    </article>
-    <article class="feature-card">
-      <h3>Likes y cartas</h3>
-      <p>Envía un like con comentario o una carta de conexión con más intención.</p>
-    </article>
-    <article class="feature-card">
-      <h3>Chat respetuoso</h3>
-      <p>Conversa con tus matches y usa cierre amistoso para evitar ghosting.</p>
-    </article>
-  </div>
-</section>
+    <div class="feed-grid">
+      @for (profile of feedProfiles; track profile.id) {
+        <app-profile-card
+          [profile]="profile"
+          (viewClicked)="onView($event)"
+          (likeClicked)="onLike($event)"
+          (letterClicked)="onLetter($event)">
+        </app-profile-card>
+      } @empty {
+        <div class="empty-state">
+          <h2>No hay perfiles por ahora</h2>
+          <p>Agrega perfiles desde Ajustes para que aparezcan en el feed.</p>
+        </div>
+      }
+    </div>
+  </section>
+}

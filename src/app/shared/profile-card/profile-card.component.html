@@ -16,8 +16,8 @@
     }
   </div>
 
-  <div class="card-actions">
-    <a class="btn primary full" [routerLink]="['/perfil', profile.id]">Ver perfil</a>
+  <div class="card-actions" aria-label="Acciones del perfil">
+    <button class="btn primary full" type="button" (click)="notifyView()">Ver perfil</button>
     <button class="btn ghost full" type="button" (click)="notifyLike()">Like</button>
     <button class="btn ghost full" type="button" (click)="notifyLetter()">Carta</button>
   </div>

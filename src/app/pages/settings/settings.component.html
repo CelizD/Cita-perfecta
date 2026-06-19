@@ -9,7 +9,7 @@
     <a class="settings-row" routerLink="/onboarding">
       <div>
         <h3>Editar perfil</h3>
-        <p>Actualiza tu ciudad, biografía e intereses.</p>
+        <p>Actualiza tu ciudad, biografia e intereses.</p>
       </div>
       <span>Editar</span>
     </a>
@@ -17,7 +17,7 @@
     <button class="settings-row" type="button" (click)="togglePause()">
       <div>
         <h3>Modo Pausa</h3>
-        <p>No aparecerás en nuevas recomendaciones mientras esté activo.</p>
+        <p>No apareceras en nuevas recomendaciones mientras este activo.</p>
       </div>
       <span>{{ authService.currentUser()?.pauseMode ? 'Activo' : 'Inactivo' }}</span>
     </button>
@@ -25,14 +25,22 @@
     <a class="settings-row" routerLink="/premium">
       <div>
         <h3>Plan Premium</h3>
-        <p>Vista simulada de beneficios premium.</p>
+        <p>Administra los beneficios premium de la cuenta.</p>
       </div>
       <span>{{ authService.currentUser()?.premium ? 'Activo' : 'Ver' }}</span>
     </a>
 
+    <a class="settings-row" routerLink="/crud-perfiles">
+      <div>
+        <h3>Administrar perfiles</h3>
+        <p>Crea, edita o elimina perfiles compatibles para probar la app.</p>
+      </div>
+      <span>Abrir</span>
+    </a>
+
     <button class="settings-row danger-row" type="button" (click)="logout()">
       <div>
-        <h3>Cerrar sesión</h3>
+        <h3>Cerrar sesion</h3>
         <p>Salir de la cuenta actual.</p>
       </div>
       <span>Salir</span>

@@ -13,7 +13,7 @@ export class PremiumService {
 
   constructor(private authService: AuthService) {}
 
-  activateDemoPremium(): void {
+  activatePremium(): void {
     this.authService.updateCurrentUser({ premium: true });
   }
 }

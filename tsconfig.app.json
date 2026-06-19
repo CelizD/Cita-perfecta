@@ -7,7 +7,16 @@
     "types": []
   },
   "include": [
-    "src/**/*.ts"
+    "src/main.ts",
+    "src/app/app.config.ts",
+    "src/app/app.routes.ts",
+    "src/app/**/*.component.ts",
+    "src/app/**/*.service.ts",
+    "src/app/**/*.guard.ts",
+    "src/app/**/*.model.ts",
+    "src/app/**/*.repository.ts",
+    "src/app/**/*.util.ts",
+    "src/app/**/*.class.ts"
   ],
   "exclude": [
     "src/**/*.spec.ts"

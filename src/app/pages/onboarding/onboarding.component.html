@@ -2,7 +2,7 @@
   <div class="section-title">
     <span class="eyebrow">Perfil personal</span>
     <h1>Completa tu perfil</h1>
-    <p>Estos datos ayudan a mostrarte perfiles más compatibles.</p>
+    <p>Estos datos ayudan a mostrarte perfiles mas compatibles.</p>
   </div>
 
   <form class="form-card" [formGroup]="form" (ngSubmit)="submit()">
@@ -12,20 +12,20 @@
     </label>
 
     <label>
-      Biografía
-      <textarea formControlName="bio" rows="5" placeholder="Cuéntanos qué buscas, qué te gusta y cómo te gusta conectar..."></textarea>
+      Biografia
+      <textarea formControlName="bio" rows="5" placeholder="Cuentanos que buscas, que te gusta y como te gusta conectar..."></textarea>
       @if (form.controls.bio.touched && form.controls.bio.invalid) {
         <small>Escribe al menos 20 caracteres.</small>
       }
     </label>
 
     <label>
-      Foto de perfil simulada
-      <input type="text" formControlName="photoProfile" placeholder="Puedes dejarlo vacío en el MVP">
+      Foto de perfil
+      <input type="text" formControlName="photoProfile" placeholder="Puedes dejarlo vacio en esta version">
     </label>
 
     <div>
-      <h3>Elige mínimo 3 intereses</h3>
+      <h3>Elige minimo 3 intereses</h3>
       <div class="chips selectable">
         @for (interest of interests; track interest) {
           <button
@@ -38,7 +38,7 @@
         }
       </div>
       @if (selectedInterests.size < 3) {
-        <small>Selecciona mínimo 3 intereses.</small>
+        <small>Selecciona minimo 3 intereses.</small>
       }
     </div>
 

@@ -31,17 +31,21 @@ export class MatchListComponent {
   }
 
   onLike(profile: PublicProfile): void {
-    const match = this.matchService.sendLike(profile.id, profile.name, profile.compatibility ?? 80, 'Me gustó tu perfil.');
+    const match = this.matchService.sendLike(profile.id, profile.name, profile.compatibility ?? 80, 'Me gusto tu perfil.');
     const chat = this.chatService.createChatForMatch(match);
-    this.actionMessage = `Like enviado a ${profile.name}. Se creó un match simulado.`;
+    this.actionMessage = `Like enviado a ${profile.name}. Se creo un match local.`;
     setTimeout(() => this.router.navigate(['/chat', chat.id]), 700);
+  }
+
+  onView(profile: PublicProfile): void {
+    this.router.navigate(['/perfil', profile.id]);
   }
 
   onLetter(profile: PublicProfile): void {
     this.matchService.sendLetter(
       profile.id,
-      `Hola ${profile.name}, me llamó la atención tu perfil y me gustaría conocerte con calma y respeto.`
+      `Hola ${profile.name}, me llamo la atencion tu perfil y me gustaria conocerte con calma y respeto.`
     );
-    this.actionMessage = `Carta de conexión enviada a ${profile.name}.`;
+    this.actionMessage = `Carta de conexion enviada a ${profile.name}.`;
   }
 }

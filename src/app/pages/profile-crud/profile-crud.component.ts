@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { ProfileCrudService } from '../../core/services/profile-crud.service';
 import { PublicProfile } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-profile-crud',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './profile-crud.component.html',
   styleUrl: './profile-crud.component.scss'
 })
@@ -15,19 +16,40 @@ export class ProfileCrudComponent {
   private profileCrudService = inject(ProfileCrudService);
 
   editingId: number | null = null;
+  pendingDeleteId: number | null = null;
   message = '';
+  searchTerm = '';
 
   profileForm = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
     age: [18, [Validators.required, Validators.min(18)]],
     city: ['', Validators.required],
     bio: ['', [Validators.required, Validators.minLength(10)]],
-    interests: ['Café, Música, Cine', Validators.required],
-    traits: ['Honestidad, Calma, Empatía', Validators.required]
+    interests: ['Cafe, Musica, Cine', Validators.required],
+    traits: ['Honestidad, Calma, Empatia', Validators.required]
   });
 
   get profiles(): PublicProfile[] {
     return this.profileCrudService.getProfiles();
+  }
+
+  get filteredProfiles(): PublicProfile[] {
+    const term = this.normalize(this.searchTerm);
+    if (!term) return this.profiles;
+
+    return this.profiles.filter((profile) => {
+      const searchable = [
+        profile.name,
+        profile.city,
+        profile.bio,
+        ...profile.interests,
+        ...profile.traits
+      ]
+        .map((value) => this.normalize(value))
+        .join(' ');
+
+      return searchable.includes(term);
+    });
   }
 
   saveProfile(): void {
@@ -58,6 +80,7 @@ export class ProfileCrudComponent {
 
   editProfile(profile: PublicProfile): void {
     this.editingId = profile.id;
+    this.pendingDeleteId = null;
     this.message = `Editando perfil de ${profile.name}.`;
     this.profileForm.patchValue({
       name: profile.name,
@@ -69,12 +92,27 @@ export class ProfileCrudComponent {
     });
   }
 
-  deleteProfile(id: number): void {
+  updateSearch(event: Event): void {
+    this.searchTerm = (event.target as HTMLInputElement).value;
+  }
+
+  requestDelete(profile: PublicProfile): void {
+    this.pendingDeleteId = profile.id;
+    this.message = `Confirma la eliminacion del perfil de ${profile.name}.`;
+  }
+
+  confirmDelete(id: number): void {
     this.profileCrudService.deleteProfile(id);
     this.message = 'Perfil eliminado correctamente.';
     if (this.editingId === id) {
       this.cancelEdit();
     }
+    this.pendingDeleteId = null;
+  }
+
+  cancelDelete(): void {
+    this.pendingDeleteId = null;
+    this.message = '';
   }
 
   cancelEdit(): void {
@@ -84,8 +122,8 @@ export class ProfileCrudComponent {
       age: 18,
       city: '',
       bio: '',
-      interests: 'Café, Música, Cine',
-      traits: 'Honestidad, Calma, Empatía'
+      interests: 'Cafe, Musica, Cine',
+      traits: 'Honestidad, Calma, Empatia'
     });
   }
 
@@ -94,5 +132,12 @@ export class ProfileCrudComponent {
       .split(',')
       .map((item) => item.trim())
       .filter(Boolean);
+  }
+
+  private normalize(value: string): string {
+    return value
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 }

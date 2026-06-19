@@ -9,6 +9,7 @@ export interface Message {
 export interface Chat {
   id: number;
   matchId: number;
+  profileId: number;
   profileName: string;
   compatibility: number;
   status: 'activo' | 'cerrado';
