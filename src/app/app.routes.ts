@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, onboardingGuard, publicGuard } from '@core/guards';
+import { adminGuard, authGuard, onboardingGuard, publicGuard } from '@core/guards';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -24,7 +24,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [authGuard],
-    loadComponent: () => import('@pages/welcome/welcome.component').then((m) => m.WelcomeComponent)
+    loadComponent: () => import('@pages/explore/explore.component').then((m) => m.ExploreComponent)
   },
   {
     path: 'profile',
@@ -97,7 +97,7 @@ export const routes: Routes = [
   },
   {
     path: 'admin/kpis',
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
     loadComponent: () => import('@pages/admin/dashboard-kpi.component').then((m) => m.DashboardKPIComponent)
   },
   {
@@ -107,7 +107,7 @@ export const routes: Routes = [
   },
   {
     path: 'crud-perfiles',
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
     loadComponent: () => import('@pages/profile-crud/profile-crud.component').then((m) => m.ProfileCrudComponent)
   },
   { path: '**', redirectTo: 'login' }

@@ -107,21 +107,22 @@ export class ProfileComponent implements OnInit {
         throw new Error(result.reason || 'La imagen no paso la revision de seguridad.');
       }
 
-      const publicUrl = await this.uploadService.uploadProfilePhoto(user.id, file);
+      const photo = await this.uploadService.uploadProfilePhoto(user.id, file);
       const { error } = await supabase
         .from('profiles')
         .update({
-          main_photo_url: publicUrl,
-          photo_url: publicUrl,
-          photo_profile: publicUrl,
+          main_photo_path: photo.path,
+          main_photo_url: null,
+          photo_url: null,
+          photo_profile: null,
           updated_at: new Date().toISOString()
         })
         .eq('id', user.id);
 
       if (error) throw new Error(error.message);
 
-      this.authService.updateCurrentUser({ photoProfile: publicUrl });
-      this.photoPreview.set(publicUrl);
+      this.authService.updateCurrentUser({ photoProfile: photo.url });
+      this.photoPreview.set(photo.url);
       this.successMessage.set('Foto subida correctamente.');
     } catch (error) {
       this.errorMessage.set(error instanceof Error ? error.message : 'No se pudo subir la foto.');

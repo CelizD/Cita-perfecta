@@ -3,6 +3,11 @@ import { CanActivateFn, Router } from '@angular/router';
 import { from, map, switchMap } from 'rxjs';
 import { SupabaseService } from '../services/supabase.service';
 
+function isAdminUser(user: Awaited<ReturnType<SupabaseService['getCurrentUser']>>): boolean {
+  const metadata = user?.app_metadata ?? {};
+  return metadata['app_role'] === 'admin' || metadata['role'] === 'admin' || metadata['is_admin'] === true;
+}
+
 export const authGuard: CanActivateFn = () => {
   const supabase = inject(SupabaseService);
   const router = inject(Router);
@@ -40,6 +45,18 @@ export const onboardingGuard: CanActivateFn = () => {
           return data['is_onboarded'] ? router.createUrlTree(['/dashboard']) : true;
         })
       );
+    })
+  );
+};
+
+export const adminGuard: CanActivateFn = () => {
+  const supabase = inject(SupabaseService);
+  const router = inject(Router);
+
+  return from(supabase.getCurrentUser()).pipe(
+    map((user) => {
+      if (!user) return router.createUrlTree(['/login']);
+      return isAdminUser(user) ? true : router.createUrlTree(['/explore']);
     })
   );
 };

@@ -62,14 +62,6 @@
       <span>{{ authService.currentUser()?.premium ? 'Activo' : 'Ver' }}</span>
     </a>
 
-    <a class="settings-row" routerLink="/crud-perfiles">
-      <div>
-        <h3>Administrar perfiles</h3>
-        <p>Crea, edita o elimina perfiles compatibles para probar la app.</p>
-      </div>
-      <span>Abrir</span>
-    </a>
-
     <button class="settings-row danger-row" type="button" (click)="logout()">
       <div>
         <h3>Cerrar sesion</h3>

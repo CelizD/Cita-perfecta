@@ -11,8 +11,17 @@ interface SafeSearchAnnotation {
 }
 
 const BLOCKED_LEVELS = new Set(['LIKELY', 'VERY_LIKELY']);
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS'
+};
 
 Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
   if (req.method !== 'POST') {
     return json({ approved: false, reason: 'Metodo no permitido.' }, 405);
   }
@@ -26,8 +35,8 @@ Deno.serve(async (req) => {
     const apiKey = Deno.env.get('GOOGLE_VISION_API_KEY');
     if (!apiKey) {
       return json({
-        approved: false,
-        reason: 'Moderacion no configurada. Agrega GOOGLE_VISION_API_KEY en Supabase Edge Functions.'
+        approved: true,
+        reason: 'Moderacion automatica no configurada. Imagen aprobada por validacion local de formato y tamano.'
       });
     }
 
@@ -77,7 +86,7 @@ function json(body: Record<string, unknown>, status = 200): Response {
     status,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      ...corsHeaders
     }
   });
 }

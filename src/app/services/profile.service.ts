@@ -8,6 +8,7 @@ export interface ExploreProfile {
   age: number | null;
   city: string | null;
   main_photo_url: string | null;
+  main_photo_path?: string | null;
   bio: string | null;
 }
 
@@ -40,6 +41,6 @@ export class ProfileService {
     const response = await this.supabase.getExploreProfiles([...excludedUserIds], from, to);
 
     if (response.error) throw new Error(response.error.message);
-    return (response.data ?? []) as ExploreProfile[];
+    return (response.data ?? []) as unknown as ExploreProfile[];
   }
 }

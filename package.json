@@ -9,8 +9,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "vitest run",
     "test:ci": "vitest run",
-    "lint": "ng build --configuration development",
-    "e2e:ci": "node -e \"console.log('E2E Playwright flow documented in e2e/cita-perfecta-flow.playwright.ts')\""
+    "typecheck": "tsc -p tsconfig.app.json --noEmit",
+    "lint": "npm run typecheck",
+    "e2e:ci": "node scripts/e2e-smoke.mjs"
   },
   "private": true,
   "packageManager": "npm@10.9.8",

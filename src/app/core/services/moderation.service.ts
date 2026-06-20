@@ -37,9 +37,16 @@ export class ModerationService {
     if (uploadError) throw new Error(uploadError.message);
 
     try {
-      const { data } = supabase.storage.from('temp-moderation').getPublicUrl(tempPath);
+      const { data } = await supabase.storage
+        .from('temp-moderation')
+        .createSignedUrl(tempPath, 5 * 60);
+
+      if (!data?.signedUrl) {
+        throw new Error('No se pudo crear una URL temporal para moderar la imagen.');
+      }
+
       const { data: result, error } = await supabase.functions.invoke<ModerationResult>('moderate-image', {
-        body: { imageUrl: data.publicUrl }
+        body: { imageUrl: data.signedUrl }
       });
 
       if (error) throw new Error(error.message);

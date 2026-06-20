@@ -8,7 +8,7 @@ const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 export class UploadService {
   private supabaseService = inject(SupabaseService);
 
-  async uploadProfilePhoto(userId: string, file: File): Promise<string> {
+  async uploadProfilePhoto(userId: string, file: File): Promise<{ path: string; url: string }> {
     const supabase = this.supabaseService.client;
     if (!supabase) throw new Error(this.supabaseService.requiredConfigMessage);
 
@@ -27,8 +27,15 @@ export class UploadService {
 
     if (error) throw new Error(error.message);
 
-    const { data } = supabase.storage.from('profile-photos').getPublicUrl(path);
-    return data.publicUrl;
+    const { data, error: signedUrlError } = await supabase.storage
+      .from('profile-photos')
+      .createSignedUrl(path, 60 * 60);
+
+    if (signedUrlError || !data?.signedUrl) {
+      throw new Error(signedUrlError?.message ?? 'No se pudo crear una URL segura para la foto.');
+    }
+
+    return { path, url: data.signedUrl };
   }
 
   validateImage(file: File): void {

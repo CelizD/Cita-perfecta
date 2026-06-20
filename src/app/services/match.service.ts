@@ -49,12 +49,28 @@ export class MatchService {
   async getMatches(userId: string) {
     const { data, error } = await this.supabase.getMatches(userId);
     if (error) throw new Error(error.message);
-    return (data ?? []).filter((match: any) => match.status === 'active');
+
+    const matches = (data ?? []).filter((match: any) => match.status === 'active');
+    return this.attachPublicProfiles(matches);
   }
 
   async getMatch(matchId: string) {
     const { data, error } = await this.supabase.getMatch(matchId);
     if (error) throw new Error(error.message);
-    return data;
+    const [match] = await this.attachPublicProfiles(data ? [data] : []);
+    return match;
+  }
+
+  private async attachPublicProfiles(matches: any[]) {
+    const userIds = Array.from(new Set(matches.flatMap((match) => [match.user_a, match.user_b]).filter(Boolean)));
+    const { data, error } = await this.supabase.getPublicProfilesByUserIds(userIds);
+    if (error) throw new Error(error.message);
+
+    const profilesByUserId = new Map((data ?? []).map((profile: any) => [profile.user_id, profile]));
+    return matches.map((match) => ({
+      ...match,
+      user_a_profile: profilesByUserId.get(match.user_a) ?? null,
+      user_b_profile: profilesByUserId.get(match.user_b) ?? null
+    }));
   }
 }

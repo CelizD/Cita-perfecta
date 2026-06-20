@@ -62,6 +62,17 @@ Migraciones principales:
 - `20250620130000_add_moderation_tables.sql`
 - `20250620140000_add_letters_counter.sql`
 - `20250620150000_add_indexes_performance.sql`
+- `20260620170000_security_privacy_ci_hardening.sql`
+
+La migracion `20260620170000_security_privacy_ci_hardening.sql` debe ejecutarse al final. Cierra rutas/consultas sensibles, deja `profiles` para el dueno/admin, usa `public_profiles` para el feed, hace privadas las fotos y crea `vulnerability_reports`.
+
+Para dar permisos de admin a tu usuario, ve a Supabase Dashboard > Authentication > Users > tu usuario > Raw App Meta Data y agrega:
+
+```json
+{
+  "app_role": "admin"
+}
+```
 
 Para moderacion de imagenes, despliega la Edge Function:
 
@@ -69,11 +80,13 @@ Para moderacion de imagenes, despliega la Edge Function:
 supabase functions deploy moderate-image
 ```
 
-Y configura el secreto:
+Si quieres moderacion automatica con Google Vision, configura el secreto:
 
 ```bash
 supabase secrets set GOOGLE_VISION_API_KEY=tu_api_key
 ```
+
+Si no configuras `GOOGLE_VISION_API_KEY`, la app no bloquea la subida: valida formato/tamano localmente y deja constancia en la respuesta de la funcion.
 
 ## Vercel
 
@@ -91,6 +104,8 @@ El script `npm run vercel-build` ejecuta `scripts/write-env.mjs` para escribir `
 npm start
 npm run build
 npm test
+npm run lint
+npm run e2e:ci
 ```
 
 ## Pruebas E2E

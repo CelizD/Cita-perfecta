@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Report } from '../models/report.model';
 import { AuthService } from './auth.service';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({ providedIn: 'root' })
 export class ReportService {
   private reportsKey = 'cp_reports';
   private blockedKey = 'cp_blocked_profiles';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private supabaseService: SupabaseService
+  ) {}
 
   reportProfile(toProfileId: number, reason: string, description: string): void {
     const user = this.authService.currentUser();
@@ -24,10 +28,25 @@ export class ReportService {
     localStorage.setItem(this.reportsKey, JSON.stringify(reports));
   }
 
-  reportVulnerability(report: { description?: string | null; steps?: string | null }): void {
+  async reportVulnerability(report: { description?: string | null; steps?: string | null }): Promise<void> {
+    const supabase = this.supabaseService.client;
+    const user = this.authService.currentUser();
+
+    if (supabase) {
+      const { error } = await supabase.from('vulnerability_reports').insert({
+        reporter_id: user?.id ?? null,
+        description: report.description ?? '',
+        steps: report.steps ?? '',
+        status: 'open'
+      });
+
+      if (error) throw new Error(error.message);
+      return;
+    }
+
     const reports = this.getReports();
     reports.push({
-      fromUserId: this.authService.currentUser()?.id ?? 'anonymous',
+      fromUserId: user?.id ?? 'anonymous',
       toProfileId: 0,
       reason: 'security_vulnerability',
       description: `Descripcion: ${report.description ?? ''}\nPasos: ${report.steps ?? ''}`,

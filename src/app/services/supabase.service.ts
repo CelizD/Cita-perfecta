@@ -76,29 +76,50 @@ export class SupabaseService {
     if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
 
     return supabase
-      .from('profiles')
+      .from('public_profiles')
       .select('*')
-      .neq('id', userId)
-      .eq('pause_mode', false)
+      .neq('user_id', userId)
       .limit(limit);
   }
 
-  getExploreProfiles(excludedUserIds: string[], from: number, to: number) {
+  async getExploreProfiles(excludedUserIds: string[], from: number, to: number) {
     const supabase = this.requireClient();
-    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+    if (!supabase) return this.notConfiguredResponse([]);
 
     let query = supabase
-      .from('profiles')
-      .select('id, user_id, name, age, city, main_photo_url, bio')
-      .is('deleted_at', null)
-      .eq('is_paused', false)
+      .from('public_profiles')
+      .select('id, user_id, name, age, city, main_photo_url, main_photo_path, bio')
       .range(from, to);
 
     if (excludedUserIds.length > 0) {
       query = query.not('user_id', 'in', `(${excludedUserIds.join(',')})`);
     }
 
-    return query;
+    const { data, error } = await query;
+    if (error) return { data: null, error };
+
+    return {
+      data: await this.withSignedProfilePhotoUrls((data ?? []) as Record<string, unknown>[]),
+      error: null
+    };
+  }
+
+  async getPublicProfilesByUserIds(userIds: string[]) {
+    const supabase = this.requireClient();
+    if (!supabase) return this.notConfiguredResponse([]);
+    if (userIds.length === 0) return { data: [], error: null };
+
+    const { data, error } = await supabase
+      .from('public_profiles')
+      .select('id, user_id, name, age, city, main_photo_url, main_photo_path, bio')
+      .in('user_id', userIds);
+
+    if (error) return { data: null, error };
+
+    return {
+      data: await this.withSignedProfilePhotoUrls((data ?? []) as Record<string, unknown>[]),
+      error: null
+    };
   }
 
   createProfile(userId: string, data: any) {
@@ -278,11 +299,7 @@ export class SupabaseService {
 
     return supabase
       .from('matches')
-      .select(`
-        *,
-        user_a_profile:profiles!matches_user_a_fkey(*),
-        user_b_profile:profiles!matches_user_b_fkey(*)
-      `)
+      .select('*')
       .or(`user_a.eq.${userId},user_b.eq.${userId}`)
       .order('created_at', { ascending: false });
   }
@@ -293,11 +310,7 @@ export class SupabaseService {
 
     return supabase
       .from('matches')
-      .select(`
-        *,
-        user_a_profile:profiles!matches_user_a_fkey(*),
-        user_b_profile:profiles!matches_user_b_fkey(*)
-      `)
+      .select('*')
       .eq('id', matchId)
       .single();
   }
@@ -443,6 +456,25 @@ export class SupabaseService {
 
   private requireClient(): SupabaseClient | null {
     return this.supabase;
+  }
+
+  private async withSignedProfilePhotoUrls(rows: Record<string, unknown>[]): Promise<Record<string, unknown>[]> {
+    const supabase = this.requireClient();
+    if (!supabase) return rows;
+
+    return Promise.all(
+      rows.map(async (row) => {
+        const path = typeof row['main_photo_path'] === 'string' ? row['main_photo_path'] : '';
+        if (!path) return row;
+
+        const { data, error } = await supabase.storage
+          .from('profile-photos')
+          .createSignedUrl(path, 60 * 60);
+
+        if (error || !data?.signedUrl) return row;
+        return { ...row, main_photo_url: data.signedUrl };
+      })
+    );
   }
 
   private notConfiguredResponse(data: unknown = null) {

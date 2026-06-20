@@ -20,7 +20,6 @@ if (!/^https:\/\/.+\.supabase\.co$/.test(supabaseUrl)) {
 }
 
 console.log(`Writing Angular production environment for Supabase project: ${new URL(supabaseUrl).host}`);
-console.log(`SUPABASE_ANON_KEY detected: ${supabaseAnonKey.slice(0, 8)}...${supabaseAnonKey.slice(-6)}`);
 
 const content = `export const environment = {
   production: true,
