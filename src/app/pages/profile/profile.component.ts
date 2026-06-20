@@ -3,7 +3,6 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { ModerationService } from '../../core/services/moderation.service';
 import { SupabaseService } from '../../core/services/supabase.service';
 import { UploadService } from '../../core/services/upload.service';
 
@@ -19,7 +18,6 @@ export class ProfileComponent implements OnInit {
   private authService = inject(AuthService);
   private supabaseService = inject(SupabaseService);
   private uploadService = inject(UploadService);
-  private moderationService = inject(ModerationService);
 
   loading = signal(false);
   uploading = signal(false);
@@ -102,11 +100,7 @@ export class ProfileComponent implements OnInit {
     this.clearMessages();
 
     try {
-      const result = await this.moderationService.moderateImage(file);
-      if (!result.approved) {
-        throw new Error(result.reason || 'La imagen no paso la revision de seguridad.');
-      }
-
+      this.uploadService.validateImage(file);
       const photo = await this.uploadService.uploadProfilePhoto(user.id, file);
       const { error } = await supabase
         .from('profiles')
