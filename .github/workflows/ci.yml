@@ -17,14 +17,17 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
+      - name: Typecheck (lint)
         run: npm run lint
+
+      - name: Dependency audit
+        run: npm audit --omit=dev --audit-level=high || true
 
       - name: Unit tests
         run: npm run test:ci
@@ -34,9 +37,27 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY || 'placeholder' }}
+
+      # H-019: verificar secrets via env antes de usarlos en if:
+      - name: Check deploy secrets
+        id: deploy-check
+        if: github.ref == 'refs/heads/main'
+        run: |
+          if [ -n "$VERCEL_TOKEN" ] && [ -n "$ORG_ID" ] && [ -n "$PROJECT_ID" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          ORG_ID: ${{ secrets.ORG_ID }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
 
       - name: Deploy to Vercel Production
-        if: github.ref == 'refs/heads/main' && secrets.VERCEL_TOKEN != '' && secrets.ORG_ID != '' && secrets.PROJECT_ID != ''
+        if: github.ref == 'refs/heads/main' && steps.deploy-check.outputs.ready == 'true'
         uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}

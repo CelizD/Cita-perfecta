@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class PremiumService {
@@ -12,9 +11,9 @@ export class PremiumService {
     'Mas privacidad y control sobre tu experiencia'
   ];
 
-  constructor(private authService: AuthService) {}
-
-  activatePremium(): void {
-    this.authService.updateCurrentUser({ premium: true });
+  // H-001: premium se otorga desde el servidor (webhook de pago via RPC activate_premium).
+  // El cliente no puede activar premium directamente; la BD bloquea el intento via trigger.
+  isPremiumActive(premium: boolean): boolean {
+    return premium;
   }
 }

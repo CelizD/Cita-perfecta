@@ -64,7 +64,7 @@ export class ProfileDetailComponent {
   report(): void {
     if (!this.profile) return;
     this.reportService.reportProfile(
-      this.profile.id,
+      String(this.profile.id),
       this.reportForm.controls.reason.value,
       this.reportForm.controls.description.value
     );
@@ -73,7 +73,7 @@ export class ProfileDetailComponent {
 
   block(): void {
     if (!this.profile) return;
-    this.reportService.blockProfile(this.profile.id);
+    this.reportService.blockProfile(String(this.profile.id));
     this.router.navigate(['/matches']);
   }
 }

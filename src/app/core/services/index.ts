@@ -6,7 +6,6 @@ export * from './consent.service';
 export * from './external-date-plan.service';
 export * from './letter.service';
 export * from './match.service';
-export * from './moderation.service';
 export * from './notification.service';
 export * from './premium.service';
 export * from './profile-crud.service';

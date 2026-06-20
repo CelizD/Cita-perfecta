@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { WeatherData, WeatherService } from '../../core/services/weather.service';
 import { MatchService } from '../../services/match.service';
 import { ExploreProfile, ProfileService } from '../../services/profile.service';
 import { SupabaseService } from '../../services/supabase.service';
@@ -19,6 +20,7 @@ export class ExploreComponent implements OnInit {
   private supabase = inject(SupabaseService);
   private profileService = inject(ProfileService);
   private matchService = inject(MatchService);
+  private weatherService = inject(WeatherService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
@@ -30,6 +32,7 @@ export class ExploreComponent implements OnInit {
   errorMessage = '';
   actionMessage = '';
   matchMessage = '';
+  weather: WeatherData | null = null;
 
   commentForm = new FormRecord<FormControl<string>>({});
 
@@ -50,7 +53,11 @@ export class ExploreComponent implements OnInit {
     this.userId = user.id;
 
     try {
-      this.profiles = await this.profileService.getExploreProfiles(this.userId, this.page);
+      const [profiles] = await Promise.all([
+        this.profileService.getExploreProfiles(this.userId, this.page),
+        this.loadWeather(user)
+      ]);
+      this.profiles = profiles;
       this.syncCommentControls();
     } catch (error) {
       this.errorMessage = error instanceof Error ? error.message : 'No se pudieron cargar los perfiles.';
@@ -114,6 +121,12 @@ export class ExploreComponent implements OnInit {
 
   initials(profile: ExploreProfile): string {
     return this.profileName(profile).slice(0, 2).toUpperCase();
+  }
+
+  private async loadWeather(user: { user_metadata?: Record<string, unknown> }): Promise<void> {
+    const city = String(user.user_metadata?.['city'] ?? '');
+    if (!city) return;
+    this.weather = await this.weatherService.getWeatherForCity(city);
   }
 
   private syncCommentControls(): void {

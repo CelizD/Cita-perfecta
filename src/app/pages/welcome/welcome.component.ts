@@ -8,7 +8,6 @@ import { ChatService } from '../../core/services/chat.service';
 import { CompatibilityService } from '../../core/services/compatibility.service';
 import { ExternalDatePlan, ExternalDatePlanService } from '../../core/services/external-date-plan.service';
 import { MatchService } from '../../core/services/match.service';
-import { ReportService } from '../../core/services/report.service';
 import { PublicProfile } from '../../core/models/user.model';
 import { DailyTipComponent } from '../../shared/components/daily-tip/daily-tip.component';
 import { ProfileCardComponent } from '../../shared/profile-card/profile-card.component';
@@ -27,7 +26,6 @@ export class WelcomeComponent {
   constructor(
     public authService: AuthService,
     private compatibilityService: CompatibilityService,
-    private reportService: ReportService,
     private matchService: MatchService,
     private chatService: ChatService,
     private externalDatePlanService: ExternalDatePlanService,
@@ -37,11 +35,7 @@ export class WelcomeComponent {
   }
 
   get feedProfiles(): PublicProfile[] {
-    const blocked = this.reportService.getBlockedProfiles();
-    return this.compatibilityService
-      .getRecommendedProfiles()
-      .filter((profile) => !blocked.includes(profile.id))
-      .slice(0, 6);
+    return this.compatibilityService.getRecommendedProfiles().slice(0, 6);
   }
 
   get userName(): string {

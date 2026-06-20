@@ -8,7 +8,8 @@ const requiredFiles = [
   'src/app/pages/explore/explore.component.ts',
   'src/app/pages/match-list/match-list.component.ts',
   'src/app/pages/chat/chat.component.ts',
-  'vercel.json'
+  'vercel.json',
+  'scripts/write-env.mjs',
 ];
 
 for (const file of requiredFiles) {
@@ -39,4 +40,34 @@ if (!Array.isArray(vercel.rewrites) || !vercel.rewrites.some((rewrite) => rewrit
   throw new Error('Vercel SPA rewrite to /index.html is missing.');
 }
 
-console.log('E2E smoke passed: critical routes, guards and Vercel SPA config are present.');
+// H-016: verify security headers are configured in vercel.json
+const requiredHeaders = ['Content-Security-Policy', 'X-Frame-Options', 'Strict-Transport-Security'];
+const headersConfig = JSON.stringify(vercel.headers ?? []);
+for (const header of requiredHeaders) {
+  if (!headersConfig.includes(header)) {
+    throw new Error(`Missing security header in vercel.json: ${header}`);
+  }
+}
+
+// H-016: verify core services are present
+const coreServices = [
+  'src/app/core/services/auth.service.ts',
+  'src/app/core/services/letter.service.ts',
+  'src/app/core/services/premium.service.ts',
+  'src/app/core/services/report.service.ts',
+  'src/app/core/services/global-error-handler.service.ts',
+];
+for (const svc of coreServices) {
+  if (!existsSync(svc)) {
+    throw new Error(`Missing core service: ${svc}`);
+  }
+}
+
+// H-016: verify migrations folder is populated
+const { readdirSync } = await import('node:fs');
+const migrations = readdirSync('supabase/migrations').filter((f) => f.endsWith('.sql'));
+if (migrations.length < 10) {
+  throw new Error(`Expected at least 10 migration files, found ${migrations.length}`);
+}
+
+console.log('E2E smoke passed: critical routes, guards, security headers, services and migrations present.');

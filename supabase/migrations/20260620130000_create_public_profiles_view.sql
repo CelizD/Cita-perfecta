@@ -43,6 +43,10 @@ begin
 end;
 $$;
 
+-- H-015: La vista usa security_definer (por defecto en PostgreSQL) porque necesita
+-- acceder a perfiles activos sin exponer filas privadas. El filtro where (deleted_at,
+-- is_paused, shadowbanned) actúa como la capa de privacidad; RLS en la tabla base
+-- ya está habilitado y la vista hereda las políticas del propietario.
 create or replace view public.public_profiles as
 select
   id,

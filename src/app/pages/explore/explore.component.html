@@ -5,6 +5,16 @@
     <p>Te mostramos perfiles activos que no has visto, sin bloqueos y listos para conectar.</p>
   </div>
 
+  @if (weather) {
+    <div class="weather-banner">
+      <span class="weather-icon">{{ weather.emoji }}</span>
+      <div class="weather-info">
+        <strong>{{ weather.city }} · {{ weather.temp }}°C — {{ weather.description }}</strong>
+        <span>{{ weather.suggestion }}</span>
+      </div>
+    </div>
+  }
+
   @if (errorMessage) {
     <div class="alert">{{ errorMessage }}</div>
   }
