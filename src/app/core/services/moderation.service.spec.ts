@@ -2,12 +2,24 @@ import { describe, expect, it } from 'vitest';
 import { ModerationService } from './moderation.service';
 
 describe('ModerationService', () => {
-  it('fails clearly when Supabase is not configured', async () => {
+  it('approves a valid image', async () => {
     const service = Object.assign(Object.create(ModerationService.prototype), {
-      supabaseService: { client: null, requiredConfigMessage: 'missing config' }
+      uploadService: { validateImage: () => {} }
     }) as ModerationService;
     const file = new File(['image'], 'profile.png', { type: 'image/png' });
 
-    await expect(service.moderateImage(file)).rejects.toThrow('missing config');
+    const result = await service.moderateImage(file);
+    expect(result.approved).toBe(true);
+  });
+
+  it('rejects when validateImage throws', async () => {
+    const service = Object.assign(Object.create(ModerationService.prototype), {
+      uploadService: { validateImage: () => { throw new Error('Archivo muy grande'); } }
+    }) as ModerationService;
+    const file = new File(['image'], 'profile.png', { type: 'image/png' });
+
+    const result = await service.moderateImage(file);
+    expect(result.approved).toBe(false);
+    expect(result.reason).toBe('Archivo muy grande');
   });
 });
