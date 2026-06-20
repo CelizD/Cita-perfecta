@@ -1,8 +1,8 @@
 <section class="page-wide explore-page">
   <div class="section-title">
     <span class="eyebrow">Explorar</span>
-    <h1>Perfiles compatibles</h1>
-    <p>Ordenamos estas personas con tus respuestas, intereses, bloqueos y dealbreakers.</p>
+    <h1>Personas para conocer</h1>
+    <p>Te mostramos perfiles activos que no has visto, sin bloqueos y listos para conectar.</p>
   </div>
 
   @if (errorMessage) {
@@ -13,51 +13,59 @@
     <div class="alert success">{{ actionMessage }}</div>
   }
 
-  <form class="comment-box" [formGroup]="commentForm">
-    <label>
-      Comentario opcional para tu proximo like
-      <input formControlName="comment" placeholder="Me gusto que valores la comunicacion clara...">
-    </label>
-  </form>
+  @if (matchMessage) {
+    <div class="match-modal">
+      <h2>¡Es un match!</h2>
+      <p>{{ matchMessage }}</p>
+    </div>
+  }
 
   @if (loading) {
     <div class="empty-state">
       <h2>Cargando perfiles...</h2>
     </div>
   } @else {
-    <div class="explore-grid">
+    <div class="explore-grid" [formGroup]="commentForm">
       @for (profile of profiles; track profile.id) {
         <article class="explore-card">
-          <div class="avatar">{{ initials(profile) }}</div>
+          @if (profile.main_photo_url) {
+            <img class="profile-photo" [src]="profile.main_photo_url" [alt]="profileName(profile)">
+          } @else {
+            <div class="avatar">{{ initials(profile) }}</div>
+          }
+
           <div class="profile-topline">
             <div>
-              <h2>{{ profileName(profile) }}</h2>
+              <h2>{{ profileName(profile) }}, {{ profile.age || 'edad no indicada' }}</h2>
               <p>{{ profile.city || 'Ciudad no especificada' }}</p>
             </div>
-            <strong>{{ profile.compatibility }}%</strong>
           </div>
 
           <p>{{ profile.bio || 'Este perfil esta completando su historia.' }}</p>
 
-          <div class="chips">
-            @for (interest of (profile.interests || []).slice(0, 4); track interest) {
-              <span>{{ interest }}</span>
-            }
-          </div>
+          <label class="like-comment">
+            Comentario opcional
+            <input [formControl]="commentControl(profile)" placeholder="Me gusto tu forma de ver la vida...">
+          </label>
 
           <div class="explore-actions">
-            <button class="btn ghost" type="button" (click)="sendPass(profile)">Pass</button>
-            <button class="btn primary" type="button" (click)="sendLike(profile)">Like</button>
-            <button class="btn neutral" type="button" (click)="blockProfile(profile)">Bloquear</button>
-            <button class="btn danger" type="button" (click)="reportProfile(profile)">Reportar</button>
+            <button class="btn ghost" type="button" (click)="sendPass(profile)" [disabled]="loading">Pass</button>
+            <button class="btn primary" type="button" (click)="sendLike(profile)" [disabled]="loading">Like</button>
           </div>
         </article>
       } @empty {
         <div class="empty-state">
           <h2>No hay perfiles por ahora</h2>
-          <p>Cuando mas personas completen el test, apareceran nuevas conexiones.</p>
+          <p>Cuando mas personas completen su perfil apareceran nuevas conexiones.</p>
+          <button class="btn ghost" type="button" (click)="nextPage()">Buscar mas</button>
         </div>
       }
     </div>
+
+    @if (profiles.length > 0) {
+      <div class="pager-actions">
+        <button class="btn ghost" type="button" (click)="nextPage()">Cargar mas</button>
+      </div>
+    }
   }
 </section>

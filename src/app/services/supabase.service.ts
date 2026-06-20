@@ -88,6 +88,24 @@ export class SupabaseService {
       .limit(limit);
   }
 
+  getExploreProfiles(excludedUserIds: string[], from: number, to: number) {
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+
+    let query = supabase
+      .from('profiles')
+      .select('id, user_id, name, age, city, main_photo_url, bio')
+      .is('deleted_at', null)
+      .eq('is_paused', false)
+      .range(from, to);
+
+    if (excludedUserIds.length > 0) {
+      query = query.not('user_id', 'in', `(${excludedUserIds.join(',')})`);
+    }
+
+    return query;
+  }
+
   createProfile(userId: string, data: any) {
     const supabase = this.requireClient();
     if (!supabase) return Promise.resolve(this.notConfiguredResponse());
@@ -194,6 +212,16 @@ export class SupabaseService {
       .eq('to_user_id', toUserId);
   }
 
+  getSwipesFromUser(fromUserId: string) {
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+
+    return supabase
+      .from('swipes')
+      .select('*')
+      .eq('from_user_id', fromUserId);
+  }
+
   checkMutualLike(userA: string, userB: string) {
     const supabase = this.requireClient();
     if (!supabase) return Promise.resolve(this.notConfiguredResponse());
@@ -217,7 +245,8 @@ export class SupabaseService {
       .upsert({
         user_a: firstUser,
         user_b: secondUser,
-        status: 'active'
+        status: 'active',
+        expires_at: new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString()
       }, { onConflict: 'user_a,user_b' })
       .select()
       .single();
@@ -263,6 +292,21 @@ export class SupabaseService {
       .order('created_at', { ascending: false });
   }
 
+  getMatch(matchId: string) {
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
+      .from('matches')
+      .select(`
+        *,
+        user_a_profile:profiles!matches_user_a_fkey(*),
+        user_b_profile:profiles!matches_user_b_fkey(*)
+      `)
+      .eq('id', matchId)
+      .single();
+  }
+
   getMessages(chatId: string) {
     const supabase = this.requireClient();
     if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
@@ -287,6 +331,18 @@ export class SupabaseService {
       })
       .select()
       .single();
+  }
+
+  markMessagesAsRead(chatId: string, userId: string) {
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+
+    return supabase
+      .from('messages')
+      .update({ read_at: new Date().toISOString() })
+      .eq('chat_id', chatId)
+      .neq('sender_id', userId)
+      .is('read_at', null);
   }
 
   subscribeToChat(chatId: string, callback: (payload: any) => void): RealtimeChannel {

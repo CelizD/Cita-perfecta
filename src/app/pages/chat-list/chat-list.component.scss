@@ -34,6 +34,14 @@
   width: 58px;
 }
 
+.avatar-photo {
+  aspect-ratio: 1;
+  border-radius: 18px;
+  height: 58px;
+  object-fit: cover;
+  width: 58px;
+}
+
 .chat-row span {
   background: #ecfff5;
   border-radius: 999px;

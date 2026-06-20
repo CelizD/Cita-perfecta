@@ -9,7 +9,16 @@
 .chat-header {
   align-items: center;
   display: flex;
+  gap: 1rem;
   justify-content: space-between;
+}
+
+.chat-photo {
+  aspect-ratio: 1;
+  border-radius: 18px;
+  height: 64px;
+  object-fit: cover;
+  width: 64px;
 }
 
 .chat-window {
@@ -20,6 +29,8 @@
   display: grid;
   gap: 1rem;
   min-height: 360px;
+  max-height: 520px;
+  overflow: auto;
   padding: 1rem;
 }
 

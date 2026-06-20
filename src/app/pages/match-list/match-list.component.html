@@ -17,9 +17,13 @@
     <div class="matches-grid">
       @for (match of matches; track match.id) {
         <article class="match-card">
-          <div class="avatar">{{ initials(match) }}</div>
+          @if (match.otherProfile.main_photo_url) {
+            <img class="avatar-photo" [src]="match.otherProfile.main_photo_url" [alt]="profileName(match)">
+          } @else {
+            <div class="avatar">{{ initials(match) }}</div>
+          }
           <div>
-            <h2>{{ profileName(match) }}</h2>
+            <h2>{{ profileName(match) }}, {{ match.otherProfile.age || 'edad no indicada' }}</h2>
             <p>{{ match.otherProfile.city || 'Ciudad no especificada' }}</p>
             <strong>{{ match.compatibility }}% compatible</strong>
           </div>

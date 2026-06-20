@@ -30,6 +30,14 @@
   width: 72px;
 }
 
+.avatar-photo {
+  aspect-ratio: 1;
+  border-radius: 20px;
+  height: 72px;
+  object-fit: cover;
+  width: 72px;
+}
+
 .match-card h2,
 .match-card p {
   margin: 0;

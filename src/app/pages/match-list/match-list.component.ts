@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { MatchService } from '../../services/match.service';
 import { SupabaseService } from '../../services/supabase.service';
 
 interface MatchView {
@@ -8,10 +9,10 @@ interface MatchView {
   compatibility: number;
   status: string;
   otherProfile: {
-    full_name?: string;
-    email?: string;
+    name?: string;
+    age?: number;
     city?: string;
-    photo_url?: string;
+    main_photo_url?: string;
   };
 }
 
@@ -24,6 +25,7 @@ interface MatchView {
 })
 export class MatchListComponent implements OnInit {
   private supabase = inject(SupabaseService);
+  private matchService = inject(MatchService);
   private router = inject(Router);
 
   userId = '';
@@ -41,22 +43,20 @@ export class MatchListComponent implements OnInit {
     }
 
     this.userId = user.id;
-    const { data, error } = await this.supabase.getMatches(this.userId);
-    this.loading = false;
-
-    if (error) {
-      this.errorMessage = error.message;
-      return;
-    }
-
-    this.matches = (data ?? [])
-      .filter((match: any) => match.status === 'active')
+    try {
+      const data = await this.matchService.getMatches(this.userId);
+      this.matches = data
       .map((match: any) => ({
         id: match.id,
         compatibility: match.compatibility ?? 80,
         status: match.status,
         otherProfile: match.user_a === this.userId ? match.user_b_profile : match.user_a_profile
       }));
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : 'No se pudieron cargar tus matches.';
+    } finally {
+      this.loading = false;
+    }
   }
 
   async openChat(match: MatchView): Promise<void> {
@@ -65,7 +65,7 @@ export class MatchListComponent implements OnInit {
   }
 
   profileName(match: MatchView): string {
-    return match.otherProfile.full_name ?? match.otherProfile.email ?? 'Match';
+    return match.otherProfile.name ?? 'Match';
   }
 
   initials(match: MatchView): string {

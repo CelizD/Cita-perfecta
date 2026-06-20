@@ -2,28 +2,6 @@
   max-width: 1180px;
 }
 
-.comment-box {
-  background: rgba(255, 255, 255, 0.86);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
-  margin-bottom: 1rem;
-  padding: 1rem;
-}
-
-.comment-box label {
-  display: grid;
-  font-weight: 900;
-  gap: 0.5rem;
-}
-
-.comment-box input {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  min-height: 46px;
-  padding: 0.8rem 1rem;
-}
-
 .explore-grid {
   display: grid;
   gap: 1rem;
@@ -55,11 +33,11 @@
   width: 92px;
 }
 
-.profile-topline {
-  align-items: start;
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
+.profile-photo {
+  aspect-ratio: 1;
+  border-radius: 26px;
+  object-fit: cover;
+  width: 92px;
 }
 
 .profile-topline h2,
@@ -67,12 +45,17 @@
   margin: 0;
 }
 
-.profile-topline strong {
-  background: #ecfff5;
-  border-radius: 999px;
-  color: #15965a;
+.like-comment {
+  display: grid;
   font-weight: 900;
-  padding: 0.45rem 0.7rem;
+  gap: 0.45rem;
+}
+
+.like-comment input {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  min-height: 44px;
+  padding: 0.75rem 0.95rem;
 }
 
 .explore-actions {
@@ -80,4 +63,25 @@
   gap: 0.7rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: auto;
+}
+
+.match-modal {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  color: white;
+  margin-bottom: 1rem;
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.match-modal h2,
+.match-modal p {
+  margin: 0;
+}
+
+.pager-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 }

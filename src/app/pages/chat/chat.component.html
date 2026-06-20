@@ -1,8 +1,11 @@
 <section class="chat-page">
   <div class="chat-header glass-card">
+    @if (otherProfile?.main_photo_url) {
+      <img class="chat-photo" [src]="otherProfile.main_photo_url" [alt]="profileName()">
+    }
     <div>
       <span class="eyebrow">Chat</span>
-      <h1>Conversacion</h1>
+      <h1>{{ profileName() }}</h1>
       <p>Estado: {{ isClosed ? 'cerrado' : 'activo' }}</p>
     </div>
     <a class="btn ghost" routerLink="/matches">Volver</a>
@@ -17,7 +20,7 @@
       <h2>Cargando chat...</h2>
     </div>
   } @else {
-    <div class="chat-window">
+    <div class="chat-window" #messageWindow>
       @for (message of messages; track message.id) {
         <div class="bubble" [class.mine]="message.sender_id === userId">
           <span>{{ message.sender_id === userId ? 'Tu' : 'Match' }}</span>

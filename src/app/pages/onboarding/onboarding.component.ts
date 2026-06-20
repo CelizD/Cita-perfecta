@@ -123,7 +123,7 @@ export class OnboardingComponent implements OnInit {
       return;
     }
 
-    await this.router.navigate(['/dashboard']);
+    await this.router.navigate(['/explore']);
   }
 
   get progressLabel(): string {

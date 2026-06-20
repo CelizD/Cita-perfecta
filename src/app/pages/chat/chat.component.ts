@@ -1,17 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
+import { ChatMessage, ChatService } from '../../services/chat.service';
+import { MatchService } from '../../services/match.service';
 import { SupabaseService } from '../../services/supabase.service';
-
-interface ChatMessage {
-  id: string;
-  chat_id: string;
-  sender_id: string;
-  content: string;
-  created_at: string;
-}
 
 @Component({
   selector: 'app-chat',
@@ -21,16 +15,22 @@ interface ChatMessage {
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent implements OnInit, OnDestroy {
+  @ViewChild('messageWindow') messageWindow?: ElementRef<HTMLDivElement>;
+
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private fb = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
   private supabase = inject(SupabaseService);
+  private matchService = inject(MatchService);
+  private chatService = inject(ChatService);
 
   userId = '';
-  matchId = this.route.snapshot.paramMap.get('id') ?? '';
+  matchId = this.route.snapshot.paramMap.get('matchId') ?? this.route.snapshot.paramMap.get('id') ?? '';
   chatId = '';
   messages: ChatMessage[] = [];
-  match: Record<string, any> | null = null;
+  match: any = null;
+  otherProfile: any = null;
   loading = false;
   errorMessage = '';
   showClosure = false;
@@ -62,7 +62,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   async ngOnDestroy(): Promise<void> {
     if (this.channel) {
-      await this.supabase.unsubscribe(this.channel);
+      await this.chatService.unsubscribe(this.channel);
     }
   }
 
@@ -73,65 +73,72 @@ export class ChatComponent implements OnInit, OnDestroy {
     const content = this.form.controls.text.value.trim();
     if (!content) return;
 
-    const { error } = await this.supabase.sendMessage(this.chatId, this.userId, content);
-    if (error) {
-      this.errorMessage = error.message;
-      return;
+    try {
+      await this.chatService.sendMessage(this.chatId, this.userId, content);
+      this.form.reset();
+      this.scrollToBottomSoon();
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : 'No se pudo enviar el mensaje.';
     }
-
-    this.form.reset();
   }
 
   async closeWithRespect(message: string): Promise<void> {
     if (!this.chatId || !this.matchId) return;
 
     this.loading = true;
-    await this.supabase.sendMessage(this.chatId, this.userId, message);
-    const { error } = await this.supabase.closeMatch(this.matchId);
-    this.loading = false;
 
-    if (error) {
-      this.errorMessage = error.message;
-      return;
+    try {
+      await this.chatService.sendMessage(this.chatId, this.userId, message);
+      await this.supabase.closeMatch(this.matchId);
+      this.match = { ...(this.match ?? {}), status: 'closed' };
+      this.showClosure = false;
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : 'No se pudo cerrar la conversacion.';
+    } finally {
+      this.loading = false;
     }
-
-    this.match = { ...(this.match ?? {}), status: 'closed' };
-    this.showClosure = false;
   }
 
   get isClosed(): boolean {
-    return this.match?.['status'] === 'closed';
+    return this.match?.status === 'closed';
+  }
+
+  profileName(): string {
+    return this.otherProfile?.name ?? 'Match';
   }
 
   private async prepareChat(): Promise<void> {
-    const chat = await this.supabase.createChat(this.matchId);
+    try {
+      this.match = await this.matchService.getMatch(this.matchId);
+      this.otherProfile = this.match.user_a === this.userId ? this.match.user_b_profile : this.match.user_a_profile;
 
-    if (chat.error) {
-      this.errorMessage = chat.error.message;
-      return;
+      const chat = await this.chatService.getChatByMatch(this.matchId);
+      this.chatId = chat['id'];
+      this.messages = await this.chatService.getMessages(this.chatId);
+      await this.chatService.markAsRead(this.chatId, this.userId);
+      this.subscribe();
+      this.scrollToBottomSoon();
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : 'No se pudo cargar el chat.';
     }
-
-    this.chatId = chat.data['id'];
-    await this.loadMessages();
-    this.subscribe();
-  }
-
-  private async loadMessages(): Promise<void> {
-    const { data, error } = await this.supabase.getMessages(this.chatId);
-
-    if (error) {
-      this.errorMessage = error.message;
-      return;
-    }
-
-    this.messages = (data ?? []) as ChatMessage[];
   }
 
   private subscribe(): void {
-    this.channel = this.supabase.subscribeToChat(this.chatId, (payload) => {
-      const message = payload.new as ChatMessage;
+    this.channel = this.chatService.subscribeToChat(this.chatId, (message) => {
       if (!this.messages.some((item) => item.id === message.id)) {
         this.messages = [...this.messages, message].sort((a, b) => a.created_at.localeCompare(b.created_at));
+      }
+
+      this.cdr.detectChanges();
+      this.scrollToBottomSoon();
+    });
+  }
+
+  private scrollToBottomSoon(): void {
+    setTimeout(() => {
+      const element = this.messageWindow?.nativeElement;
+      if (element) {
+        element.scrollTop = element.scrollHeight;
       }
     });
   }

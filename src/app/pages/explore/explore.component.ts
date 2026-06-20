@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CompatibleProfile, CompatibilityService } from '../../core/services/compatibility.service';
+import { MatchService } from '../../services/match.service';
+import { ExploreProfile, ProfileService } from '../../services/profile.service';
 import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
@@ -14,19 +15,20 @@ import { SupabaseService } from '../../services/supabase.service';
 })
 export class ExploreComponent implements OnInit {
   private supabase = inject(SupabaseService);
-  private compatibilityService = inject(CompatibilityService);
+  private profileService = inject(ProfileService);
+  private matchService = inject(MatchService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
 
   userId = '';
-  profiles: CompatibleProfile[] = [];
+  page = 0;
+  profiles: ExploreProfile[] = [];
   loading = false;
   errorMessage = '';
   actionMessage = '';
+  matchMessage = '';
 
-  commentForm = this.fb.nonNullable.group({
-    comment: ['']
-  });
+  commentForm = new FormRecord<FormControl<string>>({});
 
   async ngOnInit(): Promise<void> {
     await this.loadProfiles();
@@ -45,7 +47,8 @@ export class ExploreComponent implements OnInit {
     this.userId = user.id;
 
     try {
-      this.profiles = await this.compatibilityService.getCompatibleProfiles(this.userId, 20);
+      this.profiles = await this.profileService.getExploreProfiles(this.userId, this.page);
+      this.syncCommentControls();
     } catch (error) {
       this.errorMessage = error instanceof Error ? error.message : 'No se pudieron cargar los perfiles.';
     } finally {
@@ -53,86 +56,76 @@ export class ExploreComponent implements OnInit {
     }
   }
 
-  async sendLike(profile: CompatibleProfile): Promise<void> {
-    await this.sendSwipe(profile, 'like');
+  async nextPage(): Promise<void> {
+    this.page += 1;
+    await this.loadProfiles();
   }
 
-  async sendPass(profile: CompatibleProfile): Promise<void> {
-    await this.sendSwipe(profile, 'pass');
-  }
-
-  async sendSwipe(profile: CompatibleProfile, action: 'like' | 'pass'): Promise<void> {
+  async sendLike(profile: ExploreProfile): Promise<void> {
     this.loading = true;
-    this.errorMessage = '';
-    this.actionMessage = '';
+    this.clearMessages();
 
-    const comment = action === 'like' ? this.commentForm.controls.comment.value.trim() : '';
-    const { error } = await this.supabase.sendSwipe(this.userId, profile.id, action, comment || undefined);
+    try {
+      const comment = this.commentControl(profile).value.trim();
+      const result = await this.matchService.sendLike(this.userId, profile.user_id, comment || undefined);
+      this.removeProfile(profile);
 
-    if (error) {
-      this.errorMessage = error.message;
-      this.loading = false;
-      return;
-    }
-
-    if (action === 'like') {
-      const mutualLike = await this.supabase.checkMutualLike(this.userId, profile.id);
-
-      if (mutualLike.data) {
-        const match = await this.supabase.createMatch(this.userId, profile.id);
-
-        if (match.error) {
-          this.errorMessage = match.error.message;
-          this.loading = false;
-          return;
-        }
-
-        await this.supabase.createChat(match.data['id']);
-        this.actionMessage = `Hicieron match con ${this.profileName(profile)}.`;
+      if (result.matched && result.matchId) {
+        this.matchMessage = `Es un match con ${this.profileName(profile)}.`;
+        setTimeout(() => void this.router.navigate(['/chat', result.matchId]), 900);
       } else {
         this.actionMessage = `Like enviado a ${this.profileName(profile)}.`;
       }
-    } else {
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : 'No se pudo enviar el like.';
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async sendPass(profile: ExploreProfile): Promise<void> {
+    this.loading = true;
+    this.clearMessages();
+
+    try {
+      await this.matchService.sendPass(this.userId, profile.user_id);
+      this.removeProfile(profile);
       this.actionMessage = `Pasaste el perfil de ${this.profileName(profile)}.`;
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : 'No se pudo guardar el pass.';
+    } finally {
+      this.loading = false;
     }
-
-    this.commentForm.reset();
-    this.profiles = this.profiles.filter((item) => item.id !== profile.id);
-    this.loading = false;
   }
 
-  async blockProfile(profile: CompatibleProfile): Promise<void> {
-    const { error } = await this.supabase.blockUser(this.userId, profile.id);
-
-    if (error) {
-      this.errorMessage = error.message;
-      return;
-    }
-
-    this.profiles = this.profiles.filter((item) => item.id !== profile.id);
-    this.actionMessage = `Bloqueaste a ${this.profileName(profile)}.`;
+  commentControl(profile: ExploreProfile): FormControl<string> {
+    return this.commentForm.controls[profile.user_id];
   }
 
-  async reportProfile(profile: CompatibleProfile): Promise<void> {
-    const reason = window.prompt('Motivo del reporte', 'Comportamiento inapropiado');
-    if (!reason) return;
-
-    const { error } = await this.supabase.reportUser(this.userId, profile.id, reason);
-
-    if (error) {
-      this.errorMessage = error.message;
-      return;
-    }
-
-    this.profiles = this.profiles.filter((item) => item.id !== profile.id);
-    this.actionMessage = `Reporte enviado sobre ${this.profileName(profile)}.`;
+  profileName(profile: ExploreProfile): string {
+    return profile.name || 'Perfil';
   }
 
-  profileName(profile: CompatibleProfile): string {
-    return profile.full_name ?? profile.email ?? 'Perfil';
-  }
-
-  initials(profile: CompatibleProfile): string {
+  initials(profile: ExploreProfile): string {
     return this.profileName(profile).slice(0, 2).toUpperCase();
+  }
+
+  private syncCommentControls(): void {
+    for (const profile of this.profiles) {
+      if (!this.commentForm.controls[profile.user_id]) {
+        this.commentForm.addControl(profile.user_id, this.fb.nonNullable.control(''));
+      }
+    }
+  }
+
+  private removeProfile(profile: ExploreProfile): void {
+    this.profiles = this.profiles.filter((item) => item.id !== profile.id);
+    this.commentForm.removeControl(profile.user_id);
+  }
+
+  private clearMessages(): void {
+    this.errorMessage = '';
+    this.actionMessage = '';
+    this.matchMessage = '';
   }
 }

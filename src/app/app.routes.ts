@@ -70,7 +70,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/chat-list/chat-list.component').then((m) => m.ChatListComponent)
   },
   {
-    path: 'chat/:id',
+    path: 'chat/:matchId',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/chat/chat.component').then((m) => m.ChatComponent)
   },
