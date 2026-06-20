@@ -19,6 +19,8 @@ export class RegisterComponent {
   loading = false;
   errorMessage = '';
   successMessage = '';
+  cooldownSeconds = 0;
+  private cooldownTimer: ReturnType<typeof setInterval> | null = null;
 
   form = this.fb.nonNullable.group(
     {
@@ -34,7 +36,7 @@ export class RegisterComponent {
     this.errorMessage = '';
     this.successMessage = '';
 
-    if (this.form.invalid || this.loading) return;
+    if (this.form.invalid || this.loading || this.cooldownSeconds > 0) return;
 
     this.loading = true;
 
@@ -46,7 +48,7 @@ export class RegisterComponent {
       );
 
       if (error) {
-        this.errorMessage = this.translateSignUpError(error.message);
+        this.errorMessage = this.translateSignUpError(error);
         return;
       }
 
@@ -66,6 +68,12 @@ export class RegisterComponent {
     } finally {
       this.loading = false;
     }
+  }
+
+  get submitLabel(): string {
+    if (this.loading) return 'Creando cuenta...';
+    if (this.cooldownSeconds > 0) return `Espera ${this.cooldownSeconds}s`;
+    return 'Crear cuenta';
   }
 
   private withTimeout(promise: Promise<any>, message: string, ms = 15000): Promise<any> {
@@ -88,8 +96,20 @@ export class RegisterComponent {
     return hasUppercase && hasLowercase && hasNumber ? null : { weakPassword: true };
   }
 
-  private translateSignUpError(message: string): string {
+  private translateSignUpError(error: any): string {
+    const message = String(error?.message ?? error ?? '');
+    const status = Number(error?.status ?? 0);
     const normalized = message.toLowerCase();
+
+    if (
+      status === 429 ||
+      normalized.includes('rate limit') ||
+      normalized.includes('too many') ||
+      normalized.includes('security purposes')
+    ) {
+      this.startCooldown(60);
+      return 'Supabase bloqueo temporalmente los registros por demasiados intentos. Espera 1 minuto y prueba con un correo nuevo.';
+    }
 
     if (
       normalized.includes('already registered') ||
@@ -112,6 +132,23 @@ export class RegisterComponent {
     }
 
     return `No se pudo crear la cuenta: ${message}`;
+  }
+
+  private startCooldown(seconds: number): void {
+    this.cooldownSeconds = seconds;
+
+    if (this.cooldownTimer) {
+      clearInterval(this.cooldownTimer);
+    }
+
+    this.cooldownTimer = setInterval(() => {
+      this.cooldownSeconds = Math.max(this.cooldownSeconds - 1, 0);
+
+      if (this.cooldownSeconds === 0 && this.cooldownTimer) {
+        clearInterval(this.cooldownTimer);
+        this.cooldownTimer = null;
+      }
+    }, 1000);
   }
 
   private passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {

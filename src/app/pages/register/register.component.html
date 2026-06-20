@@ -38,8 +38,8 @@
       <div class="alert success">{{ successMessage }}</div>
     }
 
-    <button class="btn primary full" type="submit" [disabled]="loading">
-      {{ loading ? 'Creando cuenta...' : 'Crear cuenta' }}
+    <button class="btn primary full" type="submit" [disabled]="loading || cooldownSeconds > 0">
+      {{ submitLabel }}
     </button>
 
     <p class="form-link">Ya tienes cuenta? <a routerLink="/login">Inicia sesion</a></p>
