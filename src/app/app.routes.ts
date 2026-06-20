@@ -26,7 +26,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./pages/welcome/welcome.component').then((m) => m.WelcomeComponent)
   },
-  { path: 'profile', pathMatch: 'full', redirectTo: 'onboarding' },
+  {
+    path: 'profile',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/profile/profile.component').then((m) => m.ProfileComponent)
+  },
   { path: 'pacto', pathMatch: 'full', redirectTo: 'pacto-respeto' },
   {
     path: 'pacto-respeto',
@@ -53,6 +57,11 @@ export const routes: Routes = [
     path: 'matches',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/match-list/match-list.component').then((m) => m.MatchListComponent)
+  },
+  {
+    path: 'letters',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/letters/letters.component').then((m) => m.LettersComponent)
   },
   {
     path: 'explore',

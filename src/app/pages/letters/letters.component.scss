@@ -1,0 +1,94 @@
+.letters-page {
+  padding-bottom: 3rem;
+}
+
+.letters-layout {
+  align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+}
+
+.letter-compose,
+.letters-list,
+.letter-card {
+  background: #fff;
+  border: 1px solid #ffd8e1;
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(255, 92, 128, 0.1);
+}
+
+.letter-compose,
+.letters-list {
+  padding: 1.25rem;
+}
+
+.letter-compose {
+  display: grid;
+  gap: 1rem;
+}
+
+.letter-compose h2,
+.letters-list h2 {
+  margin: 0;
+}
+
+.quota {
+  background: #fff1f5;
+  border-radius: 12px;
+  color: #6b5261;
+  margin: 0;
+  padding: 0.85rem 1rem;
+}
+
+.letter-compose label {
+  color: #241229;
+  display: grid;
+  font-weight: 800;
+  gap: 0.45rem;
+}
+
+.letter-compose input,
+.letter-compose textarea {
+  border: 1px solid #ffd1dc;
+  border-radius: 12px;
+  color: #241229;
+  font: inherit;
+  padding: 0.85rem 1rem;
+}
+
+.letter-compose small {
+  color: #765c6b;
+}
+
+.letters-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.letter-card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.letter-card p {
+  color: #56415f;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.letter-meta {
+  color: #c93363;
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: 800;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+@media (max-width: 860px) {
+  .letters-layout {
+    grid-template-columns: 1fr;
+  }
+}

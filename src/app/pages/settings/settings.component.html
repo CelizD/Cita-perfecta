@@ -6,12 +6,20 @@
   </div>
 
   <div class="settings-list">
-    <a class="settings-row" routerLink="/onboarding">
+    <a class="settings-row" routerLink="/profile">
       <div>
         <h3>Editar perfil</h3>
-        <p>Actualiza tu ciudad, biografia e intereses.</p>
+        <p>Actualiza tu foto, ciudad, biografia e intereses.</p>
       </div>
       <span>Editar</span>
+    </a>
+
+    <a class="settings-row" routerLink="/letters">
+      <div>
+        <h3>Cartas de conexion</h3>
+        <p>Revisa tus cartas y envia mensajes con mas intencion.</p>
+      </div>
+      <span>Abrir</span>
     </a>
 
     <button class="settings-row" type="button" (click)="togglePause()">

@@ -1,0 +1,69 @@
+<section class="page-wide letters-page">
+  <div class="section-title">
+    <span class="eyebrow">Cartas de conexion</span>
+    <h1>Conecta con intencion</h1>
+    <p>Las cartas son para mensajes cuidados y honestos. Minimo 300 caracteres.</p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert error">{{ errorMessage() }}</div>
+  }
+
+  @if (successMessage()) {
+    <div class="alert success">{{ successMessage() }}</div>
+  }
+
+  <div class="letters-layout">
+    <form class="letter-compose" [formGroup]="form" (ngSubmit)="sendLetter()">
+      <h2>Enviar carta</h2>
+
+      @if (quota(); as currentQuota) {
+        <p class="quota">
+          Te quedan <strong>{{ currentQuota.remaining }}</strong> de {{ currentQuota.limit }} cartas este mes.
+        </p>
+      }
+
+      <label>
+        ID del perfil receptor
+        <input type="text" formControlName="toUserId" placeholder="UUID del usuario receptor">
+      </label>
+
+      <label>
+        Contenido
+        <textarea rows="9" formControlName="content" placeholder="Escribe una carta clara, respetuosa y personal."></textarea>
+      </label>
+
+      <small>{{ remainingCharacters() }} caracteres restantes para llegar al minimo.</small>
+
+      <button class="btn primary" type="submit" [disabled]="sending() || form.invalid">
+        {{ sending() ? 'Enviando...' : 'Enviar carta' }}
+      </button>
+    </form>
+
+    <div class="letters-list">
+      <h2>Tus cartas</h2>
+
+      @if (loading()) {
+        <p>Cargando cartas...</p>
+      } @else {
+        @for (letter of letters(); track letter.id) {
+          <article class="letter-card">
+            <div class="letter-meta">
+              <span>{{ letter.status }}</span>
+              <time>{{ letter.created_at | date: 'medium' }}</time>
+            </div>
+            <p>{{ letter.message }}</p>
+            @if (letter.status !== 'read') {
+              <button class="btn ghost" type="button" (click)="markAsRead(letter.id)">Marcar como leida</button>
+            }
+          </article>
+        } @empty {
+          <div class="empty-state">
+            <h3>Aun no hay cartas</h3>
+            <p>Cuando envies o recibas cartas apareceran aqui.</p>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</section>

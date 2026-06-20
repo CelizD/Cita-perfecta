@@ -1,97 +1,114 @@
 # Cita Perfecta
 
-Cita Perfecta es una aplicacion web desarrollada con Angular para crear conexiones compatibles con un enfoque de respeto, seguridad y slow dating. El proyecto incluye registro, login con Supabase, pacto de respeto, onboarding, test de compatibilidad, perfiles sugeridos, likes con comentario, cartas de conexion, chat, ajustes y panel de administracion de perfiles.
+Cita Perfecta es una aplicacion Angular + Supabase para conexiones compatibles con enfoque de respeto, seguridad y slow dating.
 
-## Funcionalidades principales
+## Funcionalidades
 
 - Autenticacion con Supabase Auth.
-- Perfil de usuario con intereses, estilo de comunicacion, lenguaje del amor y dealbreakers.
-- Pacto de respeto antes de entrar al flujo principal.
-- Test de compatibilidad y resultado de aura.
-- Feed de perfiles compatibles.
-- Like con comentario y cartas de conexion.
-- Chat basico y cierre amistoso.
-- Modo pausa, centro de seguridad y premium.
-- CRUD de perfiles sugeridos.
-- API externa Open-Meteo para sugerir planes segun el clima.
+- Onboarding, pacto de respeto, test de compatibilidad y Aura.
+- Perfil editable con subida de foto a Supabase Storage.
+- Moderacion de imagenes mediante Supabase Edge Function.
+- Exploracion de perfiles, likes con comentario, match mutuo y chat en tiempo real.
+- Cartas de conexion con limite mensual por plan.
+- Reportes, bloqueos, modo pausa, premium y RLS en Supabase.
 
-## Tecnologias
+## Stack
 
-- Angular 21
+- Angular 21 standalone components
 - TypeScript
-- Supabase
-- Bootstrap
+- Supabase Auth, Database, Storage, Realtime y Edge Functions
+- Bootstrap 5
 - Vitest
 
-## Requisitos
+## Configuracion local
 
-- Node.js compatible con Angular 21
-- npm
-- Cuenta/proyecto en Supabase
-
-## Configuracion
-
-1. Instala dependencias:
+Instala dependencias:
 
 ```bash
 npm install
 ```
 
-2. Crea un proyecto en Supabase.
+Copia el ejemplo de entorno:
 
-3. Copia tus claves desde `Project Settings > API`.
+```bash
+cp src/environments/environment.example.ts src/environments/environment.ts
+```
 
-4. Pega los valores en:
+Edita `src/environments/environment.ts`:
 
 ```ts
-// src/environments/environment.ts
 export const environment = {
   production: false,
-  supabaseUrl: 'TU_SUPABASE_URL',
-  supabaseAnonKey: 'TU_SUPABASE_ANON_KEY'
+  supabase: {
+    url: 'TU_URL_AQUI',
+    anonKey: 'TU_ANON_KEY_AQUI'
+  }
 };
 ```
 
-5. Ejecuta en Supabase el archivo:
+Usa la `anon public key`, nunca la `service_role secret`.
 
-```text
-supabase/schema.sql
+## Supabase
+
+Ejecuta las migraciones en `supabase/migrations` desde Supabase SQL Editor.
+
+Si es una base nueva, ejecuta primero la migracion inicial `20260620000000_init_cita_perfecta_schema.sql` y despues las migraciones de funcionalidades. Si tu base ya tiene tablas, ejecuta solo las migraciones de funcionalidades que te falten.
+
+Migraciones principales:
+
+- `20260620000000_init_cita_perfecta_schema.sql`
+- `20260620065000_add_match_chat_tables.sql`
+- `20250620120000_add_storage_buckets.sql`
+- `20250620130000_add_moderation_tables.sql`
+- `20250620140000_add_letters_counter.sql`
+- `20250620150000_add_indexes_performance.sql`
+
+Para moderacion de imagenes, despliega la Edge Function:
+
+```bash
+supabase functions deploy moderate-image
 ```
 
-6. Para una demo escolar, puedes desactivar temporalmente `Confirm email` en Supabase Auth.
+Y configura el secreto:
+
+```bash
+supabase secrets set GOOGLE_VISION_API_KEY=tu_api_key
+```
+
+## Vercel
+
+Variables necesarias en Vercel:
+
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+- `NODE_VERSION=20.x`
+
+El script `npm run vercel-build` ejecuta `scripts/write-env.mjs` para escribir `environment.prod.ts` con las variables de Vercel antes del build.
 
 ## Scripts
 
 ```bash
 npm start
-```
-
-Ejecuta el servidor de desarrollo en `http://localhost:4200`.
-
-```bash
 npm run build
-```
-
-Genera la version de produccion en `dist/`.
-
-```bash
 npm test
 ```
 
-Ejecuta las pruebas unitarias con Vitest.
+## Pruebas E2E
 
-## Variables
+Hay un flujo Playwright base en `e2e/cita-perfecta-flow.playwright.ts`. Para usarlo instala Playwright y configura usuarios/datos reales de prueba.
 
-El archivo `.env.example` documenta las variables necesarias. No pegues llaves reales en ese archivo.
+## Capturas y demo
+
+Agrega aqui capturas reales de tu entrega y el enlace de Vercel cuando este publicado.
+
+- Demo: pendiente
+- Capturas: pendiente
 
 ## Organizacion
 
 - `src/app/core`: modelos, servicios, guards y utilidades.
-- `src/app/pages`: pantallas principales de la aplicacion.
+- `src/app/pages`: pantallas principales.
 - `src/app/shared`: componentes reutilizables.
-- `src/environments`: configuracion de Supabase por ambiente.
-- `supabase`: SQL e instrucciones para la base de datos.
-
-## Estado del proyecto
-
-La aplicacion esta preparada para una entrega academica: usa Angular, componentes, servicios, routing, CRUD, responsive design, API externa y autenticacion con Supabase.
+- `src/environments`: configuracion por ambiente.
+- `supabase/migrations`: SQL de base de datos.
+- `supabase/functions`: Edge Functions.

@@ -1,0 +1,73 @@
+<section class="page-narrow profile-page">
+  <div class="section-title">
+    <span class="eyebrow">Tu perfil</span>
+    <h1>Editar perfil</h1>
+    <p>Completa tu informacion para que tus matches sepan quien eres de verdad.</p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert error">{{ errorMessage() }}</div>
+  }
+
+  @if (successMessage()) {
+    <div class="alert success">{{ successMessage() }}</div>
+  }
+
+  <div class="profile-layout">
+    <aside class="photo-panel">
+      <div class="photo-preview">
+        @if (photoPreview()) {
+          <img [src]="photoPreview()" alt="Foto de perfil">
+        } @else {
+          <span>CP</span>
+        }
+      </div>
+
+      <label class="btn primary upload-button">
+        {{ uploading() ? 'Subiendo...' : 'Subir foto' }}
+        <input type="file" accept="image/jpeg,image/png,image/webp" [disabled]="uploading()" (change)="onPhotoSelected($event)">
+      </label>
+
+      <p>Formatos permitidos: JPG, PNG o WEBP. Maximo 5 MB.</p>
+    </aside>
+
+    <form class="profile-form" [formGroup]="form" (ngSubmit)="saveProfile()">
+      <label>
+        Nombre
+        <input type="text" formControlName="name" placeholder="Tu nombre">
+      </label>
+
+      <label>
+        Ciudad
+        <input type="text" formControlName="city" placeholder="Ej. Tijuana">
+      </label>
+
+      <label>
+        Biografia
+        <textarea rows="5" formControlName="bio" placeholder="Cuenta que buscas y que te gusta compartir."></textarea>
+      </label>
+
+      <label>
+        Intereses separados por coma
+        <input type="text" formControlName="interests" placeholder="Cafe, musica, cine">
+      </label>
+
+      <label>
+        Estilo de comunicacion
+        <input type="text" formControlName="communicationStyle" placeholder="Claro, tranquilo, directo">
+      </label>
+
+      <label>
+        Lenguaje del amor
+        <input type="text" formControlName="loveLanguage" placeholder="Tiempo de calidad">
+      </label>
+
+      <div class="profile-actions">
+        <a class="btn ghost" routerLink="/dashboard">Cancelar</a>
+        <button class="btn primary" type="submit" [disabled]="loading() || form.invalid">
+          {{ loading() ? 'Guardando...' : 'Guardar perfil' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

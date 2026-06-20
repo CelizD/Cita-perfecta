@@ -2,6 +2,10 @@
   "buildCommand": "npm run vercel-build",
   "outputDirectory": "dist/cita-perfecta/browser",
   "framework": "angular",
+  "installCommand": "npm install",
+  "env": {
+    "NODE_VERSION": "20.x"
+  },
   "rewrites": [
     {
       "source": "/(.*)",
