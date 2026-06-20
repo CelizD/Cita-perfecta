@@ -12,7 +12,7 @@ export const authGuard: CanActivateFn = () => {
   const supabase = inject(SupabaseService);
   const router = inject(Router);
 
-  return from(supabase.getCurrentUser()).pipe(
+  return from(supabase.getLocalSession()).pipe(
     map((user) => (user ? true : router.createUrlTree(['/login'])))
   );
 };
@@ -21,7 +21,7 @@ export const publicGuard: CanActivateFn = () => {
   const supabase = inject(SupabaseService);
   const router = inject(Router);
 
-  return from(supabase.getCurrentUser()).pipe(
+  return from(supabase.getLocalSession()).pipe(
     map((user) => (!user ? true : router.createUrlTree(['/dashboard'])))
   );
 };
@@ -30,7 +30,7 @@ export const onboardingGuard: CanActivateFn = () => {
   const supabase = inject(SupabaseService);
   const router = inject(Router);
 
-  return from(supabase.getCurrentUser()).pipe(
+  return from(supabase.getLocalSession()).pipe(
     switchMap((user) => {
       if (!user) {
         return [router.createUrlTree(['/login'])];
@@ -53,6 +53,8 @@ export const adminGuard: CanActivateFn = () => {
   const supabase = inject(SupabaseService);
   const router = inject(Router);
 
+  // adminGuard necesita validar el JWT con el servidor para garantizar que el rol
+  // no fue manipulado en localStorage.
   return from(supabase.getCurrentUser()).pipe(
     map((user) => {
       if (!user) return router.createUrlTree(['/login']);

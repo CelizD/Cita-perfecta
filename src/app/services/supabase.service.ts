@@ -69,6 +69,16 @@ export class SupabaseService {
     return data.user;
   }
 
+  // Lee la sesión desde localStorage sin hacer llamada HTTP al servidor de Auth.
+  // Usar en guards para evitar bloqueos de red en el arranque.
+  async getLocalSession(): Promise<User | null> {
+    const supabase = this.requireClient();
+    if (!supabase) return null;
+
+    const { data } = await supabase.auth.getSession();
+    return data.session?.user ?? null;
+  }
+
   getProfile(userId: string) {
     const supabase = this.requireClient();
     if (!supabase) return Promise.resolve(this.notConfiguredResponse());
