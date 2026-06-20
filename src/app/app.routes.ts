@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, publicGuard } from './guards/auth.guard';
+import { authGuard, onboardingGuard, publicGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -26,11 +26,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./pages/welcome/welcome.component').then((m) => m.WelcomeComponent)
   },
-  {
-    path: 'profile',
-    canActivate: [authGuard],
-    loadComponent: () => import('./pages/onboarding/onboarding.component').then((m) => m.OnboardingComponent)
-  },
+  { path: 'profile', pathMatch: 'full', redirectTo: 'onboarding' },
   { path: 'pacto', pathMatch: 'full', redirectTo: 'pacto-respeto' },
   {
     path: 'pacto-respeto',
@@ -39,7 +35,7 @@ export const routes: Routes = [
   },
   {
     path: 'onboarding',
-    canActivate: [authGuard],
+    canActivate: [onboardingGuard],
     loadComponent: () => import('./pages/onboarding/onboarding.component').then((m) => m.OnboardingComponent)
   },
   {

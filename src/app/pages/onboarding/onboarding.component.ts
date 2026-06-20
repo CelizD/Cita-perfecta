@@ -1,67 +1,207 @@
-import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../core/services/user.service';
-import { AuthService } from '../../core/services/auth.service';
+import { Question, SupabaseService } from '../../services/supabase.service';
+
+interface AuraResult {
+  title: string;
+  phrase: string;
+}
 
 @Component({
   selector: 'app-onboarding',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './onboarding.component.html',
   styleUrl: './onboarding.component.scss'
 })
-export class OnboardingComponent {
+export class OnboardingComponent implements OnInit {
   private fb = inject(FormBuilder);
-  private userService = inject(UserService);
-  public authService = inject(AuthService);
   private router = inject(Router);
+  private supabase = inject(SupabaseService);
 
-  selectedInterests = new Set<string>();
-  selectedDealbreakers = new Set<string>();
-  interests = this.userService.interests;
-  communicationStyles = this.userService.communicationStyles;
-  loveLanguages = this.userService.loveLanguages;
-  dealbreakers = this.userService.dealbreakers;
+  step = 0;
+  loading = false;
+  errorMessage = '';
+  acceptedRespectPact = false;
+  userId = '';
+  questions: Question[] = [];
+  answers: Record<number, number> = {};
+  aura: AuraResult | null = null;
 
-  form = this.fb.nonNullable.group({
-    city: ['', Validators.required],
-    bio: ['', [Validators.required, Validators.minLength(20)]],
-    communicationStyle: [this.communicationStyles[0], Validators.required],
-    loveLanguage: [this.loveLanguages[0], Validators.required],
-    photoProfile: ['']
+  basicForm = this.fb.nonNullable.group({
+    name: ['', [Validators.required, Validators.minLength(2)]],
+    birthdate: ['', Validators.required],
+    city: ['', [Validators.required, Validators.minLength(2)]]
   });
 
-  toggleInterest(interest: string): void {
-    if (this.selectedInterests.has(interest)) {
-      this.selectedInterests.delete(interest);
-    } else {
-      this.selectedInterests.add(interest);
+  async ngOnInit(): Promise<void> {
+    this.loading = true;
+    const user = await this.supabase.getCurrentUser();
+
+    if (!user) {
+      await this.router.navigate(['/login']);
+      return;
     }
+
+    this.userId = user.id;
+    await this.loadProfile();
+    this.loading = false;
   }
 
-  toggleDealbreaker(dealbreaker: string): void {
-    if (this.selectedDealbreakers.has(dealbreaker)) {
-      this.selectedDealbreakers.delete(dealbreaker);
-    } else {
-      this.selectedDealbreakers.add(dealbreaker);
-    }
+  continueFromPact(): void {
+    if (!this.acceptedRespectPact) return;
+    this.step = 1;
   }
 
-  submit(): void {
-    this.form.markAllAsTouched();
-    if (this.form.invalid || this.selectedInterests.size < 3) return;
+  async saveBasicData(): Promise<void> {
+    this.basicForm.markAllAsTouched();
+    this.errorMessage = '';
 
-    this.userService.saveProfile({
-      city: this.form.controls.city.value,
-      bio: this.form.controls.bio.value,
-      photoProfile: this.form.controls.photoProfile.value,
-      interests: [...this.selectedInterests],
-      communicationStyle: this.form.controls.communicationStyle.value,
-      loveLanguage: this.form.controls.loveLanguage.value,
-      dealbreakers: [...this.selectedDealbreakers]
+    if (this.basicForm.invalid || this.loading) return;
+
+    this.loading = true;
+    const value = this.basicForm.getRawValue();
+
+    const primarySave = await this.supabase.updateProfile(this.userId, {
+      name: value.name,
+      birthdate: value.birthdate,
+      city: value.city,
+      pact_accepted: true
     });
 
-    this.router.navigate(['/test']);
+    if (primarySave.error) {
+      const fallbackSave = await this.supabase.updateProfile(this.userId, {
+        full_name: value.name,
+        birth_date: value.birthdate,
+        city: value.city,
+        pact_accepted: true
+      });
+
+      if (fallbackSave.error) {
+        this.loading = false;
+        this.errorMessage = fallbackSave.error.message;
+        return;
+      }
+    }
+
+    await this.loadQuestions();
+    this.step = 2;
+    this.loading = false;
+  }
+
+  setAnswer(questionId: number, value: number): void {
+    this.answers[questionId] = value;
+  }
+
+  async saveTestAndShowAura(): Promise<void> {
+    this.errorMessage = '';
+
+    if (this.questions.some((question) => !this.answers[question.id])) {
+      this.errorMessage = 'Responde todas las preguntas para calcular tu Aura.';
+      return;
+    }
+
+    this.loading = true;
+    const rows = this.questions.map((question) => ({
+      question_id: question.id,
+      value: this.answers[question.id]
+    }));
+
+    const { error } = await this.supabase.saveAnswers(this.userId, rows);
+    this.loading = false;
+
+    if (error) {
+      this.errorMessage = error.message;
+      return;
+    }
+
+    this.aura = this.calculateAura();
+    this.step = 3;
+  }
+
+  async finishOnboarding(): Promise<void> {
+    this.errorMessage = '';
+    this.loading = true;
+    const { error } = await this.supabase.updateOnboardingStatus(this.userId);
+    this.loading = false;
+
+    if (error) {
+      this.errorMessage = error.message;
+      return;
+    }
+
+    await this.router.navigate(['/dashboard']);
+  }
+
+  get progressLabel(): string {
+    return `${Math.min(this.step + 1, 4)} de 4`;
+  }
+
+  private async loadProfile(): Promise<void> {
+    const { data } = await this.supabase.getProfile(this.userId);
+    if (!data) return;
+
+    this.acceptedRespectPact = Boolean(data['pact_accepted']);
+    this.basicForm.patchValue({
+      name: String(data['name'] ?? data['full_name'] ?? ''),
+      birthdate: String(data['birthdate'] ?? data['birth_date'] ?? ''),
+      city: String(data['city'] ?? '')
+    });
+  }
+
+  private async loadQuestions(): Promise<void> {
+    const { data, error } = await this.supabase.getInitialQuestions();
+
+    if (error) {
+      this.errorMessage = error.message;
+      this.questions = [];
+      return;
+    }
+
+    this.questions = ((data ?? []) as Question[]).slice(0, 15);
+    this.answers = this.questions.reduce<Record<number, number>>((acc, question) => {
+      acc[question.id] = 3;
+      return acc;
+    }, {});
+  }
+
+  private calculateAura(): AuraResult {
+    const values = Object.values(this.answers);
+    const average = values.reduce((sum, value) => sum + value, 0) / values.length;
+
+    if (average > 4) {
+      return {
+        title: 'Romantico Profundo',
+        phrase: 'Conectas mejor con personas que valoran la entrega emocional y la honestidad.'
+      };
+    }
+
+    if (average > 3.5) {
+      return {
+        title: 'Empatico Tranquilo',
+        phrase: 'Conectas mejor con personas que valoran la calma, la paciencia y el cuidado mutuo.'
+      };
+    }
+
+    if (average > 2.5) {
+      return {
+        title: 'Explorador Leal',
+        phrase: 'Conectas mejor con personas que combinan curiosidad, respeto y estabilidad.'
+      };
+    }
+
+    if (average > 2) {
+      return {
+        title: 'Comunicador Claro',
+        phrase: 'Conectas mejor con personas que hablan directo y construyen acuerdos sanos.'
+      };
+    }
+
+    return {
+      title: 'Protector',
+      phrase: 'Conectas mejor con personas que respetan tus limites y avanzan sin presion.'
+    };
   }
 }

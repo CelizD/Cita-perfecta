@@ -2,6 +2,15 @@ import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 
+export interface Question {
+  id: number;
+  text: string;
+  category?: string;
+  weight?: number;
+  is_initial?: boolean;
+  is_active?: boolean;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private supabase: SupabaseClient;
@@ -68,6 +77,26 @@ export class SupabaseService {
       .single();
   }
 
+  async getInitialQuestions() {
+    const initialQuestions = await this.supabase
+      .from('questions')
+      .select('*')
+      .eq('is_initial', true)
+      .order('id', { ascending: true })
+      .limit(15);
+
+    if (!initialQuestions.error) {
+      return initialQuestions;
+    }
+
+    return this.supabase
+      .from('questions')
+      .select('*')
+      .eq('is_active', true)
+      .order('id', { ascending: true })
+      .limit(15);
+  }
+
   async saveAnswers(userId: string, answers: { question_id: number; value: number }[]) {
     const { error: deleteError } = await this.supabase
       .from('answers')
@@ -125,5 +154,14 @@ export class SupabaseService {
       `)
       .or(`user_a.eq.${userId},user_b.eq.${userId}`)
       .order('created_at', { ascending: false });
+  }
+
+  updateOnboardingStatus(userId: string) {
+    return this.supabase
+      .from('profiles')
+      .update({ is_onboarded: true })
+      .eq('id', userId)
+      .select()
+      .single();
   }
 }

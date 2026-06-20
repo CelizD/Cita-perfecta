@@ -37,6 +37,7 @@ create table if not exists public.profiles (
   love_language text,
   dealbreakers text[] not null default '{}',
   pact_accepted boolean not null default false,
+  is_onboarded boolean not null default false,
   profile_complete boolean not null default false,
   test_complete boolean not null default false,
   pause_mode boolean not null default false,
@@ -44,6 +45,9 @@ create table if not exists public.profiles (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.profiles
+add column if not exists is_onboarded boolean not null default false;
 
 drop trigger if exists profiles_set_updated_at on public.profiles;
 create trigger profiles_set_updated_at
@@ -91,26 +95,31 @@ create table if not exists public.questions (
   text text not null,
   category text not null,
   weight int not null default 1,
+  is_initial boolean not null default true,
   is_active boolean not null default true,
   created_at timestamptz not null default now()
 );
 
-insert into public.questions (id, text, category, weight, is_active)
+alter table public.questions
+add column if not exists is_initial boolean not null default true;
+
+insert into public.questions (id, text, category, weight, is_initial, is_active)
 values
-  (1, 'Me gusta hablar con claridad cuando algo me incomoda.', 'comunicacion', 2, true),
-  (2, 'Busco una relacion tranquila, honesta y con respeto.', 'valores', 2, true),
-  (3, 'Prefiero planes tranquilos antes que salir de fiesta todo el tiempo.', 'estilo', 1, true),
-  (4, 'Para mi es importante tener metas personales claras.', 'metas', 2, true),
-  (5, 'Me gusta conocer a alguien con calma, sin presiones.', 'valores', 2, true),
-  (6, 'Disfruto conversaciones profundas sobre la vida y emociones.', 'comunicacion', 1, true),
-  (7, 'Valoro mucho el tiempo de calidad.', 'valores', 2, true),
-  (8, 'Me gusta compartir gustos como musica, peliculas o tecnologia.', 'intereses', 1, true),
-  (9, 'Cuando algo termina, prefiero cerrar con respeto y claridad.', 'comunicacion', 2, true),
-  (10, 'Me interesa una conexion real, no solo una coincidencia rapida.', 'metas', 2, true)
+  (1, 'Me gusta hablar con claridad cuando algo me incomoda.', 'comunicacion', 2, true, true),
+  (2, 'Busco una relacion tranquila, honesta y con respeto.', 'valores', 2, true, true),
+  (3, 'Prefiero planes tranquilos antes que salir de fiesta todo el tiempo.', 'estilo', 1, true, true),
+  (4, 'Para mi es importante tener metas personales claras.', 'metas', 2, true, true),
+  (5, 'Me gusta conocer a alguien con calma, sin presiones.', 'valores', 2, true, true),
+  (6, 'Disfruto conversaciones profundas sobre la vida y emociones.', 'comunicacion', 1, true, true),
+  (7, 'Valoro mucho el tiempo de calidad.', 'valores', 2, true, true),
+  (8, 'Me gusta compartir gustos como musica, peliculas o tecnologia.', 'intereses', 1, true, true),
+  (9, 'Cuando algo termina, prefiero cerrar con respeto y claridad.', 'comunicacion', 2, true, true),
+  (10, 'Me interesa una conexion real, no solo una coincidencia rapida.', 'metas', 2, true, true)
 on conflict (id) do update set
   text = excluded.text,
   category = excluded.category,
   weight = excluded.weight,
+  is_initial = excluded.is_initial,
   is_active = excluded.is_active;
 
 select setval(

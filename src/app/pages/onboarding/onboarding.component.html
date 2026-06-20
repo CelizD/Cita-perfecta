@@ -1,83 +1,144 @@
-<section class="page-narrow">
-  <div class="section-title">
-    <span class="eyebrow">Perfil personal</span>
-    <h1>Completa tu perfil</h1>
-    <p>Estos datos ayudan a mostrarte perfiles mas compatibles.</p>
+<section class="onboarding-page">
+  <div class="onboarding-shell">
+    <div class="onboarding-header">
+      <span class="eyebrow">Onboarding Cita Perfecta</span>
+      <h1>Prepara tu perfil para conexiones reales</h1>
+      <p>Completa el pacto, tus datos basicos y el test inicial para descubrir tu Aura.</p>
+      <div class="progress-line">
+        <span [style.width.%]="(step + 1) * 25"></span>
+      </div>
+      <strong>{{ progressLabel }}</strong>
+    </div>
+
+    @if (errorMessage) {
+      <div class="alert">{{ errorMessage }}</div>
+    }
+
+    @if (loading) {
+      <div class="form-card loading-card">
+        <h2>Cargando...</h2>
+        <p>Estamos preparando tu experiencia.</p>
+      </div>
+    } @else {
+      @if (step === 0) {
+        <div class="form-card">
+          <h2>Pacto Cita Perfecta</h2>
+          <p class="warm-text">Antes de conectar, aceptamos cuidar la forma en que tratamos a las personas.</p>
+
+          <ol class="pact-list">
+            <li>Sere honesto con mis intenciones.</li>
+            <li>Tratare a los demas con empatia.</li>
+            <li>Si ya no quiero seguir, intentare cerrar con respeto.</li>
+            <li>No acosare, manipulare ni presionare a nadie.</li>
+            <li>Cuidare mi seguridad y la de los demas.</li>
+          </ol>
+
+          <label class="check-row">
+            <input
+              type="checkbox"
+              [checked]="acceptedRespectPact"
+              (change)="acceptedRespectPact = $any($event.target).checked">
+            <span>Acepto conectar con respeto.</span>
+          </label>
+
+          <button class="btn primary full" type="button" [disabled]="!acceptedRespectPact" (click)="continueFromPact()">
+            Continuar
+          </button>
+        </div>
+      }
+
+      @if (step === 1) {
+        <form class="form-card" [formGroup]="basicForm" (ngSubmit)="saveBasicData()">
+          <h2>Datos basicos</h2>
+          <p class="warm-text">Estos datos ayudan a personalizar tu perfil y tus recomendaciones.</p>
+
+          <label>
+            Nombre
+            <input type="text" formControlName="name" placeholder="Tu nombre">
+            @if (basicForm.controls.name.touched && basicForm.controls.name.invalid) {
+              <small>Escribe al menos 2 caracteres.</small>
+            }
+          </label>
+
+          <label>
+            Fecha de nacimiento
+            <input type="date" formControlName="birthdate">
+            @if (basicForm.controls.birthdate.touched && basicForm.controls.birthdate.invalid) {
+              <small>La fecha de nacimiento es obligatoria.</small>
+            }
+          </label>
+
+          <label>
+            Ciudad
+            <input type="text" formControlName="city" placeholder="Tijuana">
+            @if (basicForm.controls.city.touched && basicForm.controls.city.invalid) {
+              <small>Escribe tu ciudad.</small>
+            }
+          </label>
+
+          <button class="btn primary full" type="submit" [disabled]="loading">
+            Continuar
+          </button>
+        </form>
+      }
+
+      @if (step === 2) {
+        <div class="form-card test-card">
+          <h2>Test de compatibilidad</h2>
+          <p class="warm-text">Responde del 1 al 5. No hay respuestas perfectas; solo buscamos conocerte mejor.</p>
+
+          @for (question of questions; track question.id) {
+            <article class="question-row">
+              <div>
+                <span>Pregunta {{ $index + 1 }}</span>
+                <h3>{{ question.text }}</h3>
+              </div>
+
+              <div class="answer-scale" role="group" aria-label="Respuesta del 1 al 5">
+                @for (value of [1, 2, 3, 4, 5]; track value) {
+                  <button
+                    type="button"
+                    [class.selected]="answers[question.id] === value"
+                    (click)="setAnswer(question.id, value)">
+                    {{ value }}
+                  </button>
+                }
+              </div>
+            </article>
+          } @empty {
+            <div class="empty-state">
+              <h3>No hay preguntas iniciales</h3>
+              <p>Revisa que la tabla questions tenga preguntas con is_initial = true.</p>
+            </div>
+          }
+
+          <div class="scale-help">
+            <span>1 = Totalmente en desacuerdo</span>
+            <span>5 = Totalmente de acuerdo</span>
+          </div>
+
+          <button
+            class="btn primary full"
+            type="button"
+            [disabled]="loading || questions.length === 0"
+            (click)="saveTestAndShowAura()">
+            Ver mi Aura
+          </button>
+        </div>
+      }
+
+      @if (step === 3 && aura) {
+        <div class="aura-card">
+          <span class="eyebrow">Tu Aura</span>
+          <h2>{{ aura.title }}</h2>
+          <p>{{ aura.phrase }}</p>
+          <p class="aura-note">Este resultado es orientativo y ayuda a sugerir conexiones con mas intencion.</p>
+
+          <button class="btn primary full" type="button" [disabled]="loading" (click)="finishOnboarding()">
+            Ir al Dashboard
+          </button>
+        </div>
+      }
+    }
   </div>
-
-  <form class="form-card" [formGroup]="form" (ngSubmit)="submit()">
-    <label>
-      Ciudad
-      <input type="text" formControlName="city" placeholder="Tijuana">
-    </label>
-
-    <label>
-      Biografia
-      <textarea formControlName="bio" rows="5" placeholder="Cuentanos que buscas, que te gusta y como te gusta conectar..."></textarea>
-      @if (form.controls.bio.touched && form.controls.bio.invalid) {
-        <small>Escribe al menos 20 caracteres.</small>
-      }
-    </label>
-
-    <label>
-      Foto de perfil
-      <input type="text" formControlName="photoProfile" placeholder="Puedes dejarlo vacio en esta version">
-    </label>
-
-    <div>
-      <h3>Elige minimo 3 intereses</h3>
-      <div class="chips selectable">
-        @for (interest of interests; track interest) {
-          <button
-            type="button"
-            class="chip-button"
-            [class.selected]="selectedInterests.has(interest)"
-            (click)="toggleInterest(interest)">
-            {{ interest }}
-          </button>
-        }
-      </div>
-      @if (selectedInterests.size < 3) {
-        <small>Selecciona minimo 3 intereses.</small>
-      }
-    </div>
-
-    <div class="form-grid">
-      <label>
-        Estilo de comunicacion
-        <select formControlName="communicationStyle">
-          @for (style of communicationStyles; track style) {
-            <option [value]="style">{{ style }}</option>
-          }
-        </select>
-      </label>
-
-      <label>
-        Lenguaje del amor
-        <select formControlName="loveLanguage">
-          @for (language of loveLanguages; track language) {
-            <option [value]="language">{{ language }}</option>
-          }
-        </select>
-      </label>
-    </div>
-
-    <div>
-      <h3>Dealbreakers no negociables</h3>
-      <p class="helper-text">Esto viene del enfoque de seguridad y compatibilidad del documento maestro.</p>
-      <div class="chips selectable">
-        @for (dealbreaker of dealbreakers; track dealbreaker) {
-          <button
-            type="button"
-            class="chip-button"
-            [class.selected]="selectedDealbreakers.has(dealbreaker)"
-            (click)="toggleDealbreaker(dealbreaker)">
-            {{ dealbreaker }}
-          </button>
-        }
-      </div>
-    </div>
-
-    <button class="btn primary full" type="submit">Guardar y continuar</button>
-  </form>
 </section>
