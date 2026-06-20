@@ -1,59 +1,97 @@
-# CitaPerfecta
+# Cita Perfecta
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.15.
+Cita Perfecta es una aplicacion web desarrollada con Angular para crear conexiones compatibles con un enfoque de respeto, seguridad y slow dating. El proyecto incluye registro, login con Supabase, pacto de respeto, onboarding, test de compatibilidad, perfiles sugeridos, likes con comentario, cartas de conexion, chat, ajustes y panel de administracion de perfiles.
 
-## Development server
+## Funcionalidades principales
 
-To start a local development server, run:
+- Autenticacion con Supabase Auth.
+- Perfil de usuario con intereses, estilo de comunicacion, lenguaje del amor y dealbreakers.
+- Pacto de respeto antes de entrar al flujo principal.
+- Test de compatibilidad y resultado de aura.
+- Feed de perfiles compatibles.
+- Like con comentario y cartas de conexion.
+- Chat basico y cierre amistoso.
+- Modo pausa, centro de seguridad y premium.
+- CRUD de perfiles sugeridos.
+- API externa Open-Meteo para sugerir planes segun el clima.
 
-```bash
-ng serve
-```
+## Tecnologias
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Angular 21
+- TypeScript
+- Supabase
+- Bootstrap
+- Vitest
 
-## Code scaffolding
+## Requisitos
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Node.js compatible con Angular 21
+- npm
+- Cuenta/proyecto en Supabase
 
-```bash
-ng generate component component-name
-```
+## Configuracion
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+1. Instala dependencias:
 
 ```bash
-ng test
+npm install
 ```
 
-## Running end-to-end tests
+2. Crea un proyecto en Supabase.
 
-For end-to-end (e2e) testing, run:
+3. Copia tus claves desde `Project Settings > API`.
+
+4. Pega los valores en:
+
+```ts
+// src/environments/environment.ts
+export const environment = {
+  production: false,
+  supabaseUrl: 'TU_SUPABASE_URL',
+  supabaseAnonKey: 'TU_SUPABASE_ANON_KEY'
+};
+```
+
+5. Ejecuta en Supabase el archivo:
+
+```text
+supabase/schema.sql
+```
+
+6. Para una demo escolar, puedes desactivar temporalmente `Confirm email` en Supabase Auth.
+
+## Scripts
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Ejecuta el servidor de desarrollo en `http://localhost:4200`.
 
-## Additional Resources
+```bash
+npm run build
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Genera la version de produccion en `dist/`.
+
+```bash
+npm test
+```
+
+Ejecuta las pruebas unitarias con Vitest.
+
+## Variables
+
+El archivo `.env.example` documenta las variables necesarias. No pegues llaves reales en ese archivo.
+
+## Organizacion
+
+- `src/app/core`: modelos, servicios, guards y utilidades.
+- `src/app/pages`: pantallas principales de la aplicacion.
+- `src/app/shared`: componentes reutilizables.
+- `src/environments`: configuracion de Supabase por ambiente.
+- `supabase`: SQL e instrucciones para la base de datos.
+
+## Estado del proyecto
+
+La aplicacion esta preparada para una entrega academica: usa Angular, componentes, servicios, routing, CRUD, responsive design, API externa y autenticacion con Supabase.

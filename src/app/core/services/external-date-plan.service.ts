@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 
-interface OpenMeteoCurrent {
+export interface OpenMeteoCurrent {
   temperature_2m: number;
   weather_code: number;
 }
@@ -32,6 +32,10 @@ export class ExternalDatePlanService {
       map((response) => this.toDatePlan(response.current)),
       catchError(() => of(this.fallbackPlan()))
     );
+  }
+
+  createPlanFromWeather(current: OpenMeteoCurrent): ExternalDatePlan {
+    return this.toDatePlan(current);
   }
 
   private toDatePlan(current: OpenMeteoCurrent): ExternalDatePlan {
