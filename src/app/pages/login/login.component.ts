@@ -31,15 +31,33 @@ export class LoginComponent {
     if (this.form.invalid || this.loading) return;
 
     this.loading = true;
-    const { email, password } = this.form.getRawValue();
-    const { error } = await this.supabase.signIn(email, password);
-    this.loading = false;
 
-    if (error) {
-      this.errorMessage = error.message;
-      return;
+    try {
+      const { email, password } = this.form.getRawValue();
+      const { error } = await this.withTimeout(
+        this.supabase.signIn(email, password),
+        'Supabase tardo demasiado en responder. Intenta de nuevo.'
+      );
+
+      if (error) {
+        this.errorMessage = error.message;
+        return;
+      }
+
+      await this.router.navigate(['/dashboard']);
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : 'No se pudo iniciar sesion.';
+    } finally {
+      this.loading = false;
     }
+  }
 
-    await this.router.navigate(['/dashboard']);
+  private withTimeout(promise: Promise<any>, message: string, ms = 15000): Promise<any> {
+    return Promise.race([
+      promise,
+      new Promise<any>((_, reject) => {
+        setTimeout(() => reject(new Error(message)), ms);
+      })
+    ]);
   }
 }
