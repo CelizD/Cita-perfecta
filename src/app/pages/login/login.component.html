@@ -6,6 +6,10 @@
   </div>
 
   <form class="form-card" [formGroup]="form" (ngSubmit)="submit()">
+    @if (!supabaseService.isConfigured) {
+      <p class="setup-alert">Conecta Supabase en environment.ts para activar el login real.</p>
+    }
+
     <label>
       Correo electronico
       <input type="email" formControlName="email" placeholder="correo@ejemplo.com" autocomplete="email">
@@ -29,6 +33,7 @@
     <button class="btn primary full" type="submit" [disabled]="loading">
       {{ loading ? 'Entrando...' : 'Entrar' }}
     </button>
+    <a class="auth-helper-link" routerLink="/recuperar-contrasena">Olvide mi contrasena</a>
     <p class="form-link">No tienes cuenta? <a routerLink="/registro">Crear cuenta</a></p>
   </form>
 </section>

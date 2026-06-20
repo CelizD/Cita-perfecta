@@ -1,1 +1,25 @@
-:host { display: block; }
+:host {
+  display: block;
+}
+
+.auth-helper-link {
+  color: var(--primary-dark);
+  display: block;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+}
+
+.auth-helper-link:hover {
+  text-decoration: underline;
+}
+
+.setup-alert {
+  background: #fff8e8;
+  border: 1px solid rgba(180, 118, 18, 0.2);
+  border-radius: 12px;
+  color: #8a5a08;
+  font-weight: 800;
+  margin: 0;
+  padding: 0.85rem;
+}

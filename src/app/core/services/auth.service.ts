@@ -104,6 +104,22 @@ export class AuthService {
     return { ok: true, message: 'Inicio de sesion correcto.' };
   }
 
+  async requestPasswordReset(email: string): Promise<AuthResult> {
+    const supabase = this.supabaseService.client;
+    if (!supabase) {
+      return { ok: false, message: this.supabaseService.requiredConfigMessage };
+    }
+
+    const redirectTo = `${window.location.origin}/login`;
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), { redirectTo });
+
+    if (error) {
+      return { ok: false, message: this.translateAuthError(error.message) };
+    }
+
+    return { ok: true, message: 'Te enviamos un correo para recuperar tu contrasena.' };
+  }
+
   logout(): void {
     void this.supabaseService.client?.auth.signOut();
     this.clearSession();

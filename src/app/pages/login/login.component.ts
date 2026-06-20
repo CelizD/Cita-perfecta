@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { SupabaseService } from '../../core/services/supabase.service';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +11,10 @@ import { AuthService } from '../../core/services/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  public supabaseService = inject(SupabaseService);
   private router = inject(Router);
 
   message = '';
@@ -22,6 +24,12 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   });
+
+  ngOnInit(): void {
+    if (this.authService.currentUser()) {
+      this.redirectAfterLogin();
+    }
+  }
 
   async submit(): Promise<void> {
     this.form.markAllAsTouched();
@@ -33,11 +41,15 @@ export class LoginComponent {
     this.message = result.message;
 
     if (result.ok) {
-      const user = this.authService.currentUser();
-      if (!user?.pactAccepted) this.router.navigate(['/pacto-respeto']);
-      else if (!user.profileComplete) this.router.navigate(['/onboarding']);
-      else if (!user.testComplete) this.router.navigate(['/test']);
-      else this.router.navigate(['/matches']);
+      this.redirectAfterLogin();
     }
+  }
+
+  private redirectAfterLogin(): void {
+    const user = this.authService.currentUser();
+    if (!user?.pactAccepted) this.router.navigate(['/pacto-respeto']);
+    else if (!user.profileComplete) this.router.navigate(['/onboarding']);
+    else if (!user.testComplete) this.router.navigate(['/test']);
+    else this.router.navigate(['/matches']);
   }
 }

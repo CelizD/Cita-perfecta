@@ -6,6 +6,10 @@
   </div>
 
   <form class="form-card" [formGroup]="form" (ngSubmit)="submit()">
+    @if (!supabaseService.isConfigured) {
+      <p class="setup-alert">Conecta Supabase en environment.ts para crear cuentas reales.</p>
+    }
+
     <label>
       Nombre
       <input type="text" formControlName="name" placeholder="Daniel Celiz" autocomplete="name">

@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { SupabaseService } from '../../core/services/supabase.service';
 
 @Component({
   selector: 'app-register',
@@ -10,9 +11,10 @@ import { AuthService } from '../../core/services/auth.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  public supabaseService = inject(SupabaseService);
   private router = inject(Router);
 
   message = '';
@@ -25,6 +27,12 @@ export class RegisterComponent {
     birthDate: ['', Validators.required],
     terms: [false, Validators.requiredTrue]
   });
+
+  ngOnInit(): void {
+    if (this.authService.currentUser()) {
+      this.router.navigate(['/matches']);
+    }
+  }
 
   async submit(): Promise<void> {
     this.form.markAllAsTouched();

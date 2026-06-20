@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RespectPactComponent } from './pages/respect-pact/respect-pact.component';
 import { OnboardingComponent } from './pages/onboarding/onboarding.component';
 import { CompatibilityTestComponent } from './pages/compatibility-test/compatibility-test.component';
@@ -20,6 +21,7 @@ export const routes: Routes = [
   { path: 'inicio', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegisterComponent },
+  { path: 'recuperar-contrasena', component: ForgotPasswordComponent },
   { path: 'pacto', redirectTo: 'pacto-respeto' },
   { path: 'pacto-respeto', component: RespectPactComponent, canActivate: [authGuard] },
   { path: 'onboarding', component: OnboardingComponent, canActivate: [authGuard] },
