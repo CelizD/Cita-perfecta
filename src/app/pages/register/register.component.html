@@ -16,9 +16,9 @@
 
     <label>
       Contrasena
-      <input type="password" formControlName="password" placeholder="Minimo 6 caracteres" autocomplete="new-password">
+      <input type="password" formControlName="password" placeholder="Minimo 8 caracteres, mayuscula y numero" autocomplete="new-password">
       @if (form.controls.password.touched && form.controls.password.invalid) {
-        <small>La contrasena debe tener minimo 6 caracteres.</small>
+        <small>Usa minimo 8 caracteres, una mayuscula, una minuscula y un numero.</small>
       }
     </label>
 

@@ -23,7 +23,7 @@ export class RegisterComponent {
   form = this.fb.nonNullable.group(
     {
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8), this.strongPasswordValidator]],
       confirmPassword: ['', [Validators.required]]
     },
     { validators: this.passwordsMatchValidator }
@@ -46,7 +46,12 @@ export class RegisterComponent {
       );
 
       if (error) {
-        this.errorMessage = error.message;
+        this.errorMessage = this.translateSignUpError(error.message);
+        return;
+      }
+
+      if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+        this.errorMessage = 'Este correo ya esta registrado. Inicia sesion o usa recuperar contrasena.';
         return;
       }
 
@@ -70,6 +75,43 @@ export class RegisterComponent {
         setTimeout(() => reject(new Error(message)), ms);
       })
     ]);
+  }
+
+  private strongPasswordValidator(control: AbstractControl): ValidationErrors | null {
+    const value = String(control.value ?? '');
+    if (!value) return null;
+
+    const hasUppercase = /[A-Z]/.test(value);
+    const hasLowercase = /[a-z]/.test(value);
+    const hasNumber = /\d/.test(value);
+
+    return hasUppercase && hasLowercase && hasNumber ? null : { weakPassword: true };
+  }
+
+  private translateSignUpError(message: string): string {
+    const normalized = message.toLowerCase();
+
+    if (
+      normalized.includes('already registered') ||
+      normalized.includes('already been registered') ||
+      normalized.includes('user already registered')
+    ) {
+      return 'Este correo ya esta registrado. Inicia sesion o usa recuperar contrasena.';
+    }
+
+    if (normalized.includes('password')) {
+      return 'La contrasena debe tener minimo 8 caracteres, una mayuscula, una minuscula y un numero.';
+    }
+
+    if (normalized.includes('email') || normalized.includes('invalid')) {
+      return 'Revisa que el correo sea valido. Si ya existe, intenta iniciar sesion.';
+    }
+
+    if (normalized.includes('database') || normalized.includes('profile')) {
+      return 'Supabase no pudo crear el perfil. Ejecuta la migracion fix_signup_profile_trigger.sql en Supabase.';
+    }
+
+    return `No se pudo crear la cuenta: ${message}`;
   }
 
   private passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {

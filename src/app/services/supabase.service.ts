@@ -21,9 +21,16 @@ export class SupabaseService {
     const supabase = this.requireClient();
     if (!supabase) return Promise.resolve(this.notConfiguredResponse());
 
+    const normalizedEmail = email.trim().toLowerCase();
     return supabase.auth.signUp({
-      email,
-      password
+      email: normalizedEmail,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/login`,
+        data: {
+          name: normalizedEmail.split('@')[0]
+        }
+      }
     });
   }
 
@@ -32,7 +39,7 @@ export class SupabaseService {
     if (!supabase) return Promise.resolve(this.notConfiguredResponse());
 
     return supabase.auth.signInWithPassword({
-      email,
+      email: email.trim().toLowerCase(),
       password
     });
   }
