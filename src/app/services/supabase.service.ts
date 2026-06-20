@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { createClient, RealtimeChannel, SupabaseClient, User } from '@supabase/supabase-js';
-import { environment } from '../../environments/environment';
+import { RealtimeChannel, SupabaseClient, User } from '@supabase/supabase-js';
+import { getSupabaseClient, isSupabaseConfigured } from '../core/services/supabase-client';
 
 export interface Question {
   id: number;
@@ -13,21 +13,9 @@ export interface Question {
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
-  private supabase: SupabaseClient | null = null;
-  readonly isConfigured = this.isValidSupabaseConfig();
+  private supabase: SupabaseClient | null = getSupabaseClient();
+  readonly isConfigured = isSupabaseConfigured();
   readonly configMessage = 'Configura Supabase en src/environments/environment.ts con una URL https://...supabase.co y tu anon public key.';
-
-  constructor() {
-    if (!this.isConfigured) return;
-
-    this.supabase = createClient(environment.supabase.url, environment.supabase.anonKey, {
-      auth: {
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-        persistSession: true
-      }
-    });
-  }
 
   signUp(email: string, password: string) {
     const supabase = this.requireClient();
@@ -448,22 +436,6 @@ export class SupabaseService {
 
   private requireClient(): SupabaseClient | null {
     return this.supabase;
-  }
-
-  private isValidSupabaseConfig(): boolean {
-    const url = environment.supabase.url;
-    const anonKey = environment.supabase.anonKey;
-
-    if (!url || !anonKey || url === 'TU_URL_AQUI' || anonKey === 'TU_ANON_KEY_AQUI') {
-      return false;
-    }
-
-    try {
-      const parsed = new URL(url);
-      return parsed.protocol === 'http:' || parsed.protocol === 'https:';
-    } catch {
-      return false;
-    }
   }
 
   private notConfiguredResponse(data: unknown = null) {
