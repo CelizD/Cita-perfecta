@@ -4,9 +4,14 @@ import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
-  readonly isConfigured = Boolean(environment.supabaseUrl && environment.supabaseAnonKey);
+  readonly isConfigured = Boolean(
+    environment.supabase.url &&
+      environment.supabase.anonKey &&
+      environment.supabase.url !== 'TU_URL_AQUI' &&
+      environment.supabase.anonKey !== 'TU_ANON_KEY_AQUI'
+  );
   readonly client: SupabaseClient | null = this.isConfigured
-    ? createClient(environment.supabaseUrl, environment.supabaseAnonKey, {
+    ? createClient(environment.supabase.url, environment.supabase.anonKey, {
         auth: {
           autoRefreshToken: true,
           detectSessionInUrl: true,
@@ -16,6 +21,6 @@ export class SupabaseService {
     : null;
 
   get requiredConfigMessage(): string {
-    return 'Falta configurar Supabase. Pega tu supabaseUrl y supabaseAnonKey en src/environments/environment.ts.';
+    return 'Falta configurar Supabase. Pega environment.supabase.url y environment.supabase.anonKey en src/environments/environment.ts.';
   }
 }

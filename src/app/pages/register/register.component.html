@@ -1,23 +1,11 @@
 <section class="auth-layout">
   <div class="auth-copy">
-    <span class="eyebrow">Empieza con respeto</span>
+    <span class="eyebrow">Cita Perfecta</span>
     <h1>Crear cuenta</h1>
-    <p>Registrate para completar tu perfil, aceptar el pacto de respeto y responder el test de compatibilidad.</p>
+    <p>Registrate para completar tu perfil, responder el test y empezar a conectar con respeto.</p>
   </div>
 
   <form class="form-card" [formGroup]="form" (ngSubmit)="submit()">
-    @if (!supabaseService.isConfigured) {
-      <p class="setup-alert">Conecta Supabase en environment.ts para crear cuentas reales.</p>
-    }
-
-    <label>
-      Nombre
-      <input type="text" formControlName="name" placeholder="Daniel Celiz" autocomplete="name">
-      @if (form.controls.name.touched && form.controls.name.invalid) {
-        <small>Escribe tu nombre completo.</small>
-      }
-    </label>
-
     <label>
       Correo electronico
       <input type="email" formControlName="email" placeholder="correo@ejemplo.com" autocomplete="email">
@@ -35,25 +23,25 @@
     </label>
 
     <label>
-      Fecha de nacimiento
-      <input type="date" formControlName="birthDate">
-      @if (form.controls.birthDate.touched && form.controls.birthDate.invalid) {
-        <small>La fecha de nacimiento es obligatoria.</small>
+      Confirmar contrasena
+      <input type="password" formControlName="confirmPassword" placeholder="Repite tu contrasena" autocomplete="new-password">
+      @if (form.controls.confirmPassword.touched && form.hasError('passwordsMismatch')) {
+        <small>Las contrasenas no coinciden.</small>
       }
     </label>
 
-    <label class="check-row">
-      <input type="checkbox" formControlName="terms">
-      <span>Acepto terminos, privacidad y usar la app con respeto.</span>
-    </label>
+    @if (errorMessage) {
+      <div class="alert">{{ errorMessage }}</div>
+    }
 
-    @if (message) {
-      <p class="alert">{{ message }}</p>
+    @if (successMessage) {
+      <div class="alert success">{{ successMessage }}</div>
     }
 
     <button class="btn primary full" type="submit" [disabled]="loading">
-      {{ loading ? 'Creando cuenta...' : 'Registrarme' }}
+      {{ loading ? 'Creando cuenta...' : 'Crear cuenta' }}
     </button>
+
     <p class="form-link">Ya tienes cuenta? <a routerLink="/login">Inicia sesion</a></p>
   </form>
 </section>

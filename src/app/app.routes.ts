@@ -1,38 +1,92 @@
 import { Routes } from '@angular/router';
-import { WelcomeComponent } from './pages/welcome/welcome.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
-import { RespectPactComponent } from './pages/respect-pact/respect-pact.component';
-import { OnboardingComponent } from './pages/onboarding/onboarding.component';
-import { CompatibilityTestComponent } from './pages/compatibility-test/compatibility-test.component';
-import { AuraComponent } from './pages/aura/aura.component';
-import { MatchListComponent } from './pages/match-list/match-list.component';
-import { ProfileDetailComponent } from './pages/profile-detail/profile-detail.component';
-import { ChatListComponent } from './pages/chat-list/chat-list.component';
-import { ChatComponent } from './pages/chat/chat.component';
-import { SettingsComponent } from './pages/settings/settings.component';
-import { PremiumComponent } from './pages/premium/premium.component';
-import { ProfileCrudComponent } from './pages/profile-crud/profile-crud.component';
-import { authGuard } from './core/guards/auth.guard';
+import { authGuard, publicGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'inicio' },
-  { path: 'inicio', component: WelcomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'registro', component: RegisterComponent },
-  { path: 'recuperar-contrasena', component: ForgotPasswordComponent },
-  { path: 'pacto', redirectTo: 'pacto-respeto' },
-  { path: 'pacto-respeto', component: RespectPactComponent, canActivate: [authGuard] },
-  { path: 'onboarding', component: OnboardingComponent, canActivate: [authGuard] },
-  { path: 'test', component: CompatibilityTestComponent, canActivate: [authGuard] },
-  { path: 'aura', component: AuraComponent, canActivate: [authGuard] },
-  { path: 'matches', component: MatchListComponent, canActivate: [authGuard] },
-  { path: 'perfil/:id', component: ProfileDetailComponent, canActivate: [authGuard] },
-  { path: 'chats', component: ChatListComponent, canActivate: [authGuard] },
-  { path: 'chat/:id', component: ChatComponent, canActivate: [authGuard] },
-  { path: 'ajustes', component: SettingsComponent, canActivate: [authGuard] },
-  { path: 'premium', component: PremiumComponent, canActivate: [authGuard] },
-  { path: 'crud-perfiles', component: ProfileCrudComponent, canActivate: [authGuard] },
-  { path: '**', redirectTo: 'inicio' }
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: 'inicio', pathMatch: 'full', redirectTo: 'dashboard' },
+  {
+    path: 'login',
+    canActivate: [publicGuard],
+    loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent)
+  },
+  {
+    path: 'register',
+    canActivate: [publicGuard],
+    loadComponent: () => import('./pages/register/register.component').then((m) => m.RegisterComponent)
+  },
+  { path: 'registro', pathMatch: 'full', redirectTo: 'register' },
+  {
+    path: 'recuperar-contrasena',
+    canActivate: [publicGuard],
+    loadComponent: () =>
+      import('./pages/forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent)
+  },
+  {
+    path: 'dashboard',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/welcome/welcome.component').then((m) => m.WelcomeComponent)
+  },
+  {
+    path: 'profile',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/onboarding/onboarding.component').then((m) => m.OnboardingComponent)
+  },
+  { path: 'pacto', pathMatch: 'full', redirectTo: 'pacto-respeto' },
+  {
+    path: 'pacto-respeto',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/respect-pact/respect-pact.component').then((m) => m.RespectPactComponent)
+  },
+  {
+    path: 'onboarding',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/onboarding/onboarding.component').then((m) => m.OnboardingComponent)
+  },
+  {
+    path: 'test',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/compatibility-test/compatibility-test.component').then((m) => m.CompatibilityTestComponent)
+  },
+  {
+    path: 'aura',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/aura/aura.component').then((m) => m.AuraComponent)
+  },
+  {
+    path: 'matches',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/match-list/match-list.component').then((m) => m.MatchListComponent)
+  },
+  {
+    path: 'perfil/:id',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/profile-detail/profile-detail.component').then((m) => m.ProfileDetailComponent)
+  },
+  {
+    path: 'chats',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/chat-list/chat-list.component').then((m) => m.ChatListComponent)
+  },
+  {
+    path: 'chat/:id',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/chat/chat.component').then((m) => m.ChatComponent)
+  },
+  {
+    path: 'ajustes',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/settings/settings.component').then((m) => m.SettingsComponent)
+  },
+  {
+    path: 'premium',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/premium/premium.component').then((m) => m.PremiumComponent)
+  },
+  {
+    path: 'crud-perfiles',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/profile-crud/profile-crud.component').then((m) => m.ProfileCrudComponent)
+  },
+  { path: '**', redirectTo: 'login' }
 ];

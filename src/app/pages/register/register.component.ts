@@ -1,59 +1,64 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
-import { SupabaseService } from '../../core/services/supabase.service';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   private fb = inject(FormBuilder);
-  private authService = inject(AuthService);
-  public supabaseService = inject(SupabaseService);
   private router = inject(Router);
+  private supabase = inject(SupabaseService);
 
-  message = '';
   loading = false;
+  errorMessage = '';
+  successMessage = '';
 
-  form = this.fb.nonNullable.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-    birthDate: ['', Validators.required],
-    terms: [false, Validators.requiredTrue]
-  });
-
-  ngOnInit(): void {
-    if (this.authService.currentUser()) {
-      this.router.navigate(['/matches']);
-    }
-  }
+  form = this.fb.nonNullable.group(
+    {
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]]
+    },
+    { validators: this.passwordsMatchValidator }
+  );
 
   async submit(): Promise<void> {
     this.form.markAllAsTouched();
+    this.errorMessage = '';
+    this.successMessage = '';
+
     if (this.form.invalid || this.loading) return;
 
     this.loading = true;
-    const result = await this.authService.register({
-      name: this.form.controls.name.value,
-      email: this.form.controls.email.value,
-      password: this.form.controls.password.value,
-      birthDate: this.form.controls.birthDate.value
-    });
+    const { email, password } = this.form.getRawValue();
+    const { data, error } = await this.supabase.signUp(email, password);
     this.loading = false;
 
-    this.message = result.message;
-    if (result.ok) {
-      if (this.authService.currentUser()) {
-        this.router.navigate(['/pacto-respeto']);
-      } else {
-        this.router.navigate(['/login']);
-      }
+    if (error) {
+      this.errorMessage = error.message;
+      return;
     }
+
+    if (data.session) {
+      await this.router.navigate(['/profile']);
+      return;
+    }
+
+    this.successMessage = 'Cuenta creada. Revisa tu correo para verificar tu cuenta antes de iniciar sesion.';
+  }
+
+  private passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+
+    if (!password || !confirmPassword) return null;
+    return password === confirmPassword ? null : { passwordsMismatch: true };
   }
 }
