@@ -2,7 +2,7 @@
   <div class="section-title">
     <span class="eyebrow">Cuenta y privacidad</span>
     <h1>Ajustes</h1>
-    <p>Administra tu perfil, modo pausa, seguridad y plan premium.</p>
+    <p>Administra tu perfil, modo pausa, seguridad, consentimiento y plan premium.</p>
   </div>
 
   <div class="settings-list">
@@ -17,15 +17,31 @@
     <button class="settings-row" type="button" (click)="togglePause()">
       <div>
         <h3>Modo Pausa</h3>
-        <p>No apareceras en nuevas recomendaciones mientras este activo.</p>
+        <p>Pausa tu perfil para descansar sin perder tus chats actuales.</p>
       </div>
       <span>{{ authService.currentUser()?.pauseMode ? 'Activo' : 'Inactivo' }}</span>
     </button>
 
+    <div class="settings-row info-row">
+      <div>
+        <h3>Low-Stimulation</h3>
+        <p>Modo calmado del documento: menos ruido visual, menos estimulos y una experiencia mas tranquila.</p>
+      </div>
+      <span>MVP</span>
+    </div>
+
+    <div class="settings-row info-row">
+      <div>
+        <h3>Centro de seguridad</h3>
+        <p>Incluye reportes, bloqueos, privacidad y consentimiento para usar datos de compatibilidad.</p>
+      </div>
+      <span>Activo</span>
+    </div>
+
     <a class="settings-row" routerLink="/premium">
       <div>
         <h3>Plan Premium</h3>
-        <p>Administra los beneficios premium de la cuenta.</p>
+        <p>Premium vende privacidad, control y calidad, no frustracion.</p>
       </div>
       <span>{{ authService.currentUser()?.premium ? 'Activo' : 'Ver' }}</span>
     </a>

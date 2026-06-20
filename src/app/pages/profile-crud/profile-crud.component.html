@@ -57,6 +57,28 @@
         <input formControlName="traits" placeholder="Honestidad, Calma, Empatia" />
       </label>
 
+      <div class="form-grid">
+        <label>
+          Estilo de comunicacion
+          <input formControlName="communicationStyle" placeholder="Tranquilo y reflexivo" />
+        </label>
+
+        <label>
+          Lenguaje del amor
+          <input formControlName="loveLanguage" placeholder="Tiempo de calidad" />
+        </label>
+      </div>
+
+      <label>
+        Dealbreakers separados por coma
+        <input formControlName="dealbreakers" placeholder="Falta de respeto, Ghosting constante" />
+      </label>
+
+      <label>
+        Prompt para carta de conexion
+        <textarea rows="3" formControlName="prompt" placeholder="Ej. Escribeme sobre un plan tranquilo que disfrutarias"></textarea>
+      </label>
+
       <div class="form-actions">
         <button class="btn primary" type="submit">{{ editingId ? 'Guardar cambios' : 'Crear perfil' }}</button>
         @if (editingId) {
@@ -96,6 +118,14 @@
             </div>
 
             <p class="bio">{{ profile.bio }}</p>
+
+            <div class="admin-meta">
+              <span>{{ profile.communicationStyle || 'Conexion tranquila' }}</span>
+              <span>{{ profile.loveLanguage || 'Tiempo de calidad' }}</span>
+              @if (profile.prompt) {
+                <span>{{ profile.prompt }}</span>
+              }
+            </div>
 
             <div class="chips">
               @for (interest of profile.interests; track interest) {

@@ -42,6 +42,42 @@
       }
     </div>
 
+    <div class="form-grid">
+      <label>
+        Estilo de comunicacion
+        <select formControlName="communicationStyle">
+          @for (style of communicationStyles; track style) {
+            <option [value]="style">{{ style }}</option>
+          }
+        </select>
+      </label>
+
+      <label>
+        Lenguaje del amor
+        <select formControlName="loveLanguage">
+          @for (language of loveLanguages; track language) {
+            <option [value]="language">{{ language }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    <div>
+      <h3>Dealbreakers no negociables</h3>
+      <p class="helper-text">Esto viene del enfoque de seguridad y compatibilidad del documento maestro.</p>
+      <div class="chips selectable">
+        @for (dealbreaker of dealbreakers; track dealbreaker) {
+          <button
+            type="button"
+            class="chip-button"
+            [class.selected]="selectedDealbreakers.has(dealbreaker)"
+            (click)="toggleDealbreaker(dealbreaker)">
+            {{ dealbreaker }}
+          </button>
+        }
+      </div>
+    </div>
+
     <button class="btn primary full" type="submit">Guardar y continuar</button>
   </form>
 </section>

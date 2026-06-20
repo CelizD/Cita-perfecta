@@ -1,0 +1,2136 @@
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/user.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/onboarding/onboarding.component.ts:4:28:
+[37m      4 │ import { UserService } from [32m'../../core/services/user.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/onboarding/onboarding.component.ts:21:14:
+[37m      21 │   interests = [32mthis.userService[37m.interests;
+         ╵               [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/onboarding/onboarding.component.ts:41:4:
+[37m      41 │     [32mthis.userService[37m.saveProfile({
+         ╵     [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/user.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:4:28:
+[37m      4 │ import { UserService } from [32m'../../core/services/user.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/user.service"[0m
+
+    src/app/pages/onboarding/onboarding.component.ts:4:28:
+[37m      4 │ import { UserService } from [32m'../../core/services/user.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/user.service"[0m
+
+    src/app/pages/settings/settings.component.ts:5:20:
+[37m      5 │ import * as i2 from [32m"../../core/services/user.service"[37m;
+        ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/user.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/onboarding/onboarding.component.ts:4:28:
+[37m      4 │ import { UserService } from [32m'../../core/services/user.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/onboarding/onboarding.component.ts:21:14:
+[37m      21 │   interests = [32mthis.userService[37m.interests;
+         ╵               [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/onboarding/onboarding.component.ts:41:4:
+[37m      41 │     [32mthis.userService[37m.saveProfile({
+         ╵     [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/user.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:4:28:
+[37m      4 │ import { UserService } from [32m'../../core/services/user.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/user.service"[0m
+
+    src/app/pages/onboarding/onboarding.component.ts:4:28:
+[37m      4 │ import { UserService } from [32m'../../core/services/user.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/user.service"[0m
+
+    src/app/pages/settings/settings.component.ts:5:20:
+[37m      5 │ import * as i2 from [32m"../../core/services/user.service"[37m;
+        ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './profile-crud.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/chat.service.ts:5:35:
+[37m      5 │ import { ProfileCrudService } from [32m'./profile-crud.service'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'profile' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/chat.service.ts:19:79:
+[37m      19 │ ...is.profileCrudService.getProfiles().map(([32mprofile[37m) => profile.id));
+         ╵                                             [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './profile-crud.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:3:35:
+[37m      3 │ import { ProfileCrudService } from [32m'./profile-crud.service'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'profile' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:53:14:
+[37m      53 │         .map(([32mprofile[37m) => ({
+         ╵               [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'a' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:57:15:
+[37m      57 │         .sort(([32ma[37m, b) => (b.compatibility ?? 0) - (a.compatibility ...
+         ╵                [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'b' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:57:18:
+[37m      57 │         .sort((a, [32mb[37m) => (b.compatibility ?? 0) - (a.compatibility ...
+         ╵                   [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'profile' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:66:12:
+[37m      66 │       .map(([32mprofile[37m) => {
+         ╵             [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'a' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:73:13:
+[37m      73 │       .sort(([32ma[37m, b) => (b.compatibility ?? 0) - (a.compatibility ??...
+         ╵              [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'b' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:73:16:
+[37m      73 │       .sort((a, [32mb[37m) => (b.compatibility ?? 0) - (a.compatibility ??...
+         ╵                 [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/profile-crud.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:4:35:
+[37m      4 │ ...ofileCrudService } from [32m'../../core/services/profile-crud.service'[37m;
+        ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:33:11:
+[37m      33 │     return [32mthis.profileCrudService[37m.getProfiles();
+         ╵            [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:71:6:
+[37m      71 │       [32mthis.profileCrudService[37m.updateProfile(this.editingId, payload);
+         ╵       [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:74:6:
+[37m      74 │       [32mthis.profileCrudService[37m.createProfile(payload);
+         ╵       [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:105:4:
+[37m      105 │     [32mthis.profileCrudService[37m.deleteProfile(id);
+          ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./profile-crud.service"[0m
+
+    src/app/core/services/chat.service.ts:4:20:
+[37m      4 │ import * as i2 from [32m"./profile-crud.service"[37m;
+        ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./profile-crud.service"[0m
+
+    src/app/core/services/compatibility.service.ts:5:20:
+[37m      5 │ import * as i2 from [32m"./profile-crud.service"[37m;
+        ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/profile-crud.service"[0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:4:35:
+[37m      4 │ ...ofileCrudService } from [32m'../../core/services/profile-crud.service'[37m;
+        ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './profile-crud.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/chat.service.ts:5:35:
+[37m      5 │ import { ProfileCrudService } from [32m'./profile-crud.service'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'profile' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/chat.service.ts:19:79:
+[37m      19 │ ...is.profileCrudService.getProfiles().map(([32mprofile[37m) => profile.id));
+         ╵                                             [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './profile-crud.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:3:35:
+[37m      3 │ import { ProfileCrudService } from [32m'./profile-crud.service'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'profile' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:53:14:
+[37m      53 │         .map(([32mprofile[37m) => ({
+         ╵               [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'a' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:57:15:
+[37m      57 │         .sort(([32ma[37m, b) => (b.compatibility ?? 0) - (a.compatibility ...
+         ╵                [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'b' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:57:18:
+[37m      57 │         .sort((a, [32mb[37m) => (b.compatibility ?? 0) - (a.compatibility ...
+         ╵                   [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'profile' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:66:12:
+[37m      66 │       .map(([32mprofile[37m) => {
+         ╵             [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'a' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:73:13:
+[37m      73 │       .sort(([32ma[37m, b) => (b.compatibility ?? 0) - (a.compatibility ??...
+         ╵              [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'b' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:73:16:
+[37m      73 │       .sort((a, [32mb[37m) => (b.compatibility ?? 0) - (a.compatibility ??...
+         ╵                 [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/profile-crud.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:4:35:
+[37m      4 │ ...ofileCrudService } from [32m'../../core/services/profile-crud.service'[37m;
+        ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:33:11:
+[37m      33 │     return [32mthis.profileCrudService[37m.getProfiles();
+         ╵            [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:71:6:
+[37m      71 │       [32mthis.profileCrudService[37m.updateProfile(this.editingId, payload);
+         ╵       [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:74:6:
+[37m      74 │       [32mthis.profileCrudService[37m.createProfile(payload);
+         ╵       [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:105:4:
+[37m      105 │     [32mthis.profileCrudService[37m.deleteProfile(id);
+          ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./profile-crud.service"[0m
+
+    src/app/core/services/chat.service.ts:4:20:
+[37m      4 │ import * as i2 from [32m"./profile-crud.service"[37m;
+        ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./profile-crud.service"[0m
+
+    src/app/core/services/compatibility.service.ts:5:20:
+[37m      5 │ import * as i2 from [32m"./profile-crud.service"[37m;
+        ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/profile-crud.service"[0m
+
+    src/app/pages/profile-crud/profile-crud.component.ts:4:35:
+[37m      4 │ ...ofileCrudService } from [32m'../../core/services/profile-crud.service'[37m;
+        ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'UserId' is not assignable to type 'number'.
+  Type 'string' is not assignable to type 'number'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:18:6:
+[37m      18 │       [32mfromUserId[37m: user.id,
+         ╵       [32m~~~~~~~~~~[0m
+
+  The expected type comes from property 'fromUserId' which is declared here on type 'Like'
+
+    src/app/core/models/match.model.ts:2:2:
+[37m      2 │   [32mfromUserId[37m: number;
+        ╵   [32m~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2345: Argument of type 'UserId' is not assignable to parameter of type 'number'.
+  Type 'string' is not assignable to type 'number'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:28:33:
+[37m      28 │ ...eturn this.createOrGetMatch([32muser.id[37m, toProfileId, profileName, ...
+         ╵                                [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'UserId' is not assignable to type 'number'.
+  Type 'string' is not assignable to type 'number'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:37:6:
+[37m      37 │       [32mfromUserId[37m: user.id,
+         ╵       [32m~~~~~~~~~~[0m
+
+  The expected type comes from property 'fromUserId' which is declared here on type 'ConnectionLetter'
+
+    src/app/core/models/match.model.ts:9:2:
+[37m      9 │   [32mfromUserId[37m: number;
+        ╵   [32m~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'UserId' is not assignable to type 'number'.
+  Type 'string' is not assignable to type 'number'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:18:6:
+[37m      18 │       [32mfromUserId[37m: user.id,
+         ╵       [32m~~~~~~~~~~[0m
+
+  The expected type comes from property 'fromUserId' which is declared here on type 'Report'
+
+    src/app/core/models/report.model.ts:2:2:
+[37m      2 │   [32mfromUserId[37m: number;
+        ╵   [32m~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2345: Argument of type 'UserId' is not assignable to parameter of type 'number'.
+  Type 'string' is not assignable to type 'number'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:28:33:
+[37m      28 │ ...eturn this.createOrGetMatch([32muser.id[37m, toProfileId, profileName, ...
+         ╵                                [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'UserId' is not assignable to type 'number'.
+  Type 'string' is not assignable to type 'number'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:18:6:
+[37m      18 │       [32mfromUserId[37m: user.id,
+         ╵       [32m~~~~~~~~~~[0m
+
+  The expected type comes from property 'fromUserId' which is declared here on type 'Report'
+
+    src/app/core/models/report.model.ts:2:2:
+[37m      2 │   [32mfromUserId[37m: number;
+        ╵   [32m~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2345: Argument of type 'UserId' is not assignable to parameter of type 'number'.
+  Type 'string' is not assignable to type 'number'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:28:33:
+[37m      28 │ ...eturn this.createOrGetMatch([32muser.id[37m, toProfileId, profileName, ...
+         ╵                                [32m~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/guards/auth.guard.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'../services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS18046: 'authService' is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/guards/auth.guard.ts:9:6:
+[37m      9 │   if ([32mauthService[37m.isLoggedIn()) {
+        ╵       [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:2:28:
+[37m      2 │ import { AuthService } from [32m'./auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'CompatibilityService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:26:12:
+[37m      26 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/compatibility.service.ts:26:25:
+[37m      26 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'./auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'MatchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:12:22:
+[37m      12 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/match.service.ts:12:35:
+[37m      12 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:2:28:
+[37m      2 │ import { AuthService } from [32m'./auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:15:22:
+[37m      15 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/premium.service.ts:15:35:
+[37m      15 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'./auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'ReportService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:10:22:
+[37m      10 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/report.service.ts:10:35:
+[37m      10 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:2:28:
+[37m      2 │ import { AuthService } from [32m'./auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'UserService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:44:22:
+[37m      44 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/user.service.ts:44:35:
+[37m      44 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/login/login.component.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/login/login.component.ts:29:19:
+[37m      29 │     const result = [32mthis.authService[37m.login(this.form.controls.email...
+         ╵                    [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/login/login.component.ts:33:19:
+[37m      33 │       const user = [32mthis.authService[37m.currentUser();
+         ╵                    [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/onboarding/onboarding.component.ts:5:28:
+[37m      5 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:16:11:
+[37m      16 │     public [32mauthService[37m: AuthService
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/premium/premium.component.ts:16:24:
+[37m      16 │     public authService: [32mAuthService[37m
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/register/register.component.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/register/register.component.ts:32:19:
+[37m      32 │     const result = [32mthis.authService[37m.register({
+         ╵                    [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'RespectPactComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:12:
+[37m      22 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:25:
+[37m      22 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'SettingsComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:15:11:
+[37m      15 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/settings/settings.component.ts:15:24:
+[37m      15 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:6:28:
+[37m      6 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'WelcomeComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:27:11:
+[37m      27 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/welcome/welcome.component.ts:27:24:
+[37m      27 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'NavbarComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:14:11:
+[37m      14 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/shared/navbar/navbar.component.ts:14:24:
+[37m      14 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../services/auth.service"[0m
+
+    src/app/core/guards/auth.guard.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'../services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/auth.service"[0m
+
+    src/app/pages/login/login.component.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/auth.service"[0m
+
+    src/app/pages/onboarding/onboarding.component.ts:5:28:
+[37m      5 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/auth.service"[0m
+
+    src/app/pages/register/register.component.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/guards/auth.guard.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'../services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS18046: 'authService' is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/guards/auth.guard.ts:9:6:
+[37m      9 │   if ([32mauthService[37m.isLoggedIn()) {
+        ╵       [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:2:28:
+[37m      2 │ import { AuthService } from [32m'./auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'CompatibilityService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:26:12:
+[37m      26 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/compatibility.service.ts:26:25:
+[37m      26 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'./auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'MatchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:12:22:
+[37m      12 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/match.service.ts:12:35:
+[37m      12 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:2:28:
+[37m      2 │ import { AuthService } from [32m'./auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:15:22:
+[37m      15 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/premium.service.ts:15:35:
+[37m      15 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'./auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'ReportService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:10:22:
+[37m      10 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/report.service.ts:10:35:
+[37m      10 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:2:28:
+[37m      2 │ import { AuthService } from [32m'./auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'UserService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:44:22:
+[37m      44 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/user.service.ts:44:35:
+[37m      44 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/login/login.component.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/login/login.component.ts:29:19:
+[37m      29 │     const result = [32mthis.authService[37m.login(this.form.controls.email...
+         ╵                    [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/login/login.component.ts:33:19:
+[37m      33 │       const user = [32mthis.authService[37m.currentUser();
+         ╵                    [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/onboarding/onboarding.component.ts:5:28:
+[37m      5 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:16:11:
+[37m      16 │     public [32mauthService[37m: AuthService
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/premium/premium.component.ts:16:24:
+[37m      16 │     public authService: [32mAuthService[37m
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/register/register.component.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/register/register.component.ts:32:19:
+[37m      32 │     const result = [32mthis.authService[37m.register({
+         ╵                    [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'RespectPactComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:12:
+[37m      22 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:25:
+[37m      22 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'SettingsComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:15:11:
+[37m      15 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/settings/settings.component.ts:15:24:
+[37m      15 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:6:28:
+[37m      6 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'WelcomeComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:27:11:
+[37m      27 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/welcome/welcome.component.ts:27:24:
+[37m      27 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../core/services/auth.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'NavbarComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:14:11:
+[37m      14 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/shared/navbar/navbar.component.ts:14:24:
+[37m      14 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../services/auth.service"[0m
+
+    src/app/core/guards/auth.guard.ts:3:28:
+[37m      3 │ import { AuthService } from [32m'../services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/auth.service"[0m
+
+    src/app/pages/login/login.component.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/auth.service"[0m
+
+    src/app/pages/onboarding/onboarding.component.ts:5:28:
+[37m      5 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../core/services/auth.service"[0m
+
+    src/app/pages/register/register.component.ts:4:28:
+[37m      4 │ import { AuthService } from [32m'../../core/services/auth.service'[37m;
+        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'CompatibilityService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:26:12:
+[37m      26 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/compatibility.service.ts:26:25:
+[37m      26 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'MatchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:12:22:
+[37m      12 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/match.service.ts:12:35:
+[37m      12 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:15:22:
+[37m      15 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/premium.service.ts:15:35:
+[37m      15 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'ReportService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:10:22:
+[37m      10 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/report.service.ts:10:35:
+[37m      10 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'UserService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:44:22:
+[37m      44 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/user.service.ts:44:35:
+[37m      44 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:16:11:
+[37m      16 │     public [32mauthService[37m: AuthService
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/premium/premium.component.ts:16:24:
+[37m      16 │     public authService: [32mAuthService[37m
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'message' does not exist on type 'Promise<AuthResult>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/register/register.component.ts:39:26:
+[37m      39 │     this.message = result.[32mmessage[37m;
+         ╵                           [32m~~~~~~~[0m
+
+  Did you forget to use 'await'?
+
+    src/app/pages/register/register.component.ts:39:26:
+[37m      39 │     this.message = result.[32mmessage[37m;
+         ╵                           [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'ok' does not exist on type 'Promise<AuthResult>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/register/register.component.ts:40:15:
+[37m      40 │     if (result.[32mok[37m) {
+         ╵                [32m~~[0m
+
+  Did you forget to use 'await'?
+
+    src/app/pages/register/register.component.ts:40:15:
+[37m      40 │     if (result.[32mok[37m) {
+         ╵                [32m~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'RespectPactComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:12:
+[37m      22 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:25:
+[37m      22 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'SettingsComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:15:11:
+[37m      15 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/settings/settings.component.ts:15:24:
+[37m      15 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'WelcomeComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:27:11:
+[37m      27 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/welcome/welcome.component.ts:27:24:
+[37m      27 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'NavbarComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:14:11:
+[37m      14 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/shared/navbar/navbar.component.ts:14:24:
+[37m      14 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'CompatibilityService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:26:12:
+[37m      26 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/compatibility.service.ts:26:25:
+[37m      26 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'MatchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:12:22:
+[37m      12 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/match.service.ts:12:35:
+[37m      12 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:15:22:
+[37m      15 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/premium.service.ts:15:35:
+[37m      15 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'ReportService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:10:22:
+[37m      10 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/report.service.ts:10:35:
+[37m      10 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'UserService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:44:22:
+[37m      44 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/user.service.ts:44:35:
+[37m      44 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:16:11:
+[37m      16 │     public [32mauthService[37m: AuthService
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/premium/premium.component.ts:16:24:
+[37m      16 │     public authService: [32mAuthService[37m
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'RespectPactComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:12:
+[37m      22 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:25:
+[37m      22 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'SettingsComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:15:11:
+[37m      15 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/settings/settings.component.ts:15:24:
+[37m      15 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'WelcomeComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:27:11:
+[37m      27 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/welcome/welcome.component.ts:27:24:
+[37m      27 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'NavbarComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:14:11:
+[37m      14 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/shared/navbar/navbar.component.ts:14:24:
+[37m      14 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'CompatibilityService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:26:12:
+[37m      26 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/compatibility.service.ts:26:25:
+[37m      26 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'MatchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:12:22:
+[37m      12 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/match.service.ts:12:35:
+[37m      12 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:15:22:
+[37m      15 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/premium.service.ts:15:35:
+[37m      15 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'ReportService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:10:22:
+[37m      10 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/report.service.ts:10:35:
+[37m      10 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'UserService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:44:22:
+[37m      44 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/user.service.ts:44:35:
+[37m      44 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:16:11:
+[37m      16 │     public [32mauthService[37m: AuthService
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/premium/premium.component.ts:16:24:
+[37m      16 │     public authService: [32mAuthService[37m
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'RespectPactComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:12:
+[37m      22 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:25:
+[37m      22 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'SettingsComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:15:11:
+[37m      15 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/settings/settings.component.ts:15:24:
+[37m      15 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'WelcomeComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:27:11:
+[37m      27 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/welcome/welcome.component.ts:27:24:
+[37m      27 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'NavbarComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:14:11:
+[37m      14 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/shared/navbar/navbar.component.ts:14:24:
+[37m      14 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'CompatibilityService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:26:12:
+[37m      26 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/compatibility.service.ts:26:25:
+[37m      26 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'MatchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:12:22:
+[37m      12 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/match.service.ts:12:35:
+[37m      12 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:15:22:
+[37m      15 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/premium.service.ts:15:35:
+[37m      15 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'ReportService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:10:22:
+[37m      10 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/report.service.ts:10:35:
+[37m      10 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'UserService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:44:22:
+[37m      44 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/user.service.ts:44:35:
+[37m      44 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:16:11:
+[37m      16 │     public [32mauthService[37m: AuthService
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/premium/premium.component.ts:16:24:
+[37m      16 │     public authService: [32mAuthService[37m
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'RespectPactComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:12:
+[37m      22 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:25:
+[37m      22 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'SettingsComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:15:11:
+[37m      15 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/settings/settings.component.ts:15:24:
+[37m      15 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'WelcomeComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:27:11:
+[37m      27 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/welcome/welcome.component.ts:27:24:
+[37m      27 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'NavbarComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:14:11:
+[37m      14 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/shared/navbar/navbar.component.ts:14:24:
+[37m      14 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'CompatibilityService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:26:12:
+[37m      26 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/compatibility.service.ts:26:25:
+[37m      26 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'MatchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:12:22:
+[37m      12 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/match.service.ts:12:35:
+[37m      12 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:15:22:
+[37m      15 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/premium.service.ts:15:35:
+[37m      15 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'ReportService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:10:22:
+[37m      10 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/report.service.ts:10:35:
+[37m      10 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'UserService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:44:22:
+[37m      44 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/user.service.ts:44:35:
+[37m      44 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:16:11:
+[37m      16 │     public [32mauthService[37m: AuthService
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/premium/premium.component.ts:16:24:
+[37m      16 │     public authService: [32mAuthService[37m
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'RespectPactComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:12:
+[37m      22 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:25:
+[37m      22 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'SettingsComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:15:11:
+[37m      15 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/settings/settings.component.ts:15:24:
+[37m      15 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'WelcomeComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:27:11:
+[37m      27 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/welcome/welcome.component.ts:27:24:
+[37m      27 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'NavbarComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:14:11:
+[37m      14 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/shared/navbar/navbar.component.ts:14:24:
+[37m      14 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'CompatibilityService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:26:12:
+[37m      26 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/compatibility.service.ts:26:25:
+[37m      26 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'MatchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:12:22:
+[37m      12 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/match.service.ts:12:35:
+[37m      12 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:15:22:
+[37m      15 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/premium.service.ts:15:35:
+[37m      15 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'ReportService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:10:22:
+[37m      10 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/report.service.ts:10:35:
+[37m      10 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'UserService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:44:22:
+[37m      44 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/user.service.ts:44:35:
+[37m      44 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:16:11:
+[37m      16 │     public [32mauthService[37m: AuthService
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/premium/premium.component.ts:16:24:
+[37m      16 │     public authService: [32mAuthService[37m
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'RespectPactComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:12:
+[37m      22 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:25:
+[37m      22 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'SettingsComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:15:11:
+[37m      15 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/settings/settings.component.ts:15:24:
+[37m      15 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'WelcomeComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:27:11:
+[37m      27 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/welcome/welcome.component.ts:27:24:
+[37m      27 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'NavbarComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:14:11:
+[37m      14 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/shared/navbar/navbar.component.ts:14:24:
+[37m      14 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'CompatibilityService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:26:12:
+[37m      26 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/compatibility.service.ts:26:25:
+[37m      26 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'MatchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:12:22:
+[37m      12 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/match.service.ts:12:35:
+[37m      12 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:15:22:
+[37m      15 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/premium.service.ts:15:35:
+[37m      15 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'ReportService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:10:22:
+[37m      10 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/report.service.ts:10:35:
+[37m      10 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'UserService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:44:22:
+[37m      44 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/user.service.ts:44:35:
+[37m      44 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:16:11:
+[37m      16 │     public [32mauthService[37m: AuthService
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/premium/premium.component.ts:16:24:
+[37m      16 │     public authService: [32mAuthService[37m
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'RespectPactComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:12:
+[37m      22 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:25:
+[37m      22 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'SettingsComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:15:11:
+[37m      15 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/settings/settings.component.ts:15:24:
+[37m      15 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'WelcomeComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:27:11:
+[37m      27 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/welcome/welcome.component.ts:27:24:
+[37m      27 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'NavbarComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:14:11:
+[37m      14 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/shared/navbar/navbar.component.ts:14:24:
+[37m      14 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'CompatibilityService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/compatibility.service.ts:26:12:
+[37m      26 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/compatibility.service.ts:26:25:
+[37m      26 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'MatchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/match.service.ts:12:22:
+[37m      12 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/match.service.ts:12:35:
+[37m      12 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/premium.service.ts:15:22:
+[37m      15 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/premium.service.ts:15:35:
+[37m      15 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'ReportService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/report.service.ts:10:22:
+[37m      10 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/report.service.ts:10:35:
+[37m      10 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'UserService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/core/services/user.service.ts:44:22:
+[37m      44 │   constructor(private [32mauthService[37m: AuthService) {}
+         ╵                       [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/core/services/user.service.ts:44:35:
+[37m      44 │   constructor(private authService: [32mAuthService[37m) {}
+         ╵                                    [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'PremiumComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/premium/premium.component.ts:16:11:
+[37m      16 │     public [32mauthService[37m: AuthService
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/premium/premium.component.ts:16:24:
+[37m      16 │     public authService: [32mAuthService[37m
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'RespectPactComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:12:
+[37m      22 │     private [32mauthService[37m: AuthService,
+         ╵             [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/respect-pact/respect-pact.component.ts:22:25:
+[37m      22 │     private authService: [32mAuthService[37m,
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'SettingsComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/settings/settings.component.ts:15:11:
+[37m      15 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/settings/settings.component.ts:15:24:
+[37m      15 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'WelcomeComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/welcome/welcome.component.ts:27:11:
+[37m      27 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/welcome/welcome.component.ts:27:24:
+[37m      27 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2003: No suitable injection token for parameter 'authService' of class 'NavbarComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/navbar/navbar.component.ts:14:11:
+[37m      14 │     public [32mauthService[37m: AuthService,
+         ╵            [32m~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/shared/navbar/navbar.component.ts:14:24:
+[37m      14 │     public authService: [32mAuthService[37m,
+         ╵                         [32m~~~~~~~~~~~[0m
+
+[39m[22m

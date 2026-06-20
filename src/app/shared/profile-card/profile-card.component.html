@@ -10,6 +10,15 @@
 
   <p>{{ profile.bio }}</p>
 
+  <div class="connection-details" aria-label="Datos de conexion">
+    <span>{{ profile.communicationStyle || 'Conexion tranquila' }}</span>
+    <span>{{ profile.loveLanguage || 'Tiempo de calidad' }}</span>
+  </div>
+
+  @if (profile.prompt) {
+    <p class="connection-prompt">{{ profile.prompt }}</p>
+  }
+
   <div class="chips">
     @for (interest of profile.interests.slice(0, 4); track interest) {
       <span>{{ interest }}</span>
@@ -18,7 +27,7 @@
 
   <div class="card-actions" aria-label="Acciones del perfil">
     <button class="btn primary full" type="button" (click)="notifyView()">Ver perfil</button>
-    <button class="btn ghost full" type="button" (click)="notifyLike()">Like</button>
+    <button class="btn ghost full" type="button" (click)="notifyLike()">Like con comentario</button>
     <button class="btn ghost full" type="button" (click)="notifyLetter()">Carta</button>
   </div>
 </article>

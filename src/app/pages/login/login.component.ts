@@ -16,17 +16,20 @@ export class LoginComponent {
   private router = inject(Router);
 
   message = '';
+  loading = false;
 
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   });
 
-  submit(): void {
+  async submit(): Promise<void> {
     this.form.markAllAsTouched();
-    if (this.form.invalid) return;
+    if (this.form.invalid || this.loading) return;
 
-    const result = this.authService.login(this.form.controls.email.value, this.form.controls.password.value);
+    this.loading = true;
+    const result = await this.authService.login(this.form.controls.email.value, this.form.controls.password.value);
+    this.loading = false;
     this.message = result.message;
 
     if (result.ok) {

@@ -50,7 +50,10 @@ export class CompatibilityService {
 
     if (!user || answers.length === 0) {
       return storedProfiles
-        .map((profile) => ({ ...profile, compatibility: profile.compatibility ?? 80 }))
+        .map((profile) => ({
+          ...profile,
+          compatibility: this.applyDealbreakerCap(user?.dealbreakers ?? [], profile, profile.compatibility ?? 80)
+        }))
         .sort((a, b) => (b.compatibility ?? 0) - (a.compatibility ?? 0));
     }
 
@@ -63,7 +66,8 @@ export class CompatibilityService {
       .map((profile) => {
         const answerScore = calculateAnswerCompatibility(userAnswerValues, profile.answers);
         const interestScore = calculateInterestCompatibility(user.interests, profile.interests);
-        const compatibility = Math.round(answerScore * 0.75 + interestScore * 0.25);
+        const baseCompatibility = Math.round(answerScore * 0.75 + interestScore * 0.25);
+        const compatibility = this.applyDealbreakerCap(user.dealbreakers ?? [], profile, baseCompatibility);
         return { ...profile, compatibility };
       })
       .sort((a, b) => (b.compatibility ?? 0) - (a.compatibility ?? 0));
@@ -98,5 +102,25 @@ export class CompatibilityService {
       description: 'Disfrutas conocer personas nuevas y descubrir compatibilidad a traves de experiencias.',
       traits: ['Energia', 'Aventura', 'Apertura']
     };
+  }
+
+  private applyDealbreakerCap(userDealbreakers: string[], profile: PublicProfile, compatibility: number): number {
+    if (!this.hasDealbreakerConflict(userDealbreakers, profile.dealbreakers ?? [])) {
+      return compatibility;
+    }
+
+    return Math.min(compatibility, 55);
+  }
+
+  private hasDealbreakerConflict(userDealbreakers: string[], profileDealbreakers: string[]): boolean {
+    const normalizedUserDealbreakers = new Set(userDealbreakers.map((item) => this.normalize(item)));
+    return profileDealbreakers.some((item) => normalizedUserDealbreakers.has(this.normalize(item)));
+  }
+
+  private normalize(value: string): string {
+    return value
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 }

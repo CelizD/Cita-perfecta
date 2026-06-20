@@ -10,9 +10,13 @@ const DEFAULT_PROFILES: PublicProfile[] = [
     name: 'Valeria',
     age: 23,
     city: 'Tijuana',
-    bio: 'Me gustan los planes tranquilos, el caf\u00e9 y las conexiones honestas.',
-    interests: ['Caf\u00e9', 'M\u00fasica', 'Cine'],
-    traits: ['Honestidad', 'Calma', 'Empat\u00eda'],
+    bio: 'Me gustan los planes tranquilos, el cafe y las conexiones honestas.',
+    interests: ['Cafe', 'Musica', 'Cine'],
+    traits: ['Honestidad', 'Calma', 'Empatia'],
+    communicationStyle: 'Tranquilo y reflexivo',
+    loveLanguage: 'Tiempo de calidad',
+    dealbreakers: ['Ghosting constante', 'Falta de respeto'],
+    prompt: 'Una buena primera carta para mi habla de un plan sencillo y real.',
     answers: [5, 5, 4, 4, 5, 5, 5, 4, 5, 5],
     compatibility: 91
   },
@@ -24,6 +28,10 @@ const DEFAULT_PROFILES: PublicProfile[] = [
     bio: 'Disfruto caminar por la playa, cocinar y tener conversaciones tranquilas.',
     interests: ['Playa', 'Cocina', 'Lectura'],
     traits: ['Paciencia', 'Humor', 'Lealtad'],
+    communicationStyle: 'Directo y claro',
+    loveLanguage: 'Actos de servicio',
+    dealbreakers: ['Presion o manipulacion', 'Relaciones sin claridad'],
+    prompt: 'Me interesa alguien que pueda decir lo que busca sin jugar.',
     answers: [5, 4, 5, 4, 5, 4, 5, 3, 5, 5],
     compatibility: 88
   },
@@ -33,8 +41,12 @@ const DEFAULT_PROFILES: PublicProfile[] = [
     age: 22,
     city: 'Mexicali',
     bio: 'Me gusta la musica en vivo, los cafes bonitos y aprender cosas nuevas.',
-    interests: ['M\u00fasica', 'Caf\u00e9', 'Arte'],
-    traits: ['Creatividad', 'Empat\u00eda', 'Claridad'],
+    interests: ['Musica', 'Cafe', 'Arte'],
+    traits: ['Creatividad', 'Empatia', 'Claridad'],
+    communicationStyle: 'Expresivo y emocional',
+    loveLanguage: 'Palabras de afirmacion',
+    dealbreakers: ['Falta de respeto', 'Planes sin honestidad'],
+    prompt: 'Rompe el hielo contandome una cancion que te define.',
     answers: [4, 5, 3, 5, 4, 5, 4, 5, 4, 5],
     compatibility: 84
   },
@@ -46,6 +58,10 @@ const DEFAULT_PROFILES: PublicProfile[] = [
     bio: 'Valoro la comunicacion directa, el respeto y los planes sencillos.',
     interests: ['Cine', 'Ejercicio', 'Comida'],
     traits: ['Respeto', 'Constancia', 'Honestidad'],
+    communicationStyle: 'Directo y claro',
+    loveLanguage: 'Detalles significativos',
+    dealbreakers: ['Presion o manipulacion', 'Ghosting constante'],
+    prompt: 'Prefiero pocas conversaciones, pero con intencion real.',
     answers: [5, 5, 4, 5, 5, 4, 4, 4, 5, 5],
     compatibility: 86
   },
@@ -57,6 +73,10 @@ const DEFAULT_PROFILES: PublicProfile[] = [
     bio: 'Prefiero conexiones con calma, buen sentido del humor y metas claras.',
     interests: ['Viajes', 'Fotografia', 'Comida'],
     traits: ['Calma', 'Ambicion', 'Alegria'],
+    communicationStyle: 'Tranquilo y reflexivo',
+    loveLanguage: 'Tiempo de calidad',
+    dealbreakers: ['Relaciones sin claridad', 'Planes sin honestidad'],
+    prompt: 'Un buen match para mi sabe avanzar sin presionar.',
     answers: [4, 5, 5, 5, 4, 4, 5, 4, 4, 5],
     compatibility: 82
   },
@@ -68,6 +88,10 @@ const DEFAULT_PROFILES: PublicProfile[] = [
     bio: 'Me encanta la naturaleza, los planes espontaneos y hablar con honestidad.',
     interests: ['Naturaleza', 'Senderismo', 'Mascotas'],
     traits: ['Apertura', 'Honestidad', 'Energia'],
+    communicationStyle: 'Practico y breve',
+    loveLanguage: 'Actos de servicio',
+    dealbreakers: ['Falta de respeto', 'Presion o manipulacion'],
+    prompt: 'Si me escribes una carta, empieza con tu lugar favorito para desconectarte.',
     answers: [4, 4, 5, 4, 5, 5, 4, 3, 5, 4],
     compatibility: 79
   }
@@ -75,7 +99,7 @@ const DEFAULT_PROFILES: PublicProfile[] = [
 
 @Injectable({ providedIn: 'root' })
 export class ProfileCrudService extends BaseStorageRepository<PublicProfile> {
-  private readonly migrationKey = 'cp_crud_profiles_seed_v2';
+  private readonly migrationKey = 'cp_crud_profiles_seed_v3';
 
   constructor() {
     super('cp_crud_profiles', DEFAULT_PROFILES);
@@ -86,16 +110,17 @@ export class ProfileCrudService extends BaseStorageRepository<PublicProfile> {
     const alreadyMigrated = localStorage.getItem(this.migrationKey) === 'true';
     if (alreadyMigrated) return profiles;
 
+    const byId = new Map(DEFAULT_PROFILES.map((profile) => [profile.id, profile]));
+    const enrichedProfiles = profiles.map((profile) => {
+      const defaultProfile = byId.get(profile.id);
+      return defaultProfile ? { ...defaultProfile, ...profile } : profile;
+    });
+
     const missingDefaults = DEFAULT_PROFILES.filter(
-      (defaultProfile) => !profiles.some((profile) => profile.id === defaultProfile.id)
+      (defaultProfile) => !enrichedProfiles.some((profile) => profile.id === defaultProfile.id)
     );
+    const merged = [...enrichedProfiles, ...missingDefaults];
 
-    if (missingDefaults.length === 0) {
-      localStorage.setItem(this.migrationKey, 'true');
-      return profiles;
-    }
-
-    const merged = [...profiles, ...missingDefaults];
     this.writeAll(merged);
     localStorage.setItem(this.migrationKey, 'true');
     return merged;

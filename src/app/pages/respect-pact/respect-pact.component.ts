@@ -11,11 +11,11 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class RespectPactComponent {
   pactItems = [
-    'Seré honesto con mis intenciones.',
-    'Trataré a los demás con empatía.',
-    'Si ya no quiero seguir, cerraré con respeto.',
-    'No acosaré ni presionaré a nadie.',
-    'Reportaré comportamientos inapropiados.'
+    'Sere honesto con mis intenciones.',
+    'Tratare a los demas con empatia.',
+    'Si ya no quiero seguir, intentare cerrar con respeto.',
+    'No acosare, manipulare ni presionare a nadie.',
+    'Cuidare mi seguridad y la de los demas.'
   ];
 
   constructor(

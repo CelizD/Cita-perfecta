@@ -42,6 +42,41 @@
   color: var(--secondary);
 }
 
+.connection-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+}
+
+.connection-summary span {
+  background: rgba(108, 92, 231, 0.08);
+  border: 1px solid rgba(108, 92, 231, 0.12);
+  border-radius: 999px;
+  color: var(--secondary);
+  font-size: 0.85rem;
+  font-weight: 900;
+  padding: 0.5rem 0.75rem;
+}
+
+.prompt-card,
+.dealbreaker-box {
+  background: rgba(255, 107, 139, 0.08);
+  border: 1px solid rgba(255, 107, 139, 0.16);
+  border-radius: 12px;
+  margin: 0 0 1rem;
+  padding: 0.85rem;
+}
+
+.dealbreaker-box strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.dealbreaker-box p {
+  margin: 0;
+}
+
 .split {
   display: flex;
   gap: 0.8rem;

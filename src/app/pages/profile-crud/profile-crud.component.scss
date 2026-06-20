@@ -143,6 +143,22 @@
   margin: 0;
 }
 
+.admin-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.admin-meta span {
+  background: rgba(108, 92, 231, 0.08);
+  border: 1px solid rgba(108, 92, 231, 0.12);
+  border-radius: 999px;
+  color: var(--secondary);
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 0.42rem 0.65rem;
+}
+
 .status-pill {
   background: #ecfff5;
   border-radius: 999px;

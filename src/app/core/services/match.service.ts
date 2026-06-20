@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ConnectionLetter, Like, Match } from '../models/match.model';
+import { UserId } from '../models/user.model';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
@@ -58,7 +59,7 @@ export class MatchService {
     localStorage.setItem(this.matchesKey, JSON.stringify(updated));
   }
 
-  private createOrGetMatch(userId: number, profileId: number, profileName: string, compatibility: number): Match {
+  private createOrGetMatch(userId: UserId, profileId: number, profileName: string, compatibility: number): Match {
     const raw = localStorage.getItem(this.matchesKey);
     const matches = raw ? (JSON.parse(raw) as Match[]) : [];
 

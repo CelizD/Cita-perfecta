@@ -1,9 +1,12 @@
+import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { ChatService } from '../../core/services/chat.service';
 import { CompatibilityService } from '../../core/services/compatibility.service';
+import { ExternalDatePlan, ExternalDatePlanService } from '../../core/services/external-date-plan.service';
 import { MatchService } from '../../core/services/match.service';
 import { ReportService } from '../../core/services/report.service';
 import { PublicProfile } from '../../core/models/user.model';
@@ -12,12 +15,13 @@ import { ProfileCardComponent } from '../../shared/profile-card/profile-card.com
 @Component({
   selector: 'app-welcome',
   standalone: true,
-  imports: [RouterLink, ProfileCardComponent],
+  imports: [AsyncPipe, RouterLink, ProfileCardComponent],
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.scss'
 })
 export class WelcomeComponent {
   actionMessage = '';
+  datePlan$: Observable<ExternalDatePlan>;
 
   constructor(
     public authService: AuthService,
@@ -25,8 +29,11 @@ export class WelcomeComponent {
     private reportService: ReportService,
     private matchService: MatchService,
     private chatService: ChatService,
+    private externalDatePlanService: ExternalDatePlanService,
     private router: Router
-  ) {}
+  ) {
+    this.datePlan$ = this.externalDatePlanService.getTijuanaPlan();
+  }
 
   get feedProfiles(): PublicProfile[] {
     const blocked = this.reportService.getBlockedProfiles();

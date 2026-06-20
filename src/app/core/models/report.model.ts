@@ -1,5 +1,7 @@
+import { UserId } from './user.model';
+
 export interface Report {
-  fromUserId: number;
+  fromUserId: UserId;
   toProfileId: number;
   reason: string;
   description: string;

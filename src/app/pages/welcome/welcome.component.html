@@ -2,9 +2,14 @@
   <section class="page-wide home-feed">
     <div class="feed-hero">
       <div>
-        <span class="eyebrow">Feed de personas</span>
+        <span class="eyebrow">Cita Perfecta - Modo Amor</span>
         <h1>Hola, {{ userName }}</h1>
-        <p>Estas son conexiones sugeridas seg&uacute;n tus intereses, respuestas y perfiles guardados.</p>
+        <p>Conexiones reales, no coincidencias al azar. Menos perfiles vacios, mas compatibilidad, seguridad y calma.</p>
+        <div class="product-points">
+          <span>Slow dating</span>
+          <span>Cartas de conexion</span>
+          <span>Seguridad primero</span>
+        </div>
       </div>
 
       <div class="feed-actions">
@@ -12,6 +17,26 @@
         <a class="btn primary" routerLink="/matches">Ver todos</a>
       </div>
     </div>
+
+    @if (datePlan$ | async; as datePlan) {
+      <aside class="api-card">
+        <div>
+          <span class="eyebrow">API externa: {{ datePlan.source }}</span>
+          <h2>Plan sugerido en {{ datePlan.city }}</h2>
+          <p>
+            Clima actual:
+            @if (datePlan.temperature !== null) {
+              <strong>{{ datePlan.temperature }}&deg;C</strong>,
+            }
+            {{ datePlan.weatherLabel }}.
+          </p>
+          @if (datePlan.isFallback) {
+            <small>No se pudo consultar la API en este momento; se muestra una sugerencia local.</small>
+          }
+        </div>
+        <strong class="api-suggestion">{{ datePlan.suggestion }}</strong>
+      </aside>
+    }
 
     @if (actionMessage) {
       <div class="alert success">{{ actionMessage }}</div>
@@ -54,11 +79,36 @@
   <section class="page-wide home-feed public-mode">
     <div class="feed-hero public-hero">
       <div>
-        <span class="eyebrow">Feed de personas</span>
+        <span class="eyebrow">Cita Perfecta - Modo Amor</span>
         <h1>Personas compatibles</h1>
-        <p>Explora perfiles por intereses, ciudad y compatibilidad. Inicia sesi&oacute;n solo cuando quieras interactuar.</p>
+        <p>Explora perfiles por intereses, ciudad y compatibilidad. Cita Perfecta prioriza calidad sobre cantidad.</p>
+        <div class="product-points">
+          <span>Slow dating</span>
+          <span>Likes con comentario</span>
+          <span>Cuidado emocional</span>
+        </div>
       </div>
     </div>
+
+    @if (datePlan$ | async; as datePlan) {
+      <aside class="api-card">
+        <div>
+          <span class="eyebrow">API externa: {{ datePlan.source }}</span>
+          <h2>Plan sugerido en {{ datePlan.city }}</h2>
+          <p>
+            Clima actual:
+            @if (datePlan.temperature !== null) {
+              <strong>{{ datePlan.temperature }}&deg;C</strong>,
+            }
+            {{ datePlan.weatherLabel }}.
+          </p>
+          @if (datePlan.isFallback) {
+            <small>No se pudo consultar la API en este momento; se muestra una sugerencia local.</small>
+          }
+        </div>
+        <strong class="api-suggestion">{{ datePlan.suggestion }}</strong>
+      </aside>
+    }
 
     <div class="feed-grid">
       @for (profile of feedProfiles; track profile.id) {

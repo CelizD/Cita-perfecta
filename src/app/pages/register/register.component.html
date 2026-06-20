@@ -2,31 +2,31 @@
   <div class="auth-copy">
     <span class="eyebrow">Empieza con respeto</span>
     <h1>Crear cuenta</h1>
-    <p>Regístrate para completar tu perfil, aceptar el pacto de respeto y responder el test de compatibilidad.</p>
+    <p>Registrate para completar tu perfil, aceptar el pacto de respeto y responder el test de compatibilidad.</p>
   </div>
 
   <form class="form-card" [formGroup]="form" (ngSubmit)="submit()">
     <label>
       Nombre
-      <input type="text" formControlName="name" placeholder="Daniel Celiz">
+      <input type="text" formControlName="name" placeholder="Daniel Celiz" autocomplete="name">
       @if (form.controls.name.touched && form.controls.name.invalid) {
         <small>Escribe tu nombre completo.</small>
       }
     </label>
 
     <label>
-      Correo electrónico
-      <input type="email" formControlName="email" placeholder="correo@ejemplo.com">
+      Correo electronico
+      <input type="email" formControlName="email" placeholder="correo@ejemplo.com" autocomplete="email">
       @if (form.controls.email.touched && form.controls.email.invalid) {
-        <small>Ingresa un correo válido.</small>
+        <small>Ingresa un correo valido.</small>
       }
     </label>
 
     <label>
-      Contraseña
-      <input type="password" formControlName="password" placeholder="Mínimo 6 caracteres">
+      Contrasena
+      <input type="password" formControlName="password" placeholder="Minimo 6 caracteres" autocomplete="new-password">
       @if (form.controls.password.touched && form.controls.password.invalid) {
-        <small>La contraseña debe tener mínimo 6 caracteres.</small>
+        <small>La contrasena debe tener minimo 6 caracteres.</small>
       }
     </label>
 
@@ -40,14 +40,16 @@
 
     <label class="check-row">
       <input type="checkbox" formControlName="terms">
-      <span>Acepto términos, privacidad y usar la app con respeto.</span>
+      <span>Acepto terminos, privacidad y usar la app con respeto.</span>
     </label>
 
     @if (message) {
       <p class="alert">{{ message }}</p>
     }
 
-    <button class="btn primary full" type="submit">Registrarme</button>
-    <p class="form-link">¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+    <button class="btn primary full" type="submit" [disabled]="loading">
+      {{ loading ? 'Creando cuenta...' : 'Registrarme' }}
+    </button>
+    <p class="form-link">Ya tienes cuenta? <a routerLink="/login">Inicia sesion</a></p>
   </form>
 </section>

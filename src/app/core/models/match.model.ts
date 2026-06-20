@@ -1,12 +1,14 @@
+import { UserId } from './user.model';
+
 export interface Like {
-  fromUserId: number;
+  fromUserId: UserId;
   toProfileId: number;
   comment?: string;
   createdAt: string;
 }
 
 export interface ConnectionLetter {
-  fromUserId: number;
+  fromUserId: UserId;
   toProfileId: number;
   message: string;
   createdAt: string;
@@ -14,7 +16,7 @@ export interface ConnectionLetter {
 
 export interface Match {
   id: number;
-  userA: number;
+  userA: UserId;
   userB: number;
   profileName: string;
   compatibility: number;

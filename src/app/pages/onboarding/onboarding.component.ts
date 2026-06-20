@@ -18,11 +18,17 @@ export class OnboardingComponent {
   private router = inject(Router);
 
   selectedInterests = new Set<string>();
+  selectedDealbreakers = new Set<string>();
   interests = this.userService.interests;
+  communicationStyles = this.userService.communicationStyles;
+  loveLanguages = this.userService.loveLanguages;
+  dealbreakers = this.userService.dealbreakers;
 
   form = this.fb.nonNullable.group({
     city: ['', Validators.required],
     bio: ['', [Validators.required, Validators.minLength(20)]],
+    communicationStyle: [this.communicationStyles[0], Validators.required],
+    loveLanguage: [this.loveLanguages[0], Validators.required],
     photoProfile: ['']
   });
 
@@ -34,6 +40,14 @@ export class OnboardingComponent {
     }
   }
 
+  toggleDealbreaker(dealbreaker: string): void {
+    if (this.selectedDealbreakers.has(dealbreaker)) {
+      this.selectedDealbreakers.delete(dealbreaker);
+    } else {
+      this.selectedDealbreakers.add(dealbreaker);
+    }
+  }
+
   submit(): void {
     this.form.markAllAsTouched();
     if (this.form.invalid || this.selectedInterests.size < 3) return;
@@ -42,7 +56,10 @@ export class OnboardingComponent {
       city: this.form.controls.city.value,
       bio: this.form.controls.bio.value,
       photoProfile: this.form.controls.photoProfile.value,
-      interests: [...this.selectedInterests]
+      interests: [...this.selectedInterests],
+      communicationStyle: this.form.controls.communicationStyle.value,
+      loveLanguage: this.form.controls.loveLanguage.value,
+      dealbreakers: [...this.selectedDealbreakers]
     });
 
     this.router.navigate(['/test']);

@@ -16,6 +16,7 @@ export class RegisterComponent {
   private router = inject(Router);
 
   message = '';
+  loading = false;
 
   form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -25,20 +26,26 @@ export class RegisterComponent {
     terms: [false, Validators.requiredTrue]
   });
 
-  submit(): void {
+  async submit(): Promise<void> {
     this.form.markAllAsTouched();
-    if (this.form.invalid) return;
+    if (this.form.invalid || this.loading) return;
 
-    const result = this.authService.register({
+    this.loading = true;
+    const result = await this.authService.register({
       name: this.form.controls.name.value,
       email: this.form.controls.email.value,
       password: this.form.controls.password.value,
       birthDate: this.form.controls.birthDate.value
     });
+    this.loading = false;
 
     this.message = result.message;
     if (result.ok) {
-      this.router.navigate(['/pacto-respeto']);
+      if (this.authService.currentUser()) {
+        this.router.navigate(['/pacto-respeto']);
+      } else {
+        this.router.navigate(['/login']);
+      }
     }
   }
 }

@@ -44,6 +44,31 @@
   padding: 0.45rem 0.7rem;
 }
 
+.connection-details {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.connection-details span {
+  background: rgba(108, 92, 231, 0.08);
+  border: 1px solid rgba(108, 92, 231, 0.12);
+  border-radius: 999px;
+  color: var(--secondary);
+  font-size: 0.82rem;
+  font-weight: 900;
+  padding: 0.45rem 0.7rem;
+  width: fit-content;
+}
+
+.connection-prompt {
+  background: rgba(255, 107, 139, 0.08);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 10px 10px 0;
+  font-weight: 700;
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+}
+
 .card-actions {
   display: grid;
   gap: 0.7rem;
@@ -58,5 +83,5 @@
 .card-actions .btn {
   min-width: 0;
   padding-inline: 0.8rem;
-  white-space: nowrap;
+  white-space: normal;
 }

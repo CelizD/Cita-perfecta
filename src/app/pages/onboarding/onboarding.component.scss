@@ -2,6 +2,17 @@
   margin-top: 1rem;
 }
 
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.helper-text {
+  color: var(--muted);
+  margin: 0.35rem 0 0;
+}
+
 .chip-button {
   background: white;
   border: 1px solid rgba(255, 107, 139, 0.2);
@@ -15,4 +26,10 @@
 .chip-button.selected {
   background: var(--primary);
   color: white;
+}
+
+@media (max-width: 680px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }

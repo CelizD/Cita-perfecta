@@ -6,6 +6,13 @@
       <p>{{ profile.city }}</p>
       <div class="compat-pill">{{ profile.compatibility }}% compatible</div>
       <p>{{ profile.bio }}</p>
+      <div class="connection-summary">
+        <span>{{ profile.communicationStyle || 'Conexion tranquila' }}</span>
+        <span>{{ profile.loveLanguage || 'Tiempo de calidad' }}</span>
+      </div>
+      @if (profile.prompt) {
+        <p class="prompt-card">{{ profile.prompt }}</p>
+      }
       <div class="chips">
         @for (interest of profile.interests; track interest) {
           <span>{{ interest }}</span>
@@ -16,25 +23,33 @@
           <span>{{ trait }}</span>
         }
       </div>
+      @if (profile.dealbreakers?.length) {
+        <div class="dealbreaker-box">
+          <strong>Dealbreakers</strong>
+          <p>{{ profile.dealbreakers?.join(', ') }}</p>
+        </div>
+      }
     </div>
 
     <div class="actions-panel">
       <form class="form-card" [formGroup]="likeForm" (ngSubmit)="sendLike()">
-        <h2>Enviar like</h2>
+        <h2>Like con comentario</h2>
+        <p>En Cita Perfecta el like tiene intencion: puedes iniciar con algo concreto del perfil.</p>
         <label>
           Comentario opcional
-          <textarea rows="3" formControlName="comment" placeholder="Me gustó que valores la comunicación clara..."></textarea>
+          <textarea rows="3" formControlName="comment" placeholder="Me gusto que valores la comunicacion clara..."></textarea>
         </label>
         <button class="btn primary full" type="submit">Enviar like</button>
       </form>
 
       <form class="form-card" [formGroup]="letterForm" (ngSubmit)="sendLetter()">
-        <h2>Carta de conexión</h2>
+        <h2>Carta de conexion</h2>
+        <p>Una carta ayuda a conectar con calma, sin depender solo del swipe rapido.</p>
         <label>
           Escribe una carta breve
-          <textarea rows="5" formControlName="letter" placeholder="Hola, me llamó la atención tu perfil porque..."></textarea>
+          <textarea rows="5" formControlName="letter" placeholder="Hola, me llamo la atencion tu perfil porque..."></textarea>
           @if (letterForm.controls.letter.touched && letterForm.controls.letter.invalid) {
-            <small>La carta debe tener mínimo 15 caracteres.</small>
+            <small>La carta debe tener minimo 15 caracteres.</small>
           }
         </label>
         <button class="btn ghost full" type="submit">Enviar carta</button>
@@ -42,17 +57,18 @@
 
       <form class="form-card" [formGroup]="reportForm" (ngSubmit)="report()">
         <h2>Seguridad</h2>
+        <p>Reportar y bloquear son parte del cuidado de comunidad del MVP.</p>
         <label>
           Motivo
           <select formControlName="reason">
             <option>Comportamiento inapropiado</option>
             <option>Perfil falso</option>
-            <option>Acoso o presión</option>
+            <option>Acoso o presion</option>
             <option>Otro</option>
           </select>
         </label>
         <label>
-          Descripción
+          Descripcion
           <textarea rows="3" formControlName="description"></textarea>
         </label>
         <div class="actions split">

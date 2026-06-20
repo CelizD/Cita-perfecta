@@ -26,7 +26,11 @@ export class ProfileCrudComponent {
     city: ['', Validators.required],
     bio: ['', [Validators.required, Validators.minLength(10)]],
     interests: ['Cafe, Musica, Cine', Validators.required],
-    traits: ['Honestidad, Calma, Empatia', Validators.required]
+    traits: ['Honestidad, Calma, Empatia', Validators.required],
+    communicationStyle: ['Tranquilo y reflexivo', Validators.required],
+    loveLanguage: ['Tiempo de calidad', Validators.required],
+    dealbreakers: ['Falta de respeto, Ghosting constante'],
+    prompt: ['']
   });
 
   get profiles(): PublicProfile[] {
@@ -42,8 +46,12 @@ export class ProfileCrudComponent {
         profile.name,
         profile.city,
         profile.bio,
+        profile.communicationStyle ?? '',
+        profile.loveLanguage ?? '',
+        profile.prompt ?? '',
         ...profile.interests,
-        ...profile.traits
+        ...profile.traits,
+        ...(profile.dealbreakers ?? [])
       ]
         .map((value) => this.normalize(value))
         .join(' ');
@@ -64,6 +72,10 @@ export class ProfileCrudComponent {
       bio: value.bio,
       interests: this.toArray(value.interests),
       traits: this.toArray(value.traits),
+      communicationStyle: value.communicationStyle,
+      loveLanguage: value.loveLanguage,
+      dealbreakers: this.toArray(value.dealbreakers),
+      prompt: value.prompt,
       photoProfile: ''
     };
 
@@ -88,7 +100,11 @@ export class ProfileCrudComponent {
       city: profile.city,
       bio: profile.bio,
       interests: profile.interests.join(', '),
-      traits: profile.traits.join(', ')
+      traits: profile.traits.join(', '),
+      communicationStyle: profile.communicationStyle ?? 'Tranquilo y reflexivo',
+      loveLanguage: profile.loveLanguage ?? 'Tiempo de calidad',
+      dealbreakers: profile.dealbreakers?.join(', ') ?? '',
+      prompt: profile.prompt ?? ''
     });
   }
 
@@ -123,7 +139,11 @@ export class ProfileCrudComponent {
       city: '',
       bio: '',
       interests: 'Cafe, Musica, Cine',
-      traits: 'Honestidad, Calma, Empatia'
+      traits: 'Honestidad, Calma, Empatia',
+      communicationStyle: 'Tranquilo y reflexivo',
+      loveLanguage: 'Tiempo de calidad',
+      dealbreakers: 'Falta de respeto, Ghosting constante',
+      prompt: ''
     });
   }
 
