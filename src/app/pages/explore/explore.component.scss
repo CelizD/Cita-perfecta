@@ -85,3 +85,35 @@
   justify-content: center;
   margin-top: 1rem;
 }
+
+.weather-banner {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex;
+  gap: 0.9rem;
+  margin-bottom: 1.4rem;
+  padding: 0.85rem 1.1rem;
+}
+
+.weather-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.weather-info strong {
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.weather-info span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
