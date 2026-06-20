@@ -1,3 +1,6 @@
+-- DEPRECATED: H-014 - Este archivo es de referencia histórica únicamente.
+-- La fuente de verdad son las migraciones en supabase/migrations/*.sql.
+-- NO ejecutar este archivo directamente contra la base de datos de producción.
 -- Cita Perfecta - Supabase schema completo
 -- Ejecuta este archivo en Supabase > SQL Editor.
 

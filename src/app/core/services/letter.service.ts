@@ -12,35 +12,23 @@ export interface LetterQuota {
 export class LetterService {
   private supabaseService = inject(SupabaseService);
 
-  async sendLetter(fromUserId: string, toUserId: string, content: string): Promise<void> {
+  // H-003: cuota validada en el servidor mediante la RPC send_connection_letter
+  async sendLetter(_fromUserId: string, toUserId: string, content: string): Promise<void> {
+    if (content.trim().length < 300) {
+      throw new Error('La carta debe tener al menos 300 caracteres.');
+    }
     const supabase = this.supabaseService.client;
     if (!supabase) throw new Error(this.supabaseService.requiredConfigMessage);
 
-    const trimmed = content.trim();
-    if (trimmed.length < 300) {
-      throw new Error('La carta debe tener al menos 300 caracteres.');
-    }
-
-    const quota = await this.getQuota(fromUserId);
-    if (quota.remaining <= 0) {
-      throw new Error('Ya usaste tus cartas disponibles de este mes.');
-    }
-
-    const { error: letterError } = await supabase.from('connection_letters').insert({
-      from_user_id: fromUserId,
-      to_user_id: toUserId,
-      message: trimmed,
-      status: 'sent'
+    const { data, error } = await supabase.rpc('send_connection_letter', {
+      p_to_user_id: toUserId,
+      p_message: content
     });
 
-    if (letterError) throw new Error(letterError.message);
+    if (error) throw new Error(error.message);
 
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .update({ letters_used_this_month: quota.used + 1 })
-      .eq('id', fromUserId);
-
-    if (profileError) throw new Error(profileError.message);
+    const result = data as { ok: boolean; error?: string } | null;
+    if (!result?.ok) throw new Error(result?.error ?? 'No se pudo enviar la carta.');
   }
 
   async getLetters(userId: string) {
@@ -75,29 +63,18 @@ export class LetterService {
 
     const { data, error } = await supabase
       .from('profiles')
-      .select('premium, letters_used_this_month, letters_reset_at')
-      .eq('id', userId)
-      .single();
+      .select('premium, is_premium, letters_used_this_month, letters_reset_at')
+      .or(`id.eq.${userId},user_id.eq.${userId}`)
+      .limit(1)
+      .maybeSingle();
 
     if (error) throw new Error(error.message);
 
-    const limit = data?.premium ? 10 : 3;
+    const isPremium = Boolean(data?.premium || data?.is_premium);
+    const limit = isPremium ? 10 : 3;
     const resetAt = data?.letters_reset_at ? new Date(data.letters_reset_at) : new Date();
-    const now = new Date();
-
-    if (resetAt <= now) {
-      const nextReset = new Date(now);
-      nextReset.setMonth(nextReset.getMonth() + 1);
-
-      await supabase
-        .from('profiles')
-        .update({ letters_used_this_month: 0, letters_reset_at: nextReset.toISOString() })
-        .eq('id', userId);
-
-      return { used: 0, limit, remaining: limit, resetAt: nextReset.toISOString() };
-    }
-
     const used = Number(data?.letters_used_this_month ?? 0);
+
     return {
       used,
       limit,

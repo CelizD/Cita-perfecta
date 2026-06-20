@@ -196,7 +196,8 @@ export class AuthService {
       profileComplete: Boolean(metadata['profileComplete'] ?? existing?.profileComplete ?? false),
       testComplete: Boolean(metadata['testComplete'] ?? existing?.testComplete ?? false),
       pauseMode: Boolean(metadata['pauseMode'] ?? existing?.pauseMode ?? false),
-      premium: Boolean(metadata['premium'] ?? existing?.premium ?? false)
+      // H-007: premium se lee exclusivamente del profile row (ver mergeProfileRow), nunca de metadata editable
+      premium: false
     };
   }
 
@@ -215,8 +216,8 @@ export class AuthService {
       pactAccepted: user.pactAccepted,
       profileComplete: user.profileComplete,
       testComplete: user.testComplete,
-      pauseMode: user.pauseMode,
-      premium: user.premium
+      pauseMode: user.pauseMode
+      // H-007: premium no se escribe en user_metadata; solo el servidor lo modifica via trigger
     };
   }
 
@@ -250,7 +251,7 @@ export class AuthService {
       profile_complete: user.profileComplete,
       test_complete: user.testComplete,
       pause_mode: user.pauseMode,
-      premium: user.premium,
+      // H-007: omitimos premium; el trigger del servidor rechaza cualquier cambio client-side
       updated_at: new Date().toISOString()
     });
   }

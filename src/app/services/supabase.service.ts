@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { RealtimeChannel, SupabaseClient, User } from '@supabase/supabase-js';
 import { getSupabaseClient, isSupabaseConfigured } from '../core/services/supabase-client';
 
+// H-010: valida que un string sea un UUID v4 antes de interpolarlo en filtros PostgREST
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function assertUuid(value: string, field = 'id'): string {
+  if (!UUID_RE.test(value)) throw new Error(`Invalid UUID for field ${field}: ${value}`);
+  return value;
+}
+
 export interface Question {
   id: number;
   text: string;
@@ -16,6 +23,8 @@ export class SupabaseService {
   private supabase: SupabaseClient | null = getSupabaseClient();
   readonly isConfigured = isSupabaseConfigured();
   readonly configMessage = 'Configura Supabase en src/environments/environment.ts con una URL https://...supabase.co y tu anon public key.';
+  get requiredConfigMessage(): string { return this.configMessage; }
+  get client(): SupabaseClient | null { return this.supabase; }
 
   signUp(email: string, password: string) {
     const supabase = this.requireClient();
@@ -86,13 +95,16 @@ export class SupabaseService {
     const supabase = this.requireClient();
     if (!supabase) return this.notConfiguredResponse([]);
 
+    // H-010: validar UUIDs antes de interpolar en filtro PostgREST
+    const safeExcluded = excludedUserIds.filter((id) => UUID_RE.test(id));
+
     let query = supabase
       .from('public_profiles')
       .select('id, user_id, name, age, city, main_photo_url, main_photo_path, bio')
       .range(from, to);
 
-    if (excludedUserIds.length > 0) {
-      query = query.not('user_id', 'in', `(${excludedUserIds.join(',')})`);
+    if (safeExcluded.length > 0) {
+      query = query.not('user_id', 'in', `(${safeExcluded.join(',')})`);
     }
 
     const { data, error } = await query;
@@ -300,7 +312,7 @@ export class SupabaseService {
     return supabase
       .from('matches')
       .select('*')
-      .or(`user_a.eq.${userId},user_b.eq.${userId}`)
+      .or(`user_a.eq.${assertUuid(userId, 'userId')},user_b.eq.${userId}`)
       .order('created_at', { ascending: false });
   }
 
@@ -400,7 +412,7 @@ export class SupabaseService {
     return supabase
       .from('blocks')
       .select('*')
-      .or(`blocker_id.eq.${userId},blocked_user_id.eq.${userId}`);
+      .or(`blocker_id.eq.${assertUuid(userId, 'userId')},blocked_user_id.eq.${userId}`);
   }
 
   getReportsByUser(userId: string) {
