@@ -1,16 +1,24 @@
-import { ErrorHandler, Injectable } from '@angular/core';
+import { ErrorHandler, Injectable, NgZone, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
+  private zone = inject(NgZone);
+  private router = inject(Router);
+
   handleError(error: unknown): void {
     const err = error instanceof Error ? error : new Error(String(error));
     console.error('[GlobalErrorHandler]', err);
 
-    // Chunk load failures (lazy-route splits) → hard reload
-    if (err.message.includes('Loading chunk') || err.message.includes('Failed to fetch dynamically')) {
+    // Chunk load failures (lazy-route splits) → hard reload to pick up new hashes
+    if (err.message.includes('Loading chunk') || err.message.includes('Failed to fetch dynamically') || err.message.includes('ChunkLoadError')) {
       window.location.reload();
+      return;
     }
-    // Otros errores: se registran en consola; la UI sigue en su estado actual.
-    // No navegamos a /error para evitar loops si el error ocurre durante el boot del router.
+
+    // Cualquier otro error no controlado: redirigir a login para evitar pantalla blanca
+    this.zone.run(() => {
+      void this.router.navigate(['/login']);
+    });
   }
 }

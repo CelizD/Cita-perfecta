@@ -71,12 +71,16 @@ export class SupabaseService {
 
   // Lee la sesión desde localStorage sin hacer llamada HTTP al servidor de Auth.
   // Usar en guards para evitar bloqueos de red en el arranque.
+  // Timeout de 4 s: si getSession() se cuelga (token refresh en red lenta),
+  // el guard recibe null y redirige a /login en lugar de quedar colgado.
   async getLocalSession(): Promise<User | null> {
     const supabase = this.requireClient();
     if (!supabase) return null;
 
-    const { data } = await supabase.auth.getSession();
-    return data.session?.user ?? null;
+    const timeout = new Promise<null>((resolve) => setTimeout(() => resolve(null), 4000));
+    const sessionCall = supabase.auth.getSession().then(({ data }) => data.session?.user ?? null);
+
+    return Promise.race([sessionCall, timeout]);
   }
 
   getProfile(userId: string) {
