@@ -56,6 +56,36 @@
   padding: 1rem;
 }
 
+.closure-panel {
+  background: #fff7fa;
+  border: 1px solid rgba(255, 107, 139, 0.18);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.closure-panel h2,
+.closure-panel p {
+  margin: 0;
+}
+
+.closure-option {
+  background: white;
+  border: 1px solid rgba(255, 107, 139, 0.22);
+  border-radius: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  padding: 0.85rem;
+  text-align: left;
+}
+
+.closure-option:hover {
+  border-color: var(--primary);
+}
+
 .chat-form {
   display: grid;
   gap: 0.8rem;

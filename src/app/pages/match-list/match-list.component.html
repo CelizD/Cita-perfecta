@@ -1,27 +1,37 @@
 <section class="page-wide">
   <div class="section-title">
-    <span class="eyebrow">Conexiones compatibles</span>
-    <h1>Perfiles sugeridos para ti</h1>
-    <p>Calidad sobre cantidad: estos perfiles se ordenan usando tus respuestas, intereses y perfiles guardados.</p>
+    <span class="eyebrow">Matches activos</span>
+    <h1>Tus conexiones</h1>
+    <p>Cuando ambos se dan like, aparece un match y se abre un chat para conversar con calma.</p>
   </div>
 
-  @if (actionMessage) {
-    <div class="alert success">{{ actionMessage }}</div>
+  @if (errorMessage) {
+    <div class="alert">{{ errorMessage }}</div>
   }
 
-  <div class="profiles-grid">
-    @for (profile of profiles; track profile.id) {
-      <app-profile-card
-        [profile]="profile"
-        (viewClicked)="onView($event)"
-        (likeClicked)="onLike($event)"
-        (letterClicked)="onLetter($event)">
-      </app-profile-card>
-    } @empty {
-      <div class="empty-state">
-        <h2>No hay perfiles disponibles</h2>
-        <p>Agrega perfiles desde Ajustes para que aparezcan como conexiones compatibles.</p>
-      </div>
-    }
-  </div>
+  @if (loading) {
+    <div class="empty-state">
+      <h2>Cargando matches...</h2>
+    </div>
+  } @else {
+    <div class="matches-grid">
+      @for (match of matches; track match.id) {
+        <article class="match-card">
+          <div class="avatar">{{ initials(match) }}</div>
+          <div>
+            <h2>{{ profileName(match) }}</h2>
+            <p>{{ match.otherProfile.city || 'Ciudad no especificada' }}</p>
+            <strong>{{ match.compatibility }}% compatible</strong>
+          </div>
+          <button class="btn primary" type="button" (click)="openChat(match)">Ir al chat</button>
+        </article>
+      } @empty {
+        <div class="empty-state">
+          <h2>Todavia no tienes matches</h2>
+          <p>Explora perfiles, envia likes y vuelve cuando haya una conexion mutua.</p>
+          <a class="btn primary" routerLink="/explore">Explorar perfiles</a>
+        </div>
+      }
+    </div>
+  }
 </section>

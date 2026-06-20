@@ -1,9 +1,36 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { AuthService } from './auth.service';
 import { ProfileCrudService } from './profile-crud.service';
 import { Answer, Question } from '../models/question.model';
 import { PublicProfile } from '../models/user.model';
 import { calculateAnswerCompatibility, calculateInterestCompatibility } from '../utils/compatibility.util';
+import { SupabaseService } from '../../services/supabase.service';
+
+interface DbQuestion {
+  id: number;
+  text: string;
+  category: string;
+  weight?: number;
+}
+
+interface DbAnswer {
+  question_id: number;
+  value: number;
+}
+
+export interface CompatibleProfile {
+  id: string;
+  email?: string;
+  full_name?: string;
+  name?: string;
+  city?: string;
+  bio?: string;
+  photo_url?: string;
+  photoProfile?: string;
+  interests?: string[];
+  dealbreakers?: string[];
+  compatibility: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class CompatibilityService {
@@ -24,15 +51,127 @@ export class CompatibilityService {
 
   constructor(
     private authService: AuthService,
-    private profileCrudService: ProfileCrudService
+    private profileCrudService: ProfileCrudService,
+    @Optional() private supabase?: SupabaseService
   ) {}
 
-  saveAnswers(answers: Answer[]): void {
+  async getQuestions(): Promise<DbQuestion[]> {
+    const response = await this.supabase?.getInitialQuestions();
+    return ((response?.data ?? []) as DbQuestion[]).sort((a, b) => a.id - b.id);
+  }
+
+  async getUserAnswers(userId: string): Promise<DbAnswer[]> {
+    const { data, error } = await this.supabase!.getAnswers(userId);
+    if (error) throw error;
+    return (data ?? []) as DbAnswer[];
+  }
+
+  async calculateCompatibility(userIdA: string, userIdB: string): Promise<number> {
+    const [questions, answersA, answersB] = await Promise.all([
+      this.getQuestions(),
+      this.getUserAnswers(userIdA),
+      this.getUserAnswers(userIdB)
+    ]);
+
+    const answersByA = new Map(answersA.map((answer) => [answer.question_id, answer.value]));
+    const answersByB = new Map(answersB.map((answer) => [answer.question_id, answer.value]));
+    const commonQuestions = questions.filter((question) => answersByA.has(question.id) && answersByB.has(question.id));
+
+    if (commonQuestions.length < 5) return 0;
+
+    const categoryWeights: Record<string, number> = {
+      valores: 0.25,
+      metas: 0.2,
+      comunicacion: 0.2,
+      apego: 0.15,
+      estilo: 0.08,
+      estilo_de_vida: 0.08,
+      intereses: 0.05,
+      otros: 0.07
+    };
+
+    const categoryScores = new Map<string, { score: number; weight: number }>();
+
+    for (const question of commonQuestions) {
+      const valueA = answersByA.get(question.id) ?? 3;
+      const valueB = answersByB.get(question.id) ?? 3;
+      const closeness = 100 - Math.abs(valueA - valueB) * 25;
+      const questionWeight = question.weight ?? 1;
+      const category = this.normalizeCategory(question.category);
+      const current = categoryScores.get(category) ?? { score: 0, weight: 0 };
+
+      categoryScores.set(category, {
+        score: current.score + closeness * questionWeight,
+        weight: current.weight + questionWeight
+      });
+    }
+
+    let weightedScore = 0;
+    let usedWeight = 0;
+
+    for (const [category, item] of categoryScores.entries()) {
+      const categoryWeight = categoryWeights[category] ?? categoryWeights['otros'];
+      weightedScore += (item.score / item.weight) * categoryWeight;
+      usedWeight += categoryWeight;
+    }
+
+    return usedWeight ? Math.round(weightedScore / usedWeight) : 0;
+  }
+
+  async getCompatibleProfiles(userId: string, limit = 20): Promise<CompatibleProfile[]> {
+    const [profilesResponse, blocksResponse, reportsResponse, currentProfileResponse] = await Promise.all([
+      this.supabase!.getProfilesForCompatibility(userId, 100),
+      this.supabase!.getBlocksForUser(userId),
+      this.supabase!.getReportsByUser(userId),
+      this.supabase!.getProfile(userId)
+    ]);
+
+    if (profilesResponse.error) throw profilesResponse.error;
+
+    const blockedIds = new Set<string>();
+    for (const block of blocksResponse.data ?? []) {
+      blockedIds.add(block['blocker_id']);
+      blockedIds.add(block['blocked_user_id']);
+    }
+
+    const reportedIds = new Set((reportsResponse.data ?? []).map((report) => report['reported_user_id'] as string));
+    const currentDealbreakers = (currentProfileResponse.data?.['dealbreakers'] ?? []) as string[];
+    const results: CompatibleProfile[] = [];
+
+    for (const profile of profilesResponse.data ?? []) {
+      const profileId = profile['id'] as string;
+      if (blockedIds.has(profileId) || reportedIds.has(profileId)) continue;
+      if (this.hasDealbreakerOverlap(currentDealbreakers, (profile['dealbreakers'] ?? []) as string[])) continue;
+
+      const compatibility = await this.calculateCompatibility(userId, profileId);
+      if (compatibility <= 0) continue;
+
+      results.push({
+        ...(profile as CompatibleProfile),
+        compatibility
+      });
+    }
+
+    return results.sort((a, b) => b.compatibility - a.compatibility).slice(0, limit);
+  }
+
+  saveAnswers(answers: Answer[]): void;
+  saveAnswers(userId: string, answers: { question_id: number; value: number }[]): Promise<void>;
+  saveAnswers(first: Answer[] | string, second?: { question_id: number; value: number }[]): void | Promise<void> {
+    if (typeof first === 'string') {
+      return this.saveSupabaseAnswers(first, second ?? []);
+    }
+
     const user = this.authService.currentUser();
     if (!user) return;
 
-    localStorage.setItem(`${this.answersKey}_${user.id}`, JSON.stringify(answers));
+    localStorage.setItem(`${this.answersKey}_${user.id}`, JSON.stringify(first));
     this.authService.updateCurrentUser({ testComplete: true });
+  }
+
+  private async saveSupabaseAnswers(userId: string, answers: { question_id: number; value: number }[]): Promise<void> {
+    const { error } = await this.supabase!.saveAnswers(userId, answers);
+    if (error) throw error;
   }
 
   getAnswers(): Answer[] {
@@ -122,5 +261,16 @@ export class CompatibilityService {
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
+  }
+
+  private normalizeCategory(category: string): string {
+    const normalized = this.normalize(category).replace(/\s+/g, '_');
+    if (normalized.includes('vida')) return 'estilo_de_vida';
+    return normalized || 'otros';
+  }
+
+  private hasDealbreakerOverlap(currentDealbreakers: string[], profileDealbreakers: string[]): boolean {
+    const normalizedCurrent = new Set(currentDealbreakers.map((item) => this.normalize(item)));
+    return profileDealbreakers.some((item) => normalizedCurrent.has(this.normalize(item)));
   }
 }

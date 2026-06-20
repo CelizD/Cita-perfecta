@@ -1,9 +1,44 @@
-.profiles-grid {
+.matches-grid {
   display: grid;
-  gap: 1.2rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-@media (max-width: 650px) {
-  .profiles-grid { grid-template-columns: 1fr; }
+.match-card {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 107, 139, 0.14);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 72px 1fr;
+  padding: 1rem;
+}
+
+.avatar {
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 20px;
+  color: white;
+  display: grid;
+  font-family: var(--title-font);
+  font-size: 1.35rem;
+  font-weight: 900;
+  height: 72px;
+  place-items: center;
+  width: 72px;
+}
+
+.match-card h2,
+.match-card p {
+  margin: 0;
+}
+
+.match-card strong {
+  color: #15965a;
+}
+
+.match-card .btn {
+  grid-column: 1 / -1;
 }

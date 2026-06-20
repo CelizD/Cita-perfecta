@@ -55,6 +55,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/match-list/match-list.component').then((m) => m.MatchListComponent)
   },
   {
+    path: 'explore',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/explore/explore.component').then((m) => m.ExploreComponent)
+  },
+  {
     path: 'perfil/:id',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/profile-detail/profile-detail.component').then((m) => m.ProfileDetailComponent)

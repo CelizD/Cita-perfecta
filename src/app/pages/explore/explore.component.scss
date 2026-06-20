@@ -1,0 +1,83 @@
+.explore-page {
+  max-width: 1180px;
+}
+
+.comment-box {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.comment-box label {
+  display: grid;
+  font-weight: 900;
+  gap: 0.5rem;
+}
+
+.comment-box input {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  min-height: 46px;
+  padding: 0.8rem 1rem;
+}
+
+.explore-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.explore-card {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 107, 139, 0.14);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.2rem;
+}
+
+.avatar {
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 26px;
+  color: white;
+  display: grid;
+  font-family: var(--title-font);
+  font-size: 1.7rem;
+  font-weight: 900;
+  height: 92px;
+  place-items: center;
+  width: 92px;
+}
+
+.profile-topline {
+  align-items: start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.profile-topline h2,
+.profile-topline p {
+  margin: 0;
+}
+
+.profile-topline strong {
+  background: #ecfff5;
+  border-radius: 999px;
+  color: #15965a;
+  font-weight: 900;
+  padding: 0.45rem 0.7rem;
+}
+
+.explore-actions {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: auto;
+}

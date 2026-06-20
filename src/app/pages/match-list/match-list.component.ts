@@ -1,51 +1,75 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { ProfileCardComponent } from '../../shared/profile-card/profile-card.component';
-import { CompatibilityService } from '../../core/services/compatibility.service';
-import { ReportService } from '../../core/services/report.service';
-import { MatchService } from '../../core/services/match.service';
-import { ChatService } from '../../core/services/chat.service';
-import { PublicProfile } from '../../core/models/user.model';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { SupabaseService } from '../../services/supabase.service';
+
+interface MatchView {
+  id: string;
+  compatibility: number;
+  status: string;
+  otherProfile: {
+    full_name?: string;
+    name?: string;
+    email?: string;
+    city?: string;
+    photo_url?: string;
+  };
+}
 
 @Component({
   selector: 'app-match-list',
   standalone: true,
-  imports: [ProfileCardComponent],
+  imports: [CommonModule, RouterLink],
   templateUrl: './match-list.component.html',
   styleUrl: './match-list.component.scss'
 })
-export class MatchListComponent {
-  actionMessage = '';
+export class MatchListComponent implements OnInit {
+  private supabase = inject(SupabaseService);
+  private router = inject(Router);
 
-  constructor(
-    private compatibilityService: CompatibilityService,
-    private reportService: ReportService,
-    private matchService: MatchService,
-    private chatService: ChatService,
-    private router: Router
-  ) {}
+  userId = '';
+  matches: MatchView[] = [];
+  loading = false;
+  errorMessage = '';
 
-  get profiles(): PublicProfile[] {
-    const blocked = this.reportService.getBlockedProfiles();
-    return this.compatibilityService.getRecommendedProfiles().filter((profile) => !blocked.includes(profile.id));
+  async ngOnInit(): Promise<void> {
+    this.loading = true;
+    const user = await this.supabase.getCurrentUser();
+
+    if (!user) {
+      await this.router.navigate(['/login']);
+      return;
+    }
+
+    this.userId = user.id;
+    const { data, error } = await this.supabase.getMatches(this.userId);
+    this.loading = false;
+
+    if (error) {
+      this.errorMessage = error.message;
+      return;
+    }
+
+    this.matches = (data ?? [])
+      .filter((match: any) => match.status === 'active')
+      .map((match: any) => ({
+        id: match.id,
+        compatibility: match.compatibility ?? 80,
+        status: match.status,
+        otherProfile: match.user_a === this.userId ? match.user_b_profile : match.user_a_profile
+      }));
   }
 
-  onLike(profile: PublicProfile): void {
-    const match = this.matchService.sendLike(profile.id, profile.name, profile.compatibility ?? 80, 'Me gusto tu perfil.');
-    const chat = this.chatService.createChatForMatch(match);
-    this.actionMessage = `Like enviado a ${profile.name}. Se creo un match local.`;
-    setTimeout(() => this.router.navigate(['/chat', chat.id]), 700);
+  async openChat(match: MatchView): Promise<void> {
+    await this.supabase.createChat(match.id);
+    await this.router.navigate(['/chat', match.id]);
   }
 
-  onView(profile: PublicProfile): void {
-    this.router.navigate(['/perfil', profile.id]);
+  profileName(match: MatchView): string {
+    return match.otherProfile.full_name ?? match.otherProfile.name ?? match.otherProfile.email ?? 'Match';
   }
 
-  onLetter(profile: PublicProfile): void {
-    this.matchService.sendLetter(
-      profile.id,
-      `Hola ${profile.name}, me llamo la atencion tu perfil y me gustaria conocerte con calma y respeto.`
-    );
-    this.actionMessage = `Carta de conexion enviada a ${profile.name}.`;
+  initials(match: MatchView): string {
+    return this.profileName(match).slice(0, 2).toUpperCase();
   }
 }

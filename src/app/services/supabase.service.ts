@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
+import { createClient, RealtimeChannel, SupabaseClient, User } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 
 export interface Question {
@@ -55,6 +55,15 @@ export class SupabaseService {
       .select('*')
       .eq('id', userId)
       .single();
+  }
+
+  getProfilesForCompatibility(userId: string, limit = 50) {
+    return this.supabase
+      .from('profiles')
+      .select('*')
+      .neq('id', userId)
+      .eq('pause_mode', false)
+      .limit(limit);
   }
 
   createProfile(userId: string, data: any) {
@@ -134,13 +143,63 @@ export class SupabaseService {
   sendSwipe(fromUserId: string, toUserId: string, action: 'like' | 'pass', comment?: string) {
     return this.supabase
       .from('swipes')
-      .insert({
+      .upsert({
         from_user_id: fromUserId,
         to_user_id: toUserId,
         action,
         comment: comment ?? null
-      })
+      }, { onConflict: 'from_user_id,to_user_id' })
       .select()
+      .single();
+  }
+
+  getSwipes(fromUserId: string, toUserId: string) {
+    return this.supabase
+      .from('swipes')
+      .select('*')
+      .eq('from_user_id', fromUserId)
+      .eq('to_user_id', toUserId);
+  }
+
+  checkMutualLike(userA: string, userB: string) {
+    return this.supabase
+      .from('swipes')
+      .select('*')
+      .eq('from_user_id', userB)
+      .eq('to_user_id', userA)
+      .eq('action', 'like')
+      .maybeSingle();
+  }
+
+  createMatch(userA: string, userB: string) {
+    const [firstUser, secondUser] = [userA, userB].sort();
+    return this.supabase
+      .from('matches')
+      .upsert({
+        user_a: firstUser,
+        user_b: secondUser,
+        status: 'active'
+      }, { onConflict: 'user_a,user_b' })
+      .select()
+      .single();
+  }
+
+  createChat(matchId: string) {
+    return this.supabase
+      .from('chats')
+      .upsert({
+        match_id: matchId,
+        status: 'active'
+      }, { onConflict: 'match_id' })
+      .select()
+      .single();
+  }
+
+  getChatByMatch(matchId: string) {
+    return this.supabase
+      .from('chats')
+      .select('*')
+      .eq('match_id', matchId)
       .single();
   }
 
@@ -154,6 +213,92 @@ export class SupabaseService {
       `)
       .or(`user_a.eq.${userId},user_b.eq.${userId}`)
       .order('created_at', { ascending: false });
+  }
+
+  getMessages(chatId: string) {
+    return this.supabase
+      .from('messages')
+      .select('*')
+      .eq('chat_id', chatId)
+      .order('created_at', { ascending: true });
+  }
+
+  sendMessage(chatId: string, senderId: string, content: string) {
+    return this.supabase
+      .from('messages')
+      .insert({
+        chat_id: chatId,
+        sender_id: senderId,
+        content
+      })
+      .select()
+      .single();
+  }
+
+  subscribeToChat(chatId: string, callback: (payload: any) => void): RealtimeChannel {
+    return this.supabase
+      .channel(`chat:${chatId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'messages',
+          filter: `chat_id=eq.${chatId}`
+        },
+        callback
+      )
+      .subscribe();
+  }
+
+  unsubscribe(channel: RealtimeChannel) {
+    return this.supabase.removeChannel(channel);
+  }
+
+  closeMatch(matchId: string) {
+    return this.supabase
+      .from('matches')
+      .update({ status: 'closed' })
+      .eq('id', matchId)
+      .select()
+      .single();
+  }
+
+  getBlocksForUser(userId: string) {
+    return this.supabase
+      .from('blocks')
+      .select('*')
+      .or(`blocker_id.eq.${userId},blocked_user_id.eq.${userId}`);
+  }
+
+  getReportsByUser(userId: string) {
+    return this.supabase
+      .from('reports')
+      .select('*')
+      .eq('reporter_id', userId);
+  }
+
+  blockUser(blockerId: string, blockedId: string) {
+    return this.supabase
+      .from('blocks')
+      .upsert({
+        blocker_id: blockerId,
+        blocked_user_id: blockedId
+      }, { onConflict: 'blocker_id,blocked_user_id' })
+      .select()
+      .single();
+  }
+
+  reportUser(reporterId: string, reportedId: string, reason: string) {
+    return this.supabase
+      .from('reports')
+      .insert({
+        reporter_id: reporterId,
+        reported_user_id: reportedId,
+        reason
+      })
+      .select()
+      .single();
   }
 
   updateOnboardingStatus(userId: string) {

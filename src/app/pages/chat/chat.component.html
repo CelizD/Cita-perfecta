@@ -1,44 +1,54 @@
-@if (chat) {
-  <section class="chat-page">
-    <div class="chat-header glass-card">
-      <div>
-        <span class="eyebrow">Chat con</span>
-        <h1>{{ chat.profileName }}</h1>
-        <p>{{ chat.compatibility }}% de compatibilidad · Estado: {{ chat.status }}</p>
-      </div>
-      <a class="btn ghost" routerLink="/chats">Volver</a>
+<section class="chat-page">
+  <div class="chat-header glass-card">
+    <div>
+      <span class="eyebrow">Chat</span>
+      <h1>Conversacion</h1>
+      <p>Estado: {{ isClosed ? 'cerrado' : 'activo' }}</p>
     </div>
+    <a class="btn ghost" routerLink="/matches">Volver</a>
+  </div>
 
+  @if (errorMessage) {
+    <div class="alert">{{ errorMessage }}</div>
+  }
+
+  @if (loading) {
+    <div class="empty-state">
+      <h2>Cargando chat...</h2>
+    </div>
+  } @else {
     <div class="chat-window">
-      @for (message of chat.messages; track message.id) {
-        <div class="bubble" [class.mine]="message.sender === 'yo'">
-          <span>{{ message.sender === 'yo' ? 'Tú' : chat.profileName }}</span>
-          <p>{{ message.text }}</p>
+      @for (message of messages; track message.id) {
+        <div class="bubble" [class.mine]="message.sender_id === userId">
+          <span>{{ message.sender_id === userId ? 'Tu' : 'Match' }}</span>
+          <p>{{ message.content }}</p>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <h2>Aun no hay mensajes</h2>
+          <p>Empieza con una pregunta sencilla y respetuosa.</p>
         </div>
       }
     </div>
 
-    <div class="icebreaker">
-      <strong>Sugerencia:</strong> {{ icebreaker }}
-    </div>
-
-    @if (showClosure && chat.status === 'activo') {
-      <app-friendly-closure (closeSelected)="close($event)"></app-friendly-closure>
+    @if (showClosure && !isClosed) {
+      <div class="closure-panel">
+        <h2>Cerrar conversacion con respeto</h2>
+        <p>Elige un mensaje claro y amable para cerrar la conversacion.</p>
+        @for (option of closureOptions; track option) {
+          <button class="closure-option" type="button" (click)="closeWithRespect(option)">
+            {{ option }}
+          </button>
+        }
+      </div>
     }
 
     <form class="chat-form" [formGroup]="form" (ngSubmit)="send()">
-      <input formControlName="text" placeholder="Escribe un mensaje..." [disabled]="chat.status === 'cerrado'">
-      <button class="btn primary" type="submit" [disabled]="chat.status === 'cerrado'">Enviar</button>
-      <button class="btn ghost" type="button" (click)="showClosure = !showClosure" [disabled]="chat.status === 'cerrado'">
+      <input formControlName="text" placeholder="Escribe un mensaje..." [disabled]="isClosed">
+      <button class="btn primary" type="submit" [disabled]="isClosed">Enviar</button>
+      <button class="btn ghost" type="button" (click)="showClosure = !showClosure" [disabled]="isClosed">
         Cierre Amistoso
       </button>
     </form>
-  </section>
-} @else {
-  <section class="center-page">
-    <div class="empty-state">
-      <h1>Chat no encontrado</h1>
-      <a class="btn primary" routerLink="/chats">Volver a chats</a>
-    </div>
-  </section>
-}
+  }
+</section>
