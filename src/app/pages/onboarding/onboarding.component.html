@@ -54,16 +54,16 @@
 
           <label>
             Nombre
-            <input type="text" formControlName="name" placeholder="Tu nombre">
-            @if (basicForm.controls.name.touched && basicForm.controls.name.invalid) {
+            <input type="text" formControlName="fullName" placeholder="Tu nombre">
+            @if (basicForm.controls.fullName.touched && basicForm.controls.fullName.invalid) {
               <small>Escribe al menos 2 caracteres.</small>
             }
           </label>
 
           <label>
             Fecha de nacimiento
-            <input type="date" formControlName="birthdate">
-            @if (basicForm.controls.birthdate.touched && basicForm.controls.birthdate.invalid) {
+            <input type="date" formControlName="birthDate">
+            @if (basicForm.controls.birthDate.touched && basicForm.controls.birthDate.invalid) {
               <small>La fecha de nacimiento es obligatoria.</small>
             }
           </label>
@@ -108,7 +108,7 @@
           } @empty {
             <div class="empty-state">
               <h3>No hay preguntas iniciales</h3>
-              <p>Revisa que la tabla questions tenga preguntas con is_initial = true.</p>
+              <p>Revisa que la tabla real questions tenga filas con is_initial = true e is_active = true.</p>
             </div>
           }
 

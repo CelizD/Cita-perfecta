@@ -22,11 +22,9 @@ export interface CompatibleProfile {
   id: string;
   email?: string;
   full_name?: string;
-  name?: string;
   city?: string;
   bio?: string;
   photo_url?: string;
-  photoProfile?: string;
   interests?: string[];
   dealbreakers?: string[];
   compatibility: number;
@@ -128,13 +126,15 @@ export class CompatibilityService {
 
     if (profilesResponse.error) throw profilesResponse.error;
 
+    const blocks = (blocksResponse.data ?? []) as Array<Record<string, unknown>>;
+    const reports = (reportsResponse.data ?? []) as Array<Record<string, unknown>>;
     const blockedIds = new Set<string>();
-    for (const block of blocksResponse.data ?? []) {
-      blockedIds.add(block['blocker_id']);
-      blockedIds.add(block['blocked_user_id']);
+    for (const block of blocks) {
+      blockedIds.add(block['blocker_id'] as string);
+      blockedIds.add(block['blocked_user_id'] as string);
     }
 
-    const reportedIds = new Set((reportsResponse.data ?? []).map((report) => report['reported_user_id'] as string));
+    const reportedIds = new Set(reports.map((report) => report['reported_user_id'] as string));
     const currentDealbreakers = (currentProfileResponse.data?.['dealbreakers'] ?? []) as string[];
     const results: CompatibleProfile[] = [];
 

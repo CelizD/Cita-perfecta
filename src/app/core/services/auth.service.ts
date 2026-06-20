@@ -236,7 +236,7 @@ export class AuthService {
     await supabase.from('profiles').upsert({
       id: user.id,
       email: user.email,
-      name: user.name,
+      full_name: user.name,
       birth_date: user.birthDate || null,
       age: user.age,
       city: user.city || null,
@@ -258,7 +258,7 @@ export class AuthService {
   private mergeProfileRow(user: User, profile: Record<string, unknown>): User {
     return {
       ...user,
-      name: String(profile['name'] ?? user.name),
+      name: String(profile['full_name'] ?? user.name),
       email: String(profile['email'] ?? user.email),
       birthDate: String(profile['birth_date'] ?? user.birthDate ?? ''),
       age: Number(profile['age'] ?? user.age),

@@ -9,7 +9,6 @@ interface MatchView {
   status: string;
   otherProfile: {
     full_name?: string;
-    name?: string;
     email?: string;
     city?: string;
     photo_url?: string;
@@ -66,7 +65,7 @@ export class MatchListComponent implements OnInit {
   }
 
   profileName(match: MatchView): string {
-    return match.otherProfile.full_name ?? match.otherProfile.name ?? match.otherProfile.email ?? 'Match';
+    return match.otherProfile.full_name ?? match.otherProfile.email ?? 'Match';
   }
 
   initials(match: MatchView): string {

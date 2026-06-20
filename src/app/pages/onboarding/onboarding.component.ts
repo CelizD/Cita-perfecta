@@ -31,8 +31,8 @@ export class OnboardingComponent implements OnInit {
   aura: AuraResult | null = null;
 
   basicForm = this.fb.nonNullable.group({
-    name: ['', [Validators.required, Validators.minLength(2)]],
-    birthdate: ['', Validators.required],
+    fullName: ['', [Validators.required, Validators.minLength(2)]],
+    birthDate: ['', Validators.required],
     city: ['', [Validators.required, Validators.minLength(2)]]
   });
 
@@ -64,26 +64,17 @@ export class OnboardingComponent implements OnInit {
     this.loading = true;
     const value = this.basicForm.getRawValue();
 
-    const primarySave = await this.supabase.updateProfile(this.userId, {
-      name: value.name,
-      birthdate: value.birthdate,
+    const { error } = await this.supabase.updateProfile(this.userId, {
+      full_name: value.fullName,
+      birth_date: value.birthDate,
       city: value.city,
       pact_accepted: true
     });
 
-    if (primarySave.error) {
-      const fallbackSave = await this.supabase.updateProfile(this.userId, {
-        full_name: value.name,
-        birth_date: value.birthdate,
-        city: value.city,
-        pact_accepted: true
-      });
-
-      if (fallbackSave.error) {
-        this.loading = false;
-        this.errorMessage = fallbackSave.error.message;
-        return;
-      }
+    if (error) {
+      this.loading = false;
+      this.errorMessage = error.message;
+      return;
     }
 
     await this.loadQuestions();
@@ -145,8 +136,8 @@ export class OnboardingComponent implements OnInit {
 
     this.acceptedRespectPact = Boolean(data['pact_accepted']);
     this.basicForm.patchValue({
-      name: String(data['name'] ?? data['full_name'] ?? ''),
-      birthdate: String(data['birthdate'] ?? data['birth_date'] ?? ''),
+      fullName: String(data['full_name'] ?? ''),
+      birthDate: String(data['birth_date'] ?? ''),
       city: String(data['city'] ?? '')
     });
   }

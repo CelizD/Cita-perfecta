@@ -13,9 +13,13 @@ export interface Question {
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient | null = null;
+  readonly isConfigured = this.isValidSupabaseConfig();
+  readonly configMessage = 'Configura Supabase en src/environments/environment.ts con una URL https://...supabase.co y tu anon public key.';
 
   constructor() {
+    if (!this.isConfigured) return;
+
     this.supabase = createClient(environment.supabase.url, environment.supabase.anonKey, {
       auth: {
         autoRefreshToken: true,
@@ -26,31 +30,46 @@ export class SupabaseService {
   }
 
   signUp(email: string, password: string) {
-    return this.supabase.auth.signUp({
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase.auth.signUp({
       email,
       password
     });
   }
 
   signIn(email: string, password: string) {
-    return this.supabase.auth.signInWithPassword({
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase.auth.signInWithPassword({
       email,
       password
     });
   }
 
   signOut() {
-    return this.supabase.auth.signOut();
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase.auth.signOut();
   }
 
   async getCurrentUser(): Promise<User | null> {
-    const { data, error } = await this.supabase.auth.getUser();
+    const supabase = this.requireClient();
+    if (!supabase) return null;
+
+    const { data, error } = await supabase.auth.getUser();
     if (error) return null;
     return data.user;
   }
 
   getProfile(userId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('profiles')
       .select('*')
       .eq('id', userId)
@@ -58,7 +77,10 @@ export class SupabaseService {
   }
 
   getProfilesForCompatibility(userId: string, limit = 50) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+
+    return supabase
       .from('profiles')
       .select('*')
       .neq('id', userId)
@@ -67,7 +89,10 @@ export class SupabaseService {
   }
 
   createProfile(userId: string, data: any) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('profiles')
       .insert({
         id: userId,
@@ -78,7 +103,10 @@ export class SupabaseService {
   }
 
   updateProfile(userId: string, data: any) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('profiles')
       .update(data)
       .eq('id', userId)
@@ -87,27 +115,23 @@ export class SupabaseService {
   }
 
   async getInitialQuestions() {
-    const initialQuestions = await this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return this.notConfiguredResponse([]);
+
+    return supabase
       .from('questions')
       .select('*')
       .eq('is_initial', true)
-      .order('id', { ascending: true })
-      .limit(15);
-
-    if (!initialQuestions.error) {
-      return initialQuestions;
-    }
-
-    return this.supabase
-      .from('questions')
-      .select('*')
       .eq('is_active', true)
       .order('id', { ascending: true })
       .limit(15);
   }
 
   async saveAnswers(userId: string, answers: { question_id: number; value: number }[]) {
-    const { error: deleteError } = await this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return this.notConfiguredResponse();
+
+    const { error: deleteError } = await supabase
       .from('answers')
       .delete()
       .eq('user_id', userId);
@@ -126,14 +150,17 @@ export class SupabaseService {
       return { data: [], error: null };
     }
 
-    return this.supabase
+    return supabase
       .from('answers')
       .insert(rows)
       .select();
   }
 
   getAnswers(userId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+
+    return supabase
       .from('answers')
       .select('question_id, value')
       .eq('user_id', userId)
@@ -141,7 +168,10 @@ export class SupabaseService {
   }
 
   sendSwipe(fromUserId: string, toUserId: string, action: 'like' | 'pass', comment?: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('swipes')
       .upsert({
         from_user_id: fromUserId,
@@ -154,7 +184,10 @@ export class SupabaseService {
   }
 
   getSwipes(fromUserId: string, toUserId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+
+    return supabase
       .from('swipes')
       .select('*')
       .eq('from_user_id', fromUserId)
@@ -162,7 +195,10 @@ export class SupabaseService {
   }
 
   checkMutualLike(userA: string, userB: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('swipes')
       .select('*')
       .eq('from_user_id', userB)
@@ -172,8 +208,11 @@ export class SupabaseService {
   }
 
   createMatch(userA: string, userB: string) {
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
     const [firstUser, secondUser] = [userA, userB].sort();
-    return this.supabase
+    return supabase
       .from('matches')
       .upsert({
         user_a: firstUser,
@@ -185,7 +224,10 @@ export class SupabaseService {
   }
 
   createChat(matchId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('chats')
       .upsert({
         match_id: matchId,
@@ -196,7 +238,10 @@ export class SupabaseService {
   }
 
   getChatByMatch(matchId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('chats')
       .select('*')
       .eq('match_id', matchId)
@@ -204,7 +249,10 @@ export class SupabaseService {
   }
 
   getMatches(userId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+
+    return supabase
       .from('matches')
       .select(`
         *,
@@ -216,7 +264,10 @@ export class SupabaseService {
   }
 
   getMessages(chatId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+
+    return supabase
       .from('messages')
       .select('*')
       .eq('chat_id', chatId)
@@ -224,7 +275,10 @@ export class SupabaseService {
   }
 
   sendMessage(chatId: string, senderId: string, content: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('messages')
       .insert({
         chat_id: chatId,
@@ -236,7 +290,12 @@ export class SupabaseService {
   }
 
   subscribeToChat(chatId: string, callback: (payload: any) => void): RealtimeChannel {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) {
+      throw new Error(this.configMessage);
+    }
+
+    return supabase
       .channel(`chat:${chatId}`)
       .on(
         'postgres_changes',
@@ -252,11 +311,17 @@ export class SupabaseService {
   }
 
   unsubscribe(channel: RealtimeChannel) {
-    return this.supabase.removeChannel(channel);
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve('ok');
+
+    return supabase.removeChannel(channel);
   }
 
   closeMatch(matchId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('matches')
       .update({ status: 'closed' })
       .eq('id', matchId)
@@ -265,21 +330,30 @@ export class SupabaseService {
   }
 
   getBlocksForUser(userId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+
+    return supabase
       .from('blocks')
       .select('*')
       .or(`blocker_id.eq.${userId},blocked_user_id.eq.${userId}`);
   }
 
   getReportsByUser(userId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse([]));
+
+    return supabase
       .from('reports')
       .select('*')
       .eq('reporter_id', userId);
   }
 
   blockUser(blockerId: string, blockedId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('blocks')
       .upsert({
         blocker_id: blockerId,
@@ -290,7 +364,10 @@ export class SupabaseService {
   }
 
   reportUser(reporterId: string, reportedId: string, reason: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('reports')
       .insert({
         reporter_id: reporterId,
@@ -302,11 +379,43 @@ export class SupabaseService {
   }
 
   updateOnboardingStatus(userId: string) {
-    return this.supabase
+    const supabase = this.requireClient();
+    if (!supabase) return Promise.resolve(this.notConfiguredResponse());
+
+    return supabase
       .from('profiles')
       .update({ is_onboarded: true })
       .eq('id', userId)
       .select()
       .single();
+  }
+
+  private requireClient(): SupabaseClient | null {
+    return this.supabase;
+  }
+
+  private isValidSupabaseConfig(): boolean {
+    const url = environment.supabase.url;
+    const anonKey = environment.supabase.anonKey;
+
+    if (!url || !anonKey || url === 'TU_URL_AQUI' || anonKey === 'TU_ANON_KEY_AQUI') {
+      return false;
+    }
+
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  }
+
+  private notConfiguredResponse(data: unknown = null) {
+    return {
+      data,
+      error: {
+        message: this.configMessage
+      }
+    };
   }
 }

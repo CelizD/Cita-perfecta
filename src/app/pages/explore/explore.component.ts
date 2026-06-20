@@ -129,7 +129,7 @@ export class ExploreComponent implements OnInit {
   }
 
   profileName(profile: CompatibleProfile): string {
-    return profile.full_name ?? profile.name ?? profile.email ?? 'Perfil';
+    return profile.full_name ?? profile.email ?? 'Perfil';
   }
 
   initials(profile: CompatibleProfile): string {
