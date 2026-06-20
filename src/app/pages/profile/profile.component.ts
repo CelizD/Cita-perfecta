@@ -51,6 +51,7 @@ export class ProfileComponent implements OnInit {
 
   async saveProfile(): Promise<void> {
     const user = this.authService.currentUser();
+    const supabase = this.supabaseService.client;
     if (!user || this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -65,6 +66,24 @@ export class ProfileComponent implements OnInit {
         .split(',')
         .map((item) => item.trim())
         .filter(Boolean);
+
+      if (supabase) {
+        const { error } = await supabase
+          .from('profiles')
+          .update({
+            name: value.name.trim(),
+            city: value.city.trim(),
+            bio: value.bio.trim(),
+            interests,
+            communication_style: value.communicationStyle.trim(),
+            love_language: value.loveLanguage.trim(),
+            profile_complete: true,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', user.id);
+
+        if (error) throw new Error(error.message);
+      }
 
       this.authService.updateCurrentUser({
         name: value.name.trim(),
