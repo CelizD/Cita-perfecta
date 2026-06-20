@@ -18,12 +18,44 @@ add column if not exists is_paused boolean not null default false;
 update public.profiles
 set
   user_id = coalesce(user_id, id),
-  name = coalesce(name, full_name),
-  main_photo_url = coalesce(main_photo_url, photo_url),
-  is_paused = coalesce(is_paused, pause_mode, false)
+  name = coalesce(name, 'Perfil'),
+  is_paused = coalesce(is_paused, false)
 where user_id is null
-   or name is null
-   or main_photo_url is null;
+   or name is null;
+
+do $$
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'profiles'
+      and column_name = 'full_name'
+  ) then
+    execute 'update public.profiles set name = coalesce(name, full_name, ''Perfil'')';
+  end if;
+
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'profiles'
+      and column_name = 'photo_url'
+  ) then
+    execute 'update public.profiles set main_photo_url = coalesce(main_photo_url, photo_url)';
+  end if;
+
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'profiles'
+      and column_name = 'pause_mode'
+  ) then
+    execute 'update public.profiles set is_paused = coalesce(is_paused, pause_mode, false)';
+  end if;
+end;
+$$;
 
 create unique index if not exists profiles_user_id_uidx
 on public.profiles(user_id);
