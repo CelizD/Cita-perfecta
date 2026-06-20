@@ -14,9 +14,9 @@
       <p class="alert success">Premium activo.</p>
       <a class="btn ghost full" routerLink="/ajustes">Volver a ajustes</a>
     } @else {
-      <button class="btn primary full" type="button" (click)="premiumService.activatePremium()">
+      <a class="btn primary full" routerLink="/ajustes/pagos">
         Activar Premium
-      </button>
+      </a>
     }
   </div>
 </section>

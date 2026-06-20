@@ -44,6 +44,5 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
-# H-012: archivos de entorno generados con credenciales reales; no versionar
-src/environments/environment.ts
+# H-012: environment de producción generado por write-env.mjs con credenciales reales; no versionar
 src/environments/environment.prod.ts
