@@ -5,7 +5,7 @@
       <h1>Prepara tu perfil para conexiones reales</h1>
       <p>Completa el pacto, tus datos basicos y el test inicial para descubrir tu Aura.</p>
       <div class="progress-line">
-        <span [style.width.%]="(step + 1) * 25"></span>
+        <span [style.width.%]="progressPercentage"></span>
       </div>
       <strong>{{ progressLabel }}</strong>
     </div>

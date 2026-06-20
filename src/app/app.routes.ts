@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, onboardingGuard, publicGuard } from './guards/auth.guard';
+import { authGuard, onboardingGuard, publicGuard } from '@core/guards';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -7,96 +7,108 @@ export const routes: Routes = [
   {
     path: 'login',
     canActivate: [publicGuard],
-    loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent)
+    loadComponent: () => import('@pages/login/login.component').then((m) => m.LoginComponent)
   },
   {
     path: 'register',
     canActivate: [publicGuard],
-    loadComponent: () => import('./pages/register/register.component').then((m) => m.RegisterComponent)
+    loadComponent: () => import('@pages/register/register.component').then((m) => m.RegisterComponent)
   },
   { path: 'registro', pathMatch: 'full', redirectTo: 'register' },
   {
     path: 'recuperar-contrasena',
     canActivate: [publicGuard],
     loadComponent: () =>
-      import('./pages/forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent)
+      import('@pages/forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent)
   },
   {
     path: 'dashboard',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/welcome/welcome.component').then((m) => m.WelcomeComponent)
+    loadComponent: () => import('@pages/welcome/welcome.component').then((m) => m.WelcomeComponent)
   },
   {
     path: 'profile',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/profile/profile.component').then((m) => m.ProfileComponent)
+    loadComponent: () => import('@pages/profile/profile.component').then((m) => m.ProfileComponent)
   },
   { path: 'pacto', pathMatch: 'full', redirectTo: 'pacto-respeto' },
   {
     path: 'pacto-respeto',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/respect-pact/respect-pact.component').then((m) => m.RespectPactComponent)
+    loadComponent: () => import('@pages/respect-pact/respect-pact.component').then((m) => m.RespectPactComponent)
   },
   {
     path: 'onboarding',
-    canActivate: [onboardingGuard],
-    loadComponent: () => import('./pages/onboarding/onboarding.component').then((m) => m.OnboardingComponent)
+    canActivate: [authGuard, onboardingGuard],
+    loadComponent: () => import('@pages/onboarding/onboarding.component').then((m) => m.OnboardingComponent)
   },
   {
     path: 'test',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./pages/compatibility-test/compatibility-test.component').then((m) => m.CompatibilityTestComponent)
+      import('@pages/compatibility-test/compatibility-test.component').then((m) => m.CompatibilityTestComponent)
   },
   {
     path: 'aura',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/aura/aura.component').then((m) => m.AuraComponent)
+    loadComponent: () => import('@pages/aura/aura.component').then((m) => m.AuraComponent)
   },
   {
     path: 'matches',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/match-list/match-list.component').then((m) => m.MatchListComponent)
+    loadComponent: () => import('@pages/match-list/match-list.component').then((m) => m.MatchListComponent)
   },
   {
     path: 'letters',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/letters/letters.component').then((m) => m.LettersComponent)
+    loadComponent: () => import('@pages/letters/letters.component').then((m) => m.LettersComponent)
   },
   {
     path: 'explore',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/explore/explore.component').then((m) => m.ExploreComponent)
+    loadComponent: () => import('@pages/explore/explore.component').then((m) => m.ExploreComponent)
   },
   {
     path: 'perfil/:id',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/profile-detail/profile-detail.component').then((m) => m.ProfileDetailComponent)
+    loadComponent: () => import('@pages/profile-detail/profile-detail.component').then((m) => m.ProfileDetailComponent)
   },
   {
     path: 'chats',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/chat-list/chat-list.component').then((m) => m.ChatListComponent)
+    loadComponent: () => import('@pages/chat-list/chat-list.component').then((m) => m.ChatListComponent)
   },
   {
     path: 'chat/:matchId',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/chat/chat.component').then((m) => m.ChatComponent)
+    loadComponent: () => import('@pages/chat/chat.component').then((m) => m.ChatComponent)
   },
   {
     path: 'ajustes',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/settings/settings.component').then((m) => m.SettingsComponent)
+    loadComponent: () => import('@pages/settings/settings.component').then((m) => m.SettingsComponent)
+  },
+  { path: 'settings', pathMatch: 'full', redirectTo: 'ajustes' },
+  {
+    path: 'report-vulnerability',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('@pages/settings/security/report-vulnerability.component').then((m) => m.ReportVulnerabilityComponent)
+  },
+  {
+    path: 'admin/kpis',
+    canActivate: [authGuard],
+    loadComponent: () => import('@pages/admin/dashboard-kpi.component').then((m) => m.DashboardKPIComponent)
   },
   {
     path: 'premium',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/premium/premium.component').then((m) => m.PremiumComponent)
+    loadComponent: () => import('@pages/premium/premium.component').then((m) => m.PremiumComponent)
   },
   {
     path: 'crud-perfiles',
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/profile-crud/profile-crud.component').then((m) => m.ProfileCrudComponent)
+    loadComponent: () => import('@pages/profile-crud/profile-crud.component').then((m) => m.ProfileCrudComponent)
   },
   { path: '**', redirectTo: 'login' }
 ];

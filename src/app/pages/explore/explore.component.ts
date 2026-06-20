@@ -1,17 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatchService } from '../../services/match.service';
 import { ExploreProfile, ProfileService } from '../../services/profile.service';
 import { SupabaseService } from '../../services/supabase.service';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-explore',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, EmptyStateComponent],
   templateUrl: './explore.component.html',
-  styleUrl: './explore.component.scss'
+  styleUrl: './explore.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExploreComponent implements OnInit {
   private supabase = inject(SupabaseService);
@@ -19,6 +21,7 @@ export class ExploreComponent implements OnInit {
   private matchService = inject(MatchService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   userId = '';
   page = 0;
@@ -53,6 +56,7 @@ export class ExploreComponent implements OnInit {
       this.errorMessage = error instanceof Error ? error.message : 'No se pudieron cargar los perfiles.';
     } finally {
       this.loading = false;
+      this.cdr.markForCheck();
     }
   }
 
@@ -80,6 +84,7 @@ export class ExploreComponent implements OnInit {
       this.errorMessage = error instanceof Error ? error.message : 'No se pudo enviar el like.';
     } finally {
       this.loading = false;
+      this.cdr.markForCheck();
     }
   }
 
@@ -95,6 +100,7 @@ export class ExploreComponent implements OnInit {
       this.errorMessage = error instanceof Error ? error.message : 'No se pudo guardar el pass.';
     } finally {
       this.loading = false;
+      this.cdr.markForCheck();
     }
   }
 

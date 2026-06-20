@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Question, SupabaseService } from '../../services/supabase.service';
@@ -14,12 +14,14 @@ interface AuraResult {
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './onboarding.component.html',
-  styleUrl: './onboarding.component.scss'
+  styleUrl: './onboarding.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OnboardingComponent implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private supabase = inject(SupabaseService);
+  private cdr = inject(ChangeDetectorRef);
 
   step = 0;
   loading = false;
@@ -53,6 +55,7 @@ export class OnboardingComponent implements OnInit {
   continueFromPact(): void {
     if (!this.acceptedRespectPact) return;
     this.step = 1;
+    this.scrollTop();
   }
 
   async saveBasicData(): Promise<void> {
@@ -80,6 +83,8 @@ export class OnboardingComponent implements OnInit {
     await this.loadQuestions();
     this.step = 2;
     this.loading = false;
+    this.scrollTop();
+    this.cdr.markForCheck();
   }
 
   setAnswer(questionId: number, value: number): void {
@@ -110,6 +115,8 @@ export class OnboardingComponent implements OnInit {
 
     this.aura = this.calculateAura();
     this.step = 3;
+    this.scrollTop();
+    this.cdr.markForCheck();
   }
 
   async finishOnboarding(): Promise<void> {
@@ -130,6 +137,10 @@ export class OnboardingComponent implements OnInit {
     return `${Math.min(this.step + 1, 4)} de 4`;
   }
 
+  get progressPercentage(): number {
+    return ((this.step + 1) / 4) * 100;
+  }
+
   private async loadProfile(): Promise<void> {
     const { data } = await this.supabase.getProfile(this.userId);
     if (!data) return;
@@ -140,6 +151,7 @@ export class OnboardingComponent implements OnInit {
       birthDate: String(data['birth_date'] ?? ''),
       city: String(data['city'] ?? '')
     });
+    this.cdr.markForCheck();
   }
 
   private async loadQuestions(): Promise<void> {
@@ -156,6 +168,11 @@ export class OnboardingComponent implements OnInit {
       acc[question.id] = 3;
       return acc;
     }, {});
+    this.cdr.markForCheck();
+  }
+
+  private scrollTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   private calculateAura(): AuraResult {

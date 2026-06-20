@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatchService } from '../../services/match.service';
 import { SupabaseService } from '../../services/supabase.service';
@@ -18,12 +18,14 @@ interface ChatListItem {
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './chat-list.component.html',
-  styleUrl: './chat-list.component.scss'
+  styleUrl: './chat-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatListComponent implements OnInit {
   private supabase = inject(SupabaseService);
   private matchService = inject(MatchService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   userId = '';
   chats: ChatListItem[] = [];
@@ -52,6 +54,7 @@ export class ChatListComponent implements OnInit {
       this.errorMessage = error instanceof Error ? error.message : 'No se pudieron cargar los chats.';
     } finally {
       this.loading = false;
+      this.cdr.markForCheck();
     }
   }
 

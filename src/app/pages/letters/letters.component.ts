@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { LetterQuota, LetterService } from '../../core/services/letter.service';
@@ -9,7 +9,8 @@ import { LetterQuota, LetterService } from '../../core/services/letter.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './letters.component.html',
-  styleUrl: './letters.component.scss'
+  styleUrl: './letters.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LettersComponent implements OnInit {
   private fb = inject(FormBuilder);

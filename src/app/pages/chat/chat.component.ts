@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RealtimeChannel } from '@supabase/supabase-js';
@@ -12,7 +21,8 @@ import { SupabaseService } from '../../services/supabase.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrl: './chat.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatComponent implements OnInit, OnDestroy {
   @ViewChild('messageWindow') messageWindow?: ElementRef<HTMLDivElement>;
@@ -58,6 +68,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.userId = user.id;
     await this.prepareChat();
     this.loading = false;
+    this.cdr.markForCheck();
   }
 
   async ngOnDestroy(): Promise<void> {
@@ -96,6 +107,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.errorMessage = error instanceof Error ? error.message : 'No se pudo cerrar la conversacion.';
     } finally {
       this.loading = false;
+      this.cdr.markForCheck();
     }
   }
 
@@ -118,6 +130,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       await this.chatService.markAsRead(this.chatId, this.userId);
       this.subscribe();
       this.scrollToBottomSoon();
+      this.cdr.markForCheck();
     } catch (error) {
       this.errorMessage = error instanceof Error ? error.message : 'No se pudo cargar el chat.';
     }

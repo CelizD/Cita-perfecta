@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatchService } from '../../services/match.service';
 import { SupabaseService } from '../../services/supabase.service';
@@ -21,12 +21,14 @@ interface MatchView {
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './match-list.component.html',
-  styleUrl: './match-list.component.scss'
+  styleUrl: './match-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatchListComponent implements OnInit {
   private supabase = inject(SupabaseService);
   private matchService = inject(MatchService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   userId = '';
   matches: MatchView[] = [];
@@ -56,6 +58,7 @@ export class MatchListComponent implements OnInit {
       this.errorMessage = error instanceof Error ? error.message : 'No se pudieron cargar tus matches.';
     } finally {
       this.loading = false;
+      this.cdr.markForCheck();
     }
   }
 

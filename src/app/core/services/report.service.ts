@@ -24,6 +24,18 @@ export class ReportService {
     localStorage.setItem(this.reportsKey, JSON.stringify(reports));
   }
 
+  reportVulnerability(report: { description?: string | null; steps?: string | null }): void {
+    const reports = this.getReports();
+    reports.push({
+      fromUserId: this.authService.currentUser()?.id ?? 'anonymous',
+      toProfileId: 0,
+      reason: 'security_vulnerability',
+      description: `Descripcion: ${report.description ?? ''}\nPasos: ${report.steps ?? ''}`,
+      createdAt: new Date().toISOString()
+    });
+    localStorage.setItem(this.reportsKey, JSON.stringify(reports));
+  }
+
   blockProfile(toProfileId: number): void {
     const blocked = this.getBlockedProfiles();
     if (!blocked.includes(toProfileId)) {

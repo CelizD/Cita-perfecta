@@ -1,13 +1,13 @@
 <section class="center-page">
-  <div class="glass-card aura-card">
+  <div class="glass-card aura-card" [style.background]="auraConfig().gradient">
     <span class="eyebrow">Tu Aura Cita Perfecta</span>
-    <div class="aura-orb"></div>
-    <h1>{{ aura.title }}</h1>
-    <p>{{ aura.description }}</p>
+    <div class="aura-orb">{{ auraConfig().emoji }}</div>
+    <h1>{{ userAura() }}</h1>
+    <p>{{ auraConfig().description }}</p>
 
     <div class="chips center">
-      @for (trait of aura.traits; track trait) {
-        <span>{{ trait }}</span>
+      @for (strength of auraConfig().strengths; track strength) {
+        <span>{{ strength }}</span>
       }
     </div>
 
@@ -16,6 +16,9 @@
       psicologico profesional.
     </p>
 
-    <a class="btn primary full" routerLink="/matches">Ver conexiones</a>
+    <div class="aura-actions">
+      <button class="btn ghost full" type="button" (click)="shareAura()">Compartir mi Aura</button>
+      <a class="btn primary full" routerLink="/explore">Explorar conexiones</a>
+    </div>
   </div>
 </section>

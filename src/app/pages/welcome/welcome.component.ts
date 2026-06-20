@@ -10,12 +10,13 @@ import { ExternalDatePlan, ExternalDatePlanService } from '../../core/services/e
 import { MatchService } from '../../core/services/match.service';
 import { ReportService } from '../../core/services/report.service';
 import { PublicProfile } from '../../core/models/user.model';
+import { DailyTipComponent } from '../../shared/components/daily-tip/daily-tip.component';
 import { ProfileCardComponent } from '../../shared/profile-card/profile-card.component';
 
 @Component({
   selector: 'app-welcome',
   standalone: true,
-  imports: [AsyncPipe, RouterLink, ProfileCardComponent],
+  imports: [AsyncPipe, RouterLink, DailyTipComponent, ProfileCardComponent],
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.scss'
 })

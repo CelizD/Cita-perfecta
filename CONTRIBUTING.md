@@ -17,6 +17,33 @@ Gracias por ayudar a mejorar Cita Perfecta.
 - Maneja errores con `try/catch` y mensajes claros para el usuario.
 - No subas claves reales de Supabase, Google Vision, Firebase ni Expo.
 
+## Nomenclatura
+
+- Servicios: `nombre.service.ts`
+- Componentes: `nombre.component.ts`
+- Modelos: `nombre.model.ts`
+- Directivas: `nombre.directive.ts`
+- Pipes: `nombre.pipe.ts`
+- Pruebas unitarias: `nombre.spec.ts`
+
+## Estructura
+
+- `src/app/core`: servicios globales, modelos, guards, utilidades y clases base.
+- `src/app/pages`: pantallas lazy-loaded por ruta.
+- `src/app/shared`: componentes reutilizables y presentacionales.
+- `src/app/features`: reservado para funcionalidades grandes que agrupen varias pantallas.
+
+## Imports
+
+Para codigo nuevo usa aliases de TypeScript:
+
+```ts
+import { AuthService } from '@core/services';
+import { EmptyStateComponent } from '@shared/components/empty-state/empty-state.component';
+```
+
+Evita crear codigo nuevo en `src/app/services`; esa carpeta queda como compatibilidad temporal mientras se completa la migracion hacia `core/services`.
+
 ## Base de datos
 
 Los cambios de Supabase deben ir en `supabase/migrations` con el formato:

@@ -1,13 +1,13 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
     branches: [main]
 
 jobs:
-  build-and-test:
+  test-and-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,14 +17,29 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run unit tests
-        run: npm test
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm run test:ci
+
+      - name: E2E smoke
+        run: npm run e2e:ci
 
       - name: Build
         run: npm run build
+
+      - name: Deploy to Vercel Production
+        if: github.ref == 'refs/heads/main' && secrets.VERCEL_TOKEN != '' && secrets.ORG_ID != '' && secrets.PROJECT_ID != ''
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          vercel-args: --prod

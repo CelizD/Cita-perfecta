@@ -54,11 +54,13 @@
           </div>
         </article>
       } @empty {
-        <div class="empty-state">
-          <h2>No hay perfiles por ahora</h2>
-          <p>Cuando mas personas completen su perfil apareceran nuevas conexiones.</p>
-          <button class="btn ghost" type="button" (click)="nextPage()">Buscar mas</button>
-        </div>
+        <app-empty-state
+          icon="CP"
+          title="No hay perfiles por ahora"
+          description="Estamos buscando personas compatibles en tu zona. Vuelve pronto o carga otra pagina."
+          actionText="Buscar mas"
+          (action)="nextPage()">
+        </app-empty-state>
       }
     </div>
 
